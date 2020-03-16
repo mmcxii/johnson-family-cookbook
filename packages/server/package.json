@@ -1,0 +1,7 @@
+{
+  "name": "@jfbc/server",
+  "version": "1.0.0",
+  "description": "Node.js GraphQL server written in TypeScript",
+  "main": "index.js",
+  "license": "MIT"
+}
