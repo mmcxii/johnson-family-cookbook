@@ -1,0 +1,13 @@
+{
+  "name": "jfcb",
+  "version": "1.0.0",
+  "description": "A web and mobile app for all of my family's recipes",
+  "repository": "https://github.com/mmcxii/johnson-family-cookbook.git",
+  "author": "Nich Secord",
+  "license": "MIT",
+  "private": true,
+  "workspaces": true,
+  "devDependencies": {
+    "lerna": "^3.20.2"
+  }
+}
