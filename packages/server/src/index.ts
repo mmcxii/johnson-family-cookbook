@@ -5,8 +5,6 @@ import { createConnection } from "typeorm";
 
 import { PORT } from "./constants/envVariables";
 import { createSchema } from "./utils/createSchema";
-import { createMenusLoader } from "./utils/loaders/menusLoader";
-import { createMenuCoursesLoader } from "./utils/loaders/menuCoursesLoader";
 
 (async () => {
   await createConnection({
@@ -25,10 +23,6 @@ import { createMenuCoursesLoader } from "./utils/loaders/menuCoursesLoader";
   const schema = await createSchema();
   const apolloServer = new ApolloServer({
     schema,
-    context: () => ({
-      menusLoader: createMenusLoader(),
-      menuCoursesLoader: createMenuCoursesLoader(),
-    }),
   });
 
   apolloServer.applyMiddleware({ app, path: "/api/graphql" });
