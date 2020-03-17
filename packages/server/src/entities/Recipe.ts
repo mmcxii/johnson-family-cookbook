@@ -1,17 +1,19 @@
-import { ObjectType, Field, ID } from "type-graphql";
+import { ObjectType, Field, ID, Int } from "type-graphql";
 import {
   Entity,
   BaseEntity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   Column,
+  ManyToMany,
+  JoinTable,
+  OneToMany,
 } from "typeorm";
 
 import { RecipeCategory } from "../types/Recipe";
 import { User } from "./User";
 import { RecipeIngredient } from "./RecipeIngredient";
 import { RecipeComment } from "./RecipeComment";
-import { Menu } from "./Menu";
 
 @ObjectType()
 @Entity("recipes")
@@ -39,10 +41,6 @@ export class Recipe extends BaseEntity {
   @Column({ type: "enum", enum: RecipeCategory })
   category: RecipeCategory;
 
-  @Field(() => [RecipeIngredient])
-  @Column()
-  ingredients: RecipeIngredient[]; // TODO: Add relation
-
   @Field(() => User)
   @Column()
   createdBy: User;
@@ -64,29 +62,41 @@ export class Recipe extends BaseEntity {
 
   /* Begin Relational columns */
   // User relations
-  // TODO: Add User relations
   @Field(() => [User])
-  @Column()
+  @ManyToMany(
+    () => User,
+    (u) => u.favorites,
+  ) // Relationship owned by User
   favoritedBy: User[];
 
-  @Field(() => [User])
-  @Column()
+  @ManyToMany(() => User)
+  @JoinTable()
   upvotedBy: User[];
+  @Field(() => Int)
+  async upvoteCount(): Promise<number> {
+    return this.upvotedBy.length;
+  }
 
-  @Field(() => [User])
-  @Column()
+  @ManyToMany(() => User)
+  @JoinTable()
   downvotedBy: User[];
+  @Field(() => Int)
+  async downvoteCount(): Promise<number> {
+    return this.downvotedBy.length;
+  }
+
+  // RecipeIngredient relations
+  @Field(() => [RecipeIngredient])
+  @ManyToMany(() => RecipeIngredient)
+  @JoinTable()
+  ingredients: RecipeIngredient[];
 
   // RecipeComment relations
-  // TODO: Add relation
   @Field(() => [RecipeComment])
-  @Column()
+  @OneToMany(
+    () => RecipeComment,
+    (rc) => rc.recipe,
+  )
   comments: RecipeComment[];
-
-  // Menu relations
-  // TODO: replace with replace with Menu and add relation
-  @Field(() => [Menu])
-  @Column()
-  inMenus: Menu[];
   /* End relational columns */
 }
