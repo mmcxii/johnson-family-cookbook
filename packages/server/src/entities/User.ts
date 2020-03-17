@@ -13,6 +13,8 @@ import {
   UserPermissionLevel,
 } from "../types/User";
 
+import { Recipe } from "./Recipe";
+
 @ObjectType()
 @Entity("users")
 export class User extends BaseEntity {
@@ -75,22 +77,25 @@ export class User extends BaseEntity {
 
   /* Begin Relational Columns */
   // Recipe relations
+  // TODO: Add Recipe relation
   @Field()
   @Column()
-  favorites: any[]; // TODO: Replace with Recipe and Recipe relation
+  favorites: Recipe[];
 
   @Field()
   @Column()
-  postedRecipes: any[]; // TODO: Replace with Recipe and Recipe relation
+  postedRecipes: Recipe[];
 
   // RecipeComment relations
+  // TODO: Replace with RecipeComment and add relation
   @Field()
   @Column()
-  comments: any[]; // TODO: Replace with RecipeComment and RecipeComment relation
+  comments: any[];
 
   // Menu relations
+  // TODO: Replace with Menu and add relation
   @Field()
   @Column()
-  menus: any[]; // TODO: Replace with Menu and Menu relation
+  menus: any[];
   /* End Relational Columns */
 }

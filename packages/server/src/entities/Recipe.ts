@@ -59,8 +59,9 @@ export class Recipe extends BaseEntity {
   image?: string; // TODO: Store image in s3
   /* End optional Columns */
 
-  /* Begin relational columns */
+  /* Begin Relational columns */
   // User relations
+  // TODO: Add User relations
   @Field()
   @Column()
   favoritedBy: User[];
@@ -74,13 +75,15 @@ export class Recipe extends BaseEntity {
   downvotedBy: User[];
 
   // RecipeComment relations
+  // TODO: replace with replace with RecipeComment and add relation
   @Field()
   @Column()
-  comments: any[]; // TODO: replace with replace with RecipeComment and relation
+  comments: any[];
 
   // Menu relations
+  // TODO: replace with replace with Menu and add relation
   @Field()
   @Column()
-  inMenus: any[]; // TODO: replace with replace with Menu and relation
+  inMenus: any[];
   /* End relational columns */
 }
