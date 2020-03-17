@@ -10,7 +10,7 @@ import { Menu } from "../Menu";
 import { MenuCourse } from "../MenuCourse";
 
 @Entity("menu__menu_course")
-export class MenuMenuCourse extends BaseEntity {
+export class MenuToMenuCourse extends BaseEntity {
   /* Begin Reference Columns */
   @PrimaryColumn()
   menuId: number;
