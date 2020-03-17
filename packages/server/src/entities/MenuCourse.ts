@@ -4,7 +4,7 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToMany,
+  OneToMany,
 } from "typeorm";
 
 import { Recipe } from "./Recipe";
@@ -34,7 +34,7 @@ export class MenuCourse extends BaseEntity {
   /* End Optional Columns */
 
   /* Begin Relational Columns */
-  @ManyToMany(
+  @OneToMany(
     () => MenuMenuCourse,
     (mmc) => mmc.menu,
   )
