@@ -51,6 +51,5 @@ export class Menu extends BaseEntity {
     (mmc) => mmc.menuCourse,
   )
   menuCourseConnection: Promise<MenuMenuCourse[]>;
-
   /* End Relational Columns */
 }
