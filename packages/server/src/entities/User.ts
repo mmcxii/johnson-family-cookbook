@@ -14,6 +14,7 @@ import {
 } from "../types/User";
 
 import { Recipe } from "./Recipe";
+import { Menu } from "./Menu";
 
 @ObjectType()
 @Entity("users")
@@ -96,6 +97,6 @@ export class User extends BaseEntity {
   // TODO: Replace with Menu and add relation
   @Field()
   @Column()
-  menus: any[];
+  menus: Menu[];
   /* End Relational Columns */
 }
