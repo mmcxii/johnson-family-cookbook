@@ -7,6 +7,7 @@ import {
   Column,
   ManyToMany,
   JoinTable,
+  ManyToOne,
 } from "typeorm";
 
 import { User } from "./User";
@@ -31,7 +32,10 @@ export class Menu extends BaseEntity {
   name: string;
 
   @Field(() => User)
-  @Column()
+  @ManyToOne(
+    () => User,
+    (u) => u.menus,
+  )
   createdBy: User;
   /* End Columns needed to create entity */
 

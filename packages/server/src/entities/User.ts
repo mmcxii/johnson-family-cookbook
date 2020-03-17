@@ -5,6 +5,9 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  ManyToMany,
+  JoinTable,
+  OneToMany,
 } from "typeorm";
 
 import {
@@ -81,25 +84,36 @@ export class User extends BaseEntity implements UserRequiredValues {
 
   /* Begin Relational Columns */
   // Recipe relations
-  // TODO: Add Recipe relation
   @Field(() => [Recipe])
-  @Column()
+  @ManyToMany(
+    () => Recipe,
+    (r) => r.favoritedBy,
+  )
+  @JoinTable()
   favorites: Recipe[];
 
   @Field(() => [Recipe])
-  @Column()
+  @ManyToMany(
+    () => Recipe,
+    (r) => r.createdBy,
+  ) // Relationship owned by Recipe
   postedRecipes: Recipe[];
 
   // RecipeComment relations
-  // TODO: Add relation
   @Field(() => [RecipeComment])
-  @Column()
+  @OneToMany(
+    () => RecipeComment,
+    (rc) => rc.author,
+  )
   comments: RecipeComment[];
 
   // Menu relations
   // TODO: Add relation
   @Field(() => [Menu])
-  @Column()
+  @OneToMany(
+    () => Menu,
+    (m) => m.createdBy,
+  )
   menus: Menu[];
   /* End Relational Columns */
 }
