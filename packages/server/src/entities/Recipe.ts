@@ -41,8 +41,8 @@ export class Recipe extends BaseEntity {
     return this.directions.split("///");
   }
 
-  @Field(() => RecipeCategory)
-  @Column({ type: "enum", enum: RecipeCategory })
+  @Field(() => String)
+  @Column("text")
   category: RecipeCategory;
   /* End Columns needed to create entity */
 

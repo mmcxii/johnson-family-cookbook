@@ -33,20 +33,12 @@ export class User extends BaseEntity implements UserRequiredValues {
   @CreateDateColumn()
   joinedAt: Date;
 
-  @Field(() => UserConfirmationStatus)
-  @Column({
-    type: "enum",
-    enum: UserConfirmationStatus,
-    default: UserConfirmationStatus.NotConfirmed,
-  })
+  @Field(() => String)
+  @Column("text")
   _confirmationStatus: UserConfirmationStatus;
 
-  @Field(() => UserPermissionLevel)
-  @Column({
-    type: "enum",
-    enum: UserPermissionLevel,
-    default: UserPermissionLevel.User,
-  })
+  @Field(() => String)
+  @Column("text")
   _userPermissionLevel: UserPermissionLevel;
   /* End Generated Columns */
 
@@ -71,8 +63,8 @@ export class User extends BaseEntity implements UserRequiredValues {
   @Column()
   birthday: Date;
 
-  @Field(() => UserGender)
-  @Column({ type: "enum", enum: UserGender })
+  @Field(() => String)
+  @Column("text")
   gender: UserGender;
   /* End Columns needed to create entity */
 
