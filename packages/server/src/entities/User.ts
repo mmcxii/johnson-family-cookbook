@@ -11,6 +11,7 @@ import {
   UserGender,
   UserConfirmationStatus,
   UserPermissionLevel,
+  UserRequiredValues,
 } from "../types/User";
 
 import { Recipe } from "./Recipe";
@@ -19,7 +20,7 @@ import { RecipeComment } from "./RecipeComment";
 
 @ObjectType()
 @Entity("users")
-export class User extends BaseEntity {
+export class User extends BaseEntity implements UserRequiredValues {
   /* Begin Generated Columns */
   @Field(() => ID)
   @PrimaryGeneratedColumn()
@@ -59,6 +60,7 @@ export class User extends BaseEntity {
   @Column({ unique: true })
   email: string;
 
+  // Password is not accessable as a field
   @Column()
   password: string;
 
