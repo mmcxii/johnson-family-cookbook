@@ -9,7 +9,7 @@ import {
 
 import { Recipe } from "./Recipe";
 import { Menu } from "./Menu";
-import { MenuMenuCourse } from "./relations/Menu-MenuCourse";
+import { MenuToMenuCourse } from "./relations/MenuToMenuCourse";
 import { JfcbContext } from "../utils/JfcbContext";
 
 @ObjectType()
@@ -35,10 +35,10 @@ export class MenuCourse extends BaseEntity {
 
   /* Begin Relational Columns */
   @OneToMany(
-    () => MenuMenuCourse,
+    () => MenuToMenuCourse,
     (mmc) => mmc.menu,
   )
-  menuConnection: Promise<MenuMenuCourse[]>;
+  menuConnection: Promise<MenuToMenuCourse[]>;
 
   @Field(() => [Menu])
   async usedInMenus(@Ctx() { menusLoader }: JfcbContext): Promise<Menu[]> {

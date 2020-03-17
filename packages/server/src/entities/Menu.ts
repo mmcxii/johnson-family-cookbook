@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 
 import { User } from "./User";
-import { MenuMenuCourse } from "./relations/Menu-MenuCourse";
+import { MenuToMenuCourse } from "./relations/MenuToMenuCourse";
 import { JfcbContext } from "../utils/JfcbContext";
 import { MenuCourse } from "./MenuCourse";
 
@@ -49,10 +49,10 @@ export class Menu extends BaseEntity {
   /* Begin Relational Columns */
   // MenuCourse Connection
   @OneToMany(
-    () => MenuMenuCourse,
+    () => MenuToMenuCourse,
     (mmc) => mmc.menuCourse,
   )
-  menuCourseConnection: Promise<MenuMenuCourse[]>;
+  menuCourseConnection: Promise<MenuToMenuCourse[]>;
 
   @Field()
   async courses(

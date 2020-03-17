@@ -1,13 +1,13 @@
 import DataLoader from "dataloader";
 import { In } from "typeorm";
 
-import { MenuMenuCourse } from "../../entities/relations/Menu-MenuCourse";
+import { MenuToMenuCourse } from "../../entities/relations/MenuToMenuCourse";
 import { MenuCourse } from "../../entities/MenuCourse";
 
 const batchMenuCourses = async (menuIds: number[]) => {
   // Access Menu & MenuCourse join table and find
   // all matches for passed in array of menuIds
-  const menuMenuCourses = await MenuMenuCourse.find({
+  const menuMenuCourses = await MenuToMenuCourse.find({
     join: {
       alias: "menuMenuCourse",
       innerJoinAndSelect: {
