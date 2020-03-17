@@ -2,7 +2,7 @@ import {
   Entity,
   BaseEntity,
   PrimaryColumn,
-  ManyToMany,
+  ManyToOne,
   JoinColumn,
 } from "typeorm";
 
@@ -20,7 +20,7 @@ export class MenuMenuCourse extends BaseEntity {
   /* End Reference Columns */
 
   /* Begin Join Columns */
-  @ManyToMany(
+  @ManyToOne(
     () => Menu,
     (m) => m.menuCourseConnection,
     { primary: true },
@@ -28,7 +28,7 @@ export class MenuMenuCourse extends BaseEntity {
   @JoinColumn({ name: "menuId" })
   menu: Promise<Menu>;
 
-  @ManyToMany(
+  @ManyToOne(
     () => MenuCourse,
     (mc) => mc.menuConnection,
     { primary: true },
