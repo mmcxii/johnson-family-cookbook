@@ -6,7 +6,9 @@
   "author": "Nich Secord",
   "license": "MIT",
   "private": true,
-  "workspaces": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "lerna": "^3.20.2"
   }
