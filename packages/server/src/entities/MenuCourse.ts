@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToMany,
+  JoinTable,
 } from "typeorm";
 
 import { Recipe } from "./Recipe";
@@ -19,12 +20,6 @@ export class MenuCourse extends BaseEntity {
   id: number;
   /* End Generated Columns */
 
-  /* Begin Columns needed to create entity */
-  @Field(() => [Recipe])
-  @Column()
-  dishes: Recipe[];
-  /* End Columns needed to create entity */
-
   /* Begin Optional Columns */
   @Field()
   @Column({ nullable: true })
@@ -32,11 +27,17 @@ export class MenuCourse extends BaseEntity {
   /* End Optional Columns */
 
   /* Begin Relational Columns */
+  // Menu Relation
   @Field(() => [Menu])
   @ManyToMany(
     () => Menu,
     (m) => m.courses,
-  )
+  ) // Relationship owned by Menu
   usedInMenus: Menu[];
+
+  @Field(() => [Recipe])
+  @ManyToMany(() => Recipe)
+  @JoinTable()
+  dishes: Recipe[];
   /* End Relational Columns */
 }
