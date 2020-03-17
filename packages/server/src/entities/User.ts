@@ -29,7 +29,7 @@ export class User extends BaseEntity {
   @Column({
     type: "enum",
     enum: UserConfirmationStatus,
-    default: UserConfirmationStatus.NOT_CONFIRMED,
+    default: UserConfirmationStatus.NotConfirmed,
   })
   _confirmationStatus: UserConfirmationStatus;
 
@@ -37,7 +37,7 @@ export class User extends BaseEntity {
   @Column({
     type: "enum",
     enum: UserPermissionLevel,
-    default: UserPermissionLevel.USER,
+    default: UserPermissionLevel.User,
   })
   _userPermissionLevel: UserPermissionLevel;
   /* End Generated Columns */

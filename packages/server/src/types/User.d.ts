@@ -4,12 +4,12 @@ export enum UserGender {
 }
 
 export enum UserConfirmationStatus {
-  NOT_CONFIRMED = "NOT_CONFIRMED",
-  CONFIRMED = "CONFIRMED",
+  NotConfirmed = "NOT_CONFIRMED",
+  Confirmed = "CONFIRMED",
 }
 
 export enum UserPermissionLevel {
-  USER = "USER",
-  ADMIN = "ADMIN",
-  GUEST = "GUEST",
+  User = "USER",
+  Admin = "ADMIN",
+  Guest = "GUEST",
 }
