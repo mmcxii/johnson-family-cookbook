@@ -33,7 +33,7 @@ const batchMenus = async (menuCourseIds: number[]) => {
     }
   });
 
-  // Return an array of the used menuCourseIds
+  // Return an array of the used menus
   return menuCourseIds.map((menuCourseId) => menuCourseIdToMenus[menuCourseId]);
 };
 

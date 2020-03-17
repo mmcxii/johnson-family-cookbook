@@ -6,6 +6,7 @@ import { createConnection } from "typeorm";
 import { PORT } from "./constants/envVariables";
 import { createSchema } from "./utils/createSchema";
 import { createMenusLoader } from "./utils/loaders/menusLoader";
+import { createMenuCoursesLoader } from "./utils/loaders/menuCoursesLoader";
 
 (async () => {
   await createConnection({
@@ -26,6 +27,7 @@ import { createMenusLoader } from "./utils/loaders/menusLoader";
     schema,
     context: () => ({
       menusLoader: createMenusLoader(),
+      menuCoursesLoader: createMenuCoursesLoader(),
     }),
   });
 

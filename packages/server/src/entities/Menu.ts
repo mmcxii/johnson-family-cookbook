@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from "type-graphql";
+import { ObjectType, Field, ID, Ctx } from "type-graphql";
 import {
   Entity,
   BaseEntity,
@@ -10,6 +10,8 @@ import {
 
 import { User } from "./User";
 import { MenuMenuCourse } from "./relations/Menu-MenuCourse";
+import { JfcbContext } from "../utils/JfcbContext";
+import { MenuCourse } from "./MenuCourse";
 
 @ObjectType()
 @Entity("menus")
@@ -51,5 +53,12 @@ export class Menu extends BaseEntity {
     (mmc) => mmc.menuCourse,
   )
   menuCourseConnection: Promise<MenuMenuCourse[]>;
+
+  @Field()
+  async courses(
+    @Ctx() { menuCoursesLoader }: JfcbContext,
+  ): Promise<MenuCourse[]> {
+    return menuCoursesLoader.load(this.id);
+  }
   /* End Relational Columns */
 }
