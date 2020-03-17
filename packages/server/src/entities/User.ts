@@ -15,6 +15,7 @@ import {
 
 import { Recipe } from "./Recipe";
 import { Menu } from "./Menu";
+import { RecipeComment } from "./RecipeComment";
 
 @ObjectType()
 @Entity("users")
@@ -88,13 +89,13 @@ export class User extends BaseEntity {
   postedRecipes: Recipe[];
 
   // RecipeComment relations
-  // TODO: Replace with RecipeComment and add relation
+  // TODO: Add relation
   @Field()
   @Column()
-  comments: any[];
+  comments: RecipeComment[];
 
   // Menu relations
-  // TODO: Replace with Menu and add relation
+  // TODO: Add relation
   @Field()
   @Column()
   menus: Menu[];

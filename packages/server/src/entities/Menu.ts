@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 
 import { User } from "./User";
+import { MenuCourse } from "./MenuCourse";
 
 @ObjectType()
 @Entity("menus")
@@ -33,7 +34,7 @@ export class Menu extends BaseEntity {
 
   @Field()
   @Column()
-  courses: any[]; // TODO: Replace MenuCourse and add relation
+  courses: MenuCourse[]; // TODO: Add relation
   /* End Columns needed to create entity */
 
   /* Begin Optional columns */
