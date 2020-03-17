@@ -11,25 +11,25 @@ enum Categories {
 }
 
 enum Beverages {
-  Alcoholic = "ALCOHOLIC",
-  NonAlcoholic = "NON_ALCOHOLIC",
+  Alcoholic = "BEVERAGE_ALCOHOLIC",
+  NonAlcoholic = "BEVERAGE_NON_ALCOHOLIC",
 }
 
 enum Entrees {
-  Beef = "BEEF",
-  Poultry = "POULTRY",
-  Pork = "PORK",
-  Seafood = "SEAFOOD",
-  Pasta = "PASTA",
-  SlowCooker = "SLOW_COOKER",
-  Other = "OTHER",
+  Beef = "ENTREE_BEEF",
+  Poultry = "ENTREE_POULTRY",
+  Pork = "ENTREE_PORK",
+  Seafood = "ENTREE_SEAFOOD",
+  Pasta = "ENTREE_PASTA",
+  SlowCooker = "ENTREE_SLOW_COOKER",
+  Other = "ENTREE_OTHER",
 }
 
 enum Desserts {
-  Cookies = "COOKIES",
-  Cake = "CAKE",
-  Pie = "PIE",
-  Other = "OTHER",
+  Cookies = "DESSERT_COOKIES",
+  Cake = "DESSERT_CAKE",
+  Pie = "DESSERT_PIE",
+  Other = "DESSERT_OTHER",
 }
 
 export const RecipeCategory = {
