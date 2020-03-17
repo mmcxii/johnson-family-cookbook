@@ -5,8 +5,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "build": "tsc",
     "lint:fix": "eslint src/**/* --fix",
     "start:dev": "tsnd ./src/index.ts --respawn",
+    "start:prod": "node ./dist/index.js",
     "validate": "lint:fix"
   },
   "dependencies": {
