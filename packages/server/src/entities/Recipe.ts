@@ -8,6 +8,7 @@ import {
   ManyToMany,
   JoinTable,
   OneToMany,
+  ManyToOne,
 } from "typeorm";
 
 import { RecipeCategory } from "../types/Recipe";
@@ -33,17 +34,16 @@ export class Recipe extends BaseEntity {
   @Column()
   name: string;
 
-  @Field(() => [String])
   @Column()
-  directions: string[];
+  directions: string;
+  @Field(() => [String])
+  async returnDirections(): Promise<string[]> {
+    return this.directions.split("///");
+  }
 
   @Field(() => RecipeCategory)
   @Column({ type: "enum", enum: RecipeCategory })
   category: RecipeCategory;
-
-  @Field(() => User)
-  @Column()
-  createdBy: User;
   /* End Columns needed to create entity */
 
   /* Begin optional Columns */
@@ -51,9 +51,12 @@ export class Recipe extends BaseEntity {
   @Column({ nullable: true })
   description?: string;
 
-  @Field(() => [String])
   @Column({ nullable: true })
-  notes?: string[];
+  notes?: string;
+  @Field(() => [String])
+  async returnNotes(): Promise<string[] | null> {
+    return this.notes ? this.notes.split("///") : null;
+  }
 
   @Field()
   @Column({ nullable: true })
@@ -62,6 +65,13 @@ export class Recipe extends BaseEntity {
 
   /* Begin Relational columns */
   // User relations
+  @Field(() => User)
+  @ManyToOne(
+    () => User,
+    (u) => u.postedRecipes,
+  )
+  createdBy: User;
+
   @Field(() => [User])
   @ManyToMany(
     () => User,

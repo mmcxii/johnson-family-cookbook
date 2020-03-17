@@ -93,10 +93,10 @@ export class User extends BaseEntity implements UserRequiredValues {
   favorites: Recipe[];
 
   @Field(() => [Recipe])
-  @ManyToMany(
+  @OneToMany(
     () => Recipe,
     (r) => r.createdBy,
-  ) // Relationship owned by Recipe
+  )
   postedRecipes: Recipe[];
 
   // RecipeComment relations
