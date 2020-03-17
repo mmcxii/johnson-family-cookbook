@@ -9,6 +9,8 @@ import {
 
 import { RecipeCategory } from "../types/Recipe";
 import { User } from "./User";
+import { RecipeIngredient } from "./RecipeIngredient";
+import { RecipeComment } from "./RecipeComment";
 
 @ObjectType()
 @Entity("recipes")
@@ -38,7 +40,7 @@ export class Recipe extends BaseEntity {
 
   @Field()
   @Column()
-  ingredients: any[]; // TODO: Replace with RecipeIngredient and relation
+  ingredients: RecipeIngredient[]; // TODO: Add relation
 
   @Field()
   @Column()
@@ -75,10 +77,10 @@ export class Recipe extends BaseEntity {
   downvotedBy: User[];
 
   // RecipeComment relations
-  // TODO: replace with replace with RecipeComment and add relation
+  // TODO: Add relation
   @Field()
   @Column()
-  comments: any[];
+  comments: RecipeComment[];
 
   // Menu relations
   // TODO: replace with replace with Menu and add relation

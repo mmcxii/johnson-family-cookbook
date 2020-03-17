@@ -5,7 +5,7 @@ import { Recipe } from "./Recipe";
 
 @ObjectType()
 @Entity("recipe_ingredients")
-export class RecipeIngredients extends BaseEntity {
+export class RecipeIngredient extends BaseEntity {
   /* Begin Generated Columns */
   @Field(() => ID)
   @PrimaryGeneratedColumn()
