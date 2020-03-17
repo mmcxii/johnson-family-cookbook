@@ -21,6 +21,7 @@ module.exports = {
     "@typescript-eslint/ban-ts-ignore": 0,
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/semi": ["error"],
+    "@typescript-eslint/no-non-null-assertion": 0,
   },
   parser: "@typescript-eslint/parser",
 };

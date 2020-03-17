@@ -16,6 +16,15 @@ export enum UserPermissionLevel {
   Guest = "GUEST",
 }
 
+export interface UserRequiredValues {
+  firstName: string;
+  lastName: string;
+  password: string;
+  email: string;
+  birthday: Date;
+  gender: UserGender;
+}
+
 registerEnumType(UserGender, {
   name: "UserGender",
 });

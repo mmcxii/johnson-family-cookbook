@@ -16,6 +16,7 @@ import { createMenusLoader } from "./utils/loaders/menusLoader";
     password: "postgres",
     port: 5432,
     synchronize: true,
+    entities: [__dirname + "/entities/**/{,!(__test__)}/*.{t,j}s"],
   }).then((db) => {
     console.log(`Established connection with database: ${db.name}`);
   });
