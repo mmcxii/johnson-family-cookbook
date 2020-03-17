@@ -6,6 +6,9 @@ import { createConnection } from "typeorm";
 import { PORT } from "./constants/envVariables";
 import { createSchema } from "./utils/createSchema";
 
+import { Menu } from "./entities/Menu";
+import { MenuCourse } from "./entities/MenuCourse";
+
 (async () => {
   await createConnection({
     name: "default",
@@ -15,7 +18,7 @@ import { createSchema } from "./utils/createSchema";
     password: "postgres",
     port: 5432,
     synchronize: true,
-    entities: [__dirname + "/entities/**/{,!(__test__)}/*.{t,j}s"],
+    entities: [Menu, MenuCourse],
   }).then((db) => {
     console.log(`Established connection with database: ${db.name}`);
   });

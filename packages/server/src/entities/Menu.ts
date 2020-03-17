@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   Column,
   ManyToMany,
+  JoinTable,
 } from "typeorm";
 
 import { User } from "./User";
@@ -40,7 +41,7 @@ export class Menu extends BaseEntity {
   description?: string;
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   image?: string; // TODO: Save image in s3
   /* End Optional Columns */
 
@@ -51,6 +52,7 @@ export class Menu extends BaseEntity {
     () => MenuCourse,
     (mc) => mc.usedInMenus,
   )
+  @JoinTable()
   courses: MenuCourse[];
   /* End Relational Columns */
 }
