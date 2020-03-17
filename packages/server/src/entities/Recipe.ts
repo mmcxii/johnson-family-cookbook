@@ -31,19 +31,19 @@ export class Recipe extends BaseEntity {
   @Column()
   name: string;
 
-  @Field()
+  @Field(() => [String])
   @Column()
   directions: string[];
 
-  @Field()
+  @Field(() => RecipeCategory)
   @Column({ type: "enum", enum: RecipeCategory })
   category: RecipeCategory;
 
-  @Field()
+  @Field(() => [RecipeIngredient])
   @Column()
   ingredients: RecipeIngredient[]; // TODO: Add relation
 
-  @Field()
+  @Field(() => User)
   @Column()
   createdBy: User;
   /* End Columns needed to create entity */
@@ -53,7 +53,7 @@ export class Recipe extends BaseEntity {
   @Column({ nullable: true })
   description?: string;
 
-  @Field()
+  @Field(() => [String])
   @Column({ nullable: true })
   notes?: string[];
 
@@ -65,27 +65,27 @@ export class Recipe extends BaseEntity {
   /* Begin Relational columns */
   // User relations
   // TODO: Add User relations
-  @Field()
+  @Field(() => [User])
   @Column()
   favoritedBy: User[];
 
-  @Field()
+  @Field(() => [User])
   @Column()
   upvotedBy: User[];
 
-  @Field()
+  @Field(() => [User])
   @Column()
   downvotedBy: User[];
 
   // RecipeComment relations
   // TODO: Add relation
-  @Field()
+  @Field(() => [RecipeComment])
   @Column()
   comments: RecipeComment[];
 
   // Menu relations
   // TODO: replace with replace with Menu and add relation
-  @Field()
+  @Field(() => [Menu])
   @Column()
   inMenus: Menu[];
   /* End relational columns */

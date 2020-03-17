@@ -1,8 +1,15 @@
 import { ObjectType, Field, ID } from "type-graphql";
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  BaseEntity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+} from "typeorm";
 
 import { Recipe } from "./Recipe";
 import { Menu } from "./Menu";
+import { MenuMenuCourse } from "./relations/Menu-MenuCourse";
 
 @ObjectType()
 @Entity("menu_courses")
@@ -14,11 +21,11 @@ export class MenuCourse extends BaseEntity {
   /* End Generated Columns */
 
   /* Begin Columns needed to create entity */
-  @Field()
+  @Field(() => [Recipe])
   @Column()
   dishes: Recipe[];
 
-  @Field()
+  @Field(() => [Menu])
   @Column()
   usedInMenus: Menu[];
   /* End Columns needed to create entity */
@@ -28,4 +35,12 @@ export class MenuCourse extends BaseEntity {
   @Column({ nullable: true })
   name?: string;
   /* End Optional Columns */
+
+  /* Begin Relational Columns */
+  @ManyToMany(
+    () => MenuMenuCourse,
+    (mmc) => mmc.menu,
+  )
+  menuConnection: Promise<MenuMenuCourse[]>;
+  /* End Relational Columns */
 }

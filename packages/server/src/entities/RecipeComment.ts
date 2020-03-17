@@ -28,11 +28,11 @@ export class RecipeComment extends BaseEntity {
   @Column()
   message: string;
 
-  @Field()
+  @Field(() => User)
   @Column()
   author: User;
 
-  @Field()
+  @Field(() => Recipe)
   @Column()
   recipe: Recipe;
   /* End Columns needed to create entity */

@@ -28,7 +28,7 @@ export class RecipeIngredient extends BaseEntity {
 
   /* Begin Relational Columns */
   // TODO: Add Recipe relation
-  @Field()
+  @Field(() => [Recipe])
   @Column()
   usedInRecipes: Recipe[];
   /* End Relational Columns */

@@ -5,10 +5,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   Column,
+  ManyToMany,
 } from "typeorm";
 
 import { User } from "./User";
-import { MenuCourse } from "./MenuCourse";
+import { MenuMenuCourse } from "./relations/Menu-MenuCourse";
 
 @ObjectType()
 @Entity("menus")
@@ -28,13 +29,9 @@ export class Menu extends BaseEntity {
   @Column()
   name: string;
 
-  @Field()
+  @Field(() => User)
   @Column()
   createdBy: User;
-
-  @Field()
-  @Column()
-  courses: MenuCourse[]; // TODO: Add relation
   /* End Columns needed to create entity */
 
   /* Begin Optional columns */
@@ -46,4 +43,14 @@ export class Menu extends BaseEntity {
   @Column()
   image?: string; // TODO: Save image in s3
   /* End Optional Columns */
+
+  /* Begin Relational Columns */
+  // MenuCourse Connection
+  @ManyToMany(
+    () => MenuMenuCourse,
+    (mmc) => mmc.menuCourse,
+  )
+  menuCourseConnection: Promise<MenuMenuCourse[]>;
+
+  /* End Relational Columns */
 }

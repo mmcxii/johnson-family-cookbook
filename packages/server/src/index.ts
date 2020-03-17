@@ -4,11 +4,17 @@ import { ApolloServer } from "apollo-server-express";
 
 import { PORT } from "./constants/envVariables";
 import { createSchema } from "./utils/createSchema";
+import { createMenusLoader } from "./utils/loaders/menusLoader";
 
 (async () => {
   const app = express();
   const schema = await createSchema();
-  const apolloServer = new ApolloServer({ schema });
+  const apolloServer = new ApolloServer({
+    schema,
+    context: () => ({
+      menusLoader: createMenusLoader(),
+    }),
+  });
 
   apolloServer.applyMiddleware({ app, path: "/api/graphql" });
 

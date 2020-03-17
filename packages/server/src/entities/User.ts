@@ -29,7 +29,7 @@ export class User extends BaseEntity {
   @CreateDateColumn()
   joinedAt: Date;
 
-  @Field()
+  @Field(() => UserConfirmationStatus)
   @Column({
     type: "enum",
     enum: UserConfirmationStatus,
@@ -37,7 +37,7 @@ export class User extends BaseEntity {
   })
   _confirmationStatus: UserConfirmationStatus;
 
-  @Field()
+  @Field(() => UserPermissionLevel)
   @Column({
     type: "enum",
     enum: UserPermissionLevel,
@@ -66,7 +66,7 @@ export class User extends BaseEntity {
   @Column()
   birthday: Date;
 
-  @Field()
+  @Field(() => UserGender)
   @Column({ type: "enum", enum: UserGender })
   gender: UserGender;
   /* End Columns needed to create entity */
@@ -80,23 +80,23 @@ export class User extends BaseEntity {
   /* Begin Relational Columns */
   // Recipe relations
   // TODO: Add Recipe relation
-  @Field()
+  @Field(() => [Recipe])
   @Column()
   favorites: Recipe[];
 
-  @Field()
+  @Field(() => [Recipe])
   @Column()
   postedRecipes: Recipe[];
 
   // RecipeComment relations
   // TODO: Add relation
-  @Field()
+  @Field(() => [RecipeComment])
   @Column()
   comments: RecipeComment[];
 
   // Menu relations
   // TODO: Add relation
-  @Field()
+  @Field(() => [Menu])
   @Column()
   menus: Menu[];
   /* End Relational Columns */

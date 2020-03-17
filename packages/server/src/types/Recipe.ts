@@ -1,3 +1,5 @@
+import { registerEnumType } from "type-graphql";
+
 enum Categories {
   Appetizer = "APPETIZER",
   Bread = "BREAD",
@@ -37,3 +39,8 @@ export const RecipeCategory = {
   Desserts,
 };
 export type RecipeCategory = typeof RecipeCategory;
+
+registerEnumType(RecipeCategory, {
+  name: "RecipeCategory",
+  description: "All possible categories a recipe can be filed in",
+});
