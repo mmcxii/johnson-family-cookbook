@@ -1,0 +1,39 @@
+import {
+  Entity,
+  BaseEntity,
+  PrimaryColumn,
+  ManyToMany,
+  JoinColumn,
+} from "typeorm";
+
+import { Menu } from "../Menu";
+import { MenuCourse } from "../MenuCourse";
+
+@Entity("menu__menu_course")
+export class MenuMenuCourse extends BaseEntity {
+  /* Begin Reference Columns */
+  @PrimaryColumn()
+  menuId: number;
+
+  @PrimaryColumn()
+  menuCourseId: number;
+  /* End Reference Columns */
+
+  /* Begin Join Columns */
+  @ManyToMany(
+    () => Menu,
+    (m) => m.menuCourseConnection,
+    { primary: true },
+  )
+  @JoinColumn({ name: "menuId" })
+  menu: Promise<Menu>;
+
+  @ManyToMany(
+    () => MenuCourse,
+    (mc) => mc.menuConnection,
+    { primary: true },
+  )
+  @JoinColumn({ name: "menuCourseId" })
+  menuCourse: Promise<MenuCourse>;
+  /* End Join Columns */
+}
