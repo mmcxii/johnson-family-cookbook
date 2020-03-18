@@ -10,12 +10,13 @@ import {
   ManyToOne,
 } from "typeorm";
 
+import { MenuRequiredValues } from "../types/menu.types";
 import { User } from "./User";
 import { MenuCourse } from "./MenuCourse";
 
 @ObjectType()
 @Entity("menus")
-export class Menu extends BaseEntity {
+export class Menu extends BaseEntity implements MenuRequiredValues {
   /*
     Begin generated values
   */
