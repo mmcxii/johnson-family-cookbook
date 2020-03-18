@@ -14,7 +14,9 @@ import { Recipe } from "./Recipe";
 @ObjectType()
 @Entity("recipe_comments")
 export class RecipeComment extends BaseEntity {
-  /* Begin Generated Columns */
+  /*
+    Begin generated values
+  */
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
@@ -22,15 +24,18 @@ export class RecipeComment extends BaseEntity {
   @Field()
   @CreateDateColumn()
   createdAt: Date;
-  /* End Generated Columns */
+  /*
+    End generated values
+  */
 
-  /* Begin Columns needed to create entity */
+  /*
+    Begin required values
+  */
   @Field()
   @Column()
   message: string;
-  /* End Columns needed to create entity */
 
-  /* Begin Columns Relational Columns */
+  /* Begin relational values */
   @Field(() => User)
   @ManyToOne(
     () => User,
@@ -44,5 +49,9 @@ export class RecipeComment extends BaseEntity {
     (r) => r.comments,
   )
   recipe: Recipe;
-  /* End Columns Relational Columns */
+  /* End relational values */
+
+  /*
+    End required values
+  */
 }

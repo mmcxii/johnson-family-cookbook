@@ -14,30 +14,48 @@ import { Menu } from "./Menu";
 @ObjectType()
 @Entity("menu_courses")
 export class MenuCourse extends BaseEntity {
-  /* Begin Generated Columns */
+  /*
+    Begin generated values
+  */
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
-  /* End Generated Columns */
 
-  /* Begin Optional Columns */
-  @Field()
-  @Column({ nullable: true })
-  name?: string;
-  /* End Optional Columns */
-
-  /* Begin Relational Columns */
-  // Menu Relation
+  /* Begin relational values */
   @Field(() => [Menu])
   @ManyToMany(
     () => Menu,
     (m) => m.courses,
   ) // Relationship owned by Menu
   usedInMenus: Menu[];
+  /* End relational values */
 
+  /*
+    End generated values
+  */
+
+  /*
+    Begin required values
+  */
+
+  /* Begin relational values */
   @Field(() => [Recipe])
   @ManyToMany(() => Recipe)
   @JoinTable()
   dishes: Recipe[];
-  /* End Relational Columns */
+  /* End relational values */
+
+  /*
+    End required values
+  */
+
+  /*
+    Begin optional values
+  */
+  @Field()
+  @Column({ nullable: true })
+  name?: string;
+  /*
+    End optional values
+  */
 }

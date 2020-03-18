@@ -12,13 +12,29 @@ import { Recipe } from "./Recipe";
 @ObjectType()
 @Entity("recipe_ingredients")
 export class RecipeIngredient extends BaseEntity {
-  /* Begin Generated Columns */
+  /*
+    Begin generated values
+  */
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
-  /* End Generated Columns */
 
-  /* Begin Columns needed to create entity */
+  /* Begin Relational values */
+  @Field(() => [Recipe])
+  @ManyToMany(
+    () => Recipe,
+    (r) => r.ingredients,
+  ) // Relationship owned by Recipe
+  usedInRecipes: Recipe[];
+  /* End Relational values */
+
+  /*
+    End generated values
+  */
+
+  /*
+    Begin required values
+  */
   @Field(() => Float)
   @Column()
   quantity: number;
@@ -30,14 +46,7 @@ export class RecipeIngredient extends BaseEntity {
   @Field()
   @Column()
   name: string;
-  /* End Columns needed to create entity */
-
-  /* Begin Relational Columns */
-  @Field(() => [Recipe])
-  @ManyToMany(
-    () => Recipe,
-    (r) => r.ingredients,
-  ) // Relationship owned by Recipe
-  usedInRecipes: Recipe[];
-  /* End Relational Columns */
+  /*
+    End required values
+  */
 }

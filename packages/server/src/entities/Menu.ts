@@ -16,7 +16,9 @@ import { MenuCourse } from "./MenuCourse";
 @ObjectType()
 @Entity("menus")
 export class Menu extends BaseEntity {
-  /* Begin Generated Columns */
+  /*
+    Begin generated values
+  */
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
@@ -24,33 +26,25 @@ export class Menu extends BaseEntity {
   @Field()
   @CreateDateColumn()
   createdAt: Date;
-  /* End Generated Columns */
+  /*
+    End generated values
+  */
 
-  /* Begin Columns needed to create entity */
+  /*
+    Begin required values
+  */
   @Field()
   @Column()
   name: string;
 
+  /* Begin required relational values */
   @Field(() => User)
   @ManyToOne(
     () => User,
     (u) => u.menus,
   )
   createdBy: User;
-  /* End Columns needed to create entity */
 
-  /* Begin Optional columns */
-  @Field()
-  @Column({ nullable: true })
-  description?: string;
-
-  @Field()
-  @Column({ nullable: true })
-  image?: string; // TODO: Save image in s3
-  /* End Optional Columns */
-
-  /* Begin Relational Columns */
-  // MenuCourse Connection
   @Field(() => [MenuCourse])
   @ManyToMany(
     () => MenuCourse,
@@ -58,5 +52,23 @@ export class Menu extends BaseEntity {
   )
   @JoinTable()
   courses: MenuCourse[];
-  /* End Relational Columns */
+  /* End required relational values */
+
+  /*
+    End required values
+  */
+
+  /*
+    Begin optional values
+  */
+  @Field()
+  @Column({ nullable: true })
+  description?: string;
+
+  @Field()
+  @Column({ nullable: true })
+  image?: string; // TODO: Save image in s3
+  /*
+    End optional values
+  */
 }

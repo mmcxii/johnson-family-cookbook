@@ -24,7 +24,9 @@ import { RecipeComment } from "./RecipeComment";
 @ObjectType()
 @Entity("users")
 export class User extends BaseEntity implements UserRequiredValues {
-  /* Begin Generated Columns */
+  /*
+    Begin generated values 
+  */
   @Field(() => ID, { nullable: true })
   @PrimaryGeneratedColumn()
   id: number;
@@ -40,9 +42,45 @@ export class User extends BaseEntity implements UserRequiredValues {
   @Field(() => String)
   @Column("text", { default: "USER" })
   _userPermissionLevel: UserPermissionLevel;
-  /* End Generated Columns */
 
-  /* Begin Columns needed to create entity */
+  /* Begin relational values */
+  @Field(() => [Recipe], { defaultValue: [] })
+  @ManyToMany(
+    () => Recipe,
+    (r) => r.favoritedBy,
+  )
+  @JoinTable()
+  favorites: Recipe[];
+
+  @Field(() => [Recipe], { defaultValue: [] })
+  @OneToMany(
+    () => Recipe,
+    (r) => r.createdBy,
+  )
+  postedRecipes: Recipe[];
+
+  @Field(() => [RecipeComment], { defaultValue: [] })
+  @OneToMany(
+    () => RecipeComment,
+    (rc) => rc.author,
+  )
+  comments: RecipeComment[];
+
+  @Field(() => [Menu], { defaultValue: [] })
+  @OneToMany(
+    () => Menu,
+    (m) => m.createdBy,
+  )
+  menus: Menu[];
+  /* End relational values */
+
+  /*
+    End generated values 
+  */
+
+  /*
+    Begin required values
+  */
   @Field()
   @Column()
   firstName: string;
@@ -66,45 +104,17 @@ export class User extends BaseEntity implements UserRequiredValues {
   @Field(() => String)
   @Column("text")
   gender: UserGender;
-  /* End Columns needed to create entity */
+  /*
+    End required values
+  */
 
-  /* Begin optional Columns */
+  /*
+    Begin optional values
+  */
   @Field()
   @Column({ nullable: true })
   image?: string; // TODO: Save user images in S3
-  /* End optional Columns */
-
-  /* Begin Relational Columns */
-  // Recipe relations
-  @Field(() => [Recipe], { defaultValue: [] })
-  @ManyToMany(
-    () => Recipe,
-    (r) => r.favoritedBy,
-  )
-  @JoinTable()
-  favorites: Recipe[];
-
-  @Field(() => [Recipe], { defaultValue: [] })
-  @OneToMany(
-    () => Recipe,
-    (r) => r.createdBy,
-  )
-  postedRecipes: Recipe[];
-
-  // RecipeComment relations
-  @Field(() => [RecipeComment], { defaultValue: [] })
-  @OneToMany(
-    () => RecipeComment,
-    (rc) => rc.author,
-  )
-  comments: RecipeComment[];
-
-  // Menu relations
-  @Field(() => [Menu], { defaultValue: [] })
-  @OneToMany(
-    () => Menu,
-    (m) => m.createdBy,
-  )
-  menus: Menu[];
-  /* End Relational Columns */
+  /*
+    End optional values
+  */
 }
