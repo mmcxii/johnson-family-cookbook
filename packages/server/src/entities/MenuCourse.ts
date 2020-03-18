@@ -8,12 +8,13 @@ import {
   JoinTable,
 } from "typeorm";
 
+import { MenuCourseRequiredValues } from "../types/menuCourse.types";
 import { Recipe } from "./Recipe";
 import { Menu } from "./Menu";
 
 @ObjectType()
 @Entity("menu_courses")
-export class MenuCourse extends BaseEntity {
+export class MenuCourse extends BaseEntity implements MenuCourseRequiredValues {
   /*
     Begin generated values
   */
