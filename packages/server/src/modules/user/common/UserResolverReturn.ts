@@ -1,6 +1,6 @@
 import { ObjectType, Field } from "type-graphql";
 
-import { ResolverReturnStatus } from "../../../types/Common";
+import { ResolverReturnStatus } from "../../../types/common.types";
 import { User } from "../../../entities/User";
 
 @ObjectType()

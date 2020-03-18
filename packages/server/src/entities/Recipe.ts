@@ -11,7 +11,7 @@ import {
   ManyToOne,
 } from "typeorm";
 
-import { RecipeCategory } from "../types/Recipe";
+import { RecipeCategory } from "../types/recipe.types";
 import { User } from "./User";
 import { RecipeIngredient } from "./RecipeIngredient";
 import { RecipeComment } from "./RecipeComment";

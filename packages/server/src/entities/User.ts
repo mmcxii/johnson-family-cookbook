@@ -15,7 +15,7 @@ import {
   UserConfirmationStatus,
   UserPermissionLevel,
   UserRequiredValues,
-} from "../types/User";
+} from "../types/user.types.";
 
 import { Recipe } from "./Recipe";
 import { Menu } from "./Menu";

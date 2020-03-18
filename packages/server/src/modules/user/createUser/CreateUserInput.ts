@@ -1,6 +1,6 @@
 import { InputType, Field } from "type-graphql";
 
-import { UserRequiredValues, UserGender } from "../../../types/User";
+import { UserRequiredValues, UserGender } from "../../../types/user.types.";
 
 @InputType()
 export class CreateUserInput implements UserRequiredValues {
