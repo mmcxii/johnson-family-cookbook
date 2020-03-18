@@ -1,10 +1,10 @@
 import { Resolver, Mutation, Arg } from "type-graphql";
-import bcrypt from "bcryptjs";
+// import bcrypt from "bcryptjs";
 
 import { UserResolverReturn } from "./common/UserResolverReturn";
 import { CreateUserInput } from "./createUser/CreateUserInput";
 import { User } from "../../entities/User";
-import { PASSWORD_HASH } from "../../constants/envVariables";
+// import { PASSWORD_HASH } from "../../constants/envVariables";
 
 @Resolver()
 export class CreateUserResolver {
@@ -23,12 +23,12 @@ export class CreateUserResolver {
     }
 
     /* Hash the user's password */
-    const hashedPassword = await bcrypt.hash(PASSWORD_HASH!, data.password);
+    // const hashedPassword = await bcrypt.hash(PASSWORD_HASH!, data.password);
 
     /* Confirm the account was created successfully */
     const user = await User.create({
       ...data,
-      password: hashedPassword, // Overwrite with the hashed password
+      // password: hashedPassword, // Overwrite with the hashed password
     }).save();
     if (!user) {
       return {

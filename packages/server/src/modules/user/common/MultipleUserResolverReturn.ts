@@ -4,13 +4,13 @@ import { ResolverReturnStatus } from "../../../types/Common";
 import { User } from "../../../entities/User";
 
 @ObjectType()
-export class UserResolverReturn {
+export class MultipleUserResolverReturn {
   @Field(() => String)
   _status: ResolverReturnStatus;
 
   @Field()
   message: string;
 
-  @Field(() => User, { nullable: true })
-  payload: User | null;
+  @Field(() => [User], { nullable: true })
+  payload: User[] | null;
 }
