@@ -47,9 +47,12 @@ export class Recipe extends BaseEntity {
   /* End Columns needed to create entity */
 
   /* Begin optional Columns */
-  @Field()
   @Column({ nullable: true })
   description?: string;
+  @Field(() => [String])
+  async returnDescription(): Promise<string[] | null> {
+    return this.description ? this.description.split("///") : null;
+  }
 
   @Column({ nullable: true })
   notes?: string;
@@ -72,7 +75,7 @@ export class Recipe extends BaseEntity {
   )
   createdBy: User;
 
-  @Field(() => [User])
+  @Field(() => [User], { defaultValue: [] })
   @ManyToMany(
     () => User,
     (u) => u.favorites,
@@ -82,7 +85,7 @@ export class Recipe extends BaseEntity {
   @ManyToMany(() => User)
   @JoinTable()
   upvotedBy: User[];
-  @Field(() => Int)
+  @Field(() => Int, { defaultValue: 0 })
   async upvoteCount(): Promise<number> {
     return this.upvotedBy.length;
   }
@@ -90,7 +93,7 @@ export class Recipe extends BaseEntity {
   @ManyToMany(() => User)
   @JoinTable()
   downvotedBy: User[];
-  @Field(() => Int)
+  @Field(() => Int, { defaultValue: 0 })
   async downvoteCount(): Promise<number> {
     return this.downvotedBy.length;
   }
@@ -102,7 +105,7 @@ export class Recipe extends BaseEntity {
   ingredients: RecipeIngredient[];
 
   // RecipeComment relations
-  @Field(() => [RecipeComment])
+  @Field(() => [RecipeComment], { defaultValue: [] })
   @OneToMany(
     () => RecipeComment,
     (rc) => rc.recipe,

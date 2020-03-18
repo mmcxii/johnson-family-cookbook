@@ -25,7 +25,7 @@ import { RecipeComment } from "./RecipeComment";
 @Entity("users")
 export class User extends BaseEntity implements UserRequiredValues {
   /* Begin Generated Columns */
-  @Field(() => ID)
+  @Field(() => ID, { nullable: true })
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -34,11 +34,11 @@ export class User extends BaseEntity implements UserRequiredValues {
   joinedAt: Date;
 
   @Field(() => String)
-  @Column("text")
+  @Column("text", { default: "NOT_CONFIRMED" })
   _confirmationStatus: UserConfirmationStatus;
 
   @Field(() => String)
-  @Column("text")
+  @Column("text", { default: "USER" })
   _userPermissionLevel: UserPermissionLevel;
   /* End Generated Columns */
 
@@ -70,13 +70,13 @@ export class User extends BaseEntity implements UserRequiredValues {
 
   /* Begin optional Columns */
   @Field()
-  @Column()
+  @Column({ nullable: true })
   image?: string; // TODO: Save user images in S3
   /* End optional Columns */
 
   /* Begin Relational Columns */
   // Recipe relations
-  @Field(() => [Recipe])
+  @Field(() => [Recipe], { defaultValue: [] })
   @ManyToMany(
     () => Recipe,
     (r) => r.favoritedBy,
@@ -84,7 +84,7 @@ export class User extends BaseEntity implements UserRequiredValues {
   @JoinTable()
   favorites: Recipe[];
 
-  @Field(() => [Recipe])
+  @Field(() => [Recipe], { defaultValue: [] })
   @OneToMany(
     () => Recipe,
     (r) => r.createdBy,
@@ -92,7 +92,7 @@ export class User extends BaseEntity implements UserRequiredValues {
   postedRecipes: Recipe[];
 
   // RecipeComment relations
-  @Field(() => [RecipeComment])
+  @Field(() => [RecipeComment], { defaultValue: [] })
   @OneToMany(
     () => RecipeComment,
     (rc) => rc.author,
@@ -100,8 +100,7 @@ export class User extends BaseEntity implements UserRequiredValues {
   comments: RecipeComment[];
 
   // Menu relations
-  // TODO: Add relation
-  @Field(() => [Menu])
+  @Field(() => [Menu], { defaultValue: [] })
   @OneToMany(
     () => Menu,
     (m) => m.createdBy,
