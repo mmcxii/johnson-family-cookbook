@@ -1,5 +1,11 @@
 import { ObjectType, Field, ID, Float } from "type-graphql";
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Entity,
+  BaseEntity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+} from "typeorm";
 
 import { Recipe } from "./Recipe";
 
@@ -27,9 +33,11 @@ export class RecipeIngredient extends BaseEntity {
   /* End Columns needed to create entity */
 
   /* Begin Relational Columns */
-  // TODO: Add Recipe relation
   @Field(() => [Recipe])
-  @Column()
+  @ManyToMany(
+    () => Recipe,
+    (r) => r.ingredients,
+  ) // Relationship owned by Recipe
   usedInRecipes: Recipe[];
   /* End Relational Columns */
 }

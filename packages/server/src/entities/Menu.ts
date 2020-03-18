@@ -1,16 +1,16 @@
-import { ObjectType, Field, ID, Ctx } from "type-graphql";
+import { ObjectType, Field, ID } from "type-graphql";
 import {
   Entity,
   BaseEntity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   Column,
-  OneToMany,
+  ManyToMany,
+  JoinTable,
+  ManyToOne,
 } from "typeorm";
 
 import { User } from "./User";
-import { MenuToMenuCourse } from "./relations/MenuToMenuCourse";
-import { JfcbContext } from "../utils/JfcbContext";
 import { MenuCourse } from "./MenuCourse";
 
 @ObjectType()
@@ -32,7 +32,10 @@ export class Menu extends BaseEntity {
   name: string;
 
   @Field(() => User)
-  @Column()
+  @ManyToOne(
+    () => User,
+    (u) => u.menus,
+  )
   createdBy: User;
   /* End Columns needed to create entity */
 
@@ -42,23 +45,18 @@ export class Menu extends BaseEntity {
   description?: string;
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   image?: string; // TODO: Save image in s3
   /* End Optional Columns */
 
   /* Begin Relational Columns */
   // MenuCourse Connection
-  @OneToMany(
-    () => MenuToMenuCourse,
-    (mmc) => mmc.menuCourse,
+  @Field(() => [MenuCourse])
+  @ManyToMany(
+    () => MenuCourse,
+    (mc) => mc.usedInMenus,
   )
-  menuCourseConnection: Promise<MenuToMenuCourse[]>;
-
-  @Field()
-  async courses(
-    @Ctx() { menuCoursesLoader }: JfcbContext,
-  ): Promise<MenuCourse[]> {
-    return menuCoursesLoader.load(this.id);
-  }
+  @JoinTable()
+  courses: MenuCourse[];
   /* End Relational Columns */
 }

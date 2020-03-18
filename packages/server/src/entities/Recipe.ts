@@ -1,17 +1,20 @@
-import { ObjectType, Field, ID } from "type-graphql";
+import { ObjectType, Field, ID, Int } from "type-graphql";
 import {
   Entity,
   BaseEntity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   Column,
+  ManyToMany,
+  JoinTable,
+  OneToMany,
+  ManyToOne,
 } from "typeorm";
 
 import { RecipeCategory } from "../types/Recipe";
 import { User } from "./User";
 import { RecipeIngredient } from "./RecipeIngredient";
 import { RecipeComment } from "./RecipeComment";
-import { Menu } from "./Menu";
 
 @ObjectType()
 @Entity("recipes")
@@ -31,31 +34,32 @@ export class Recipe extends BaseEntity {
   @Column()
   name: string;
 
+  @Column()
+  directions: string;
   @Field(() => [String])
-  @Column()
-  directions: string[];
+  async returnDirections(): Promise<string[]> {
+    return this.directions.split("///");
+  }
 
-  @Field(() => RecipeCategory)
-  @Column({ type: "enum", enum: RecipeCategory })
+  @Field(() => String)
+  @Column("text")
   category: RecipeCategory;
-
-  @Field(() => [RecipeIngredient])
-  @Column()
-  ingredients: RecipeIngredient[]; // TODO: Add relation
-
-  @Field(() => User)
-  @Column()
-  createdBy: User;
   /* End Columns needed to create entity */
 
   /* Begin optional Columns */
-  @Field()
   @Column({ nullable: true })
   description?: string;
-
   @Field(() => [String])
+  async returnDescription(): Promise<string[] | null> {
+    return this.description ? this.description.split("///") : null;
+  }
+
   @Column({ nullable: true })
-  notes?: string[];
+  notes?: string;
+  @Field(() => [String])
+  async returnNotes(): Promise<string[] | null> {
+    return this.notes ? this.notes.split("///") : null;
+  }
 
   @Field()
   @Column({ nullable: true })
@@ -64,29 +68,48 @@ export class Recipe extends BaseEntity {
 
   /* Begin Relational columns */
   // User relations
-  // TODO: Add User relations
-  @Field(() => [User])
-  @Column()
+  @Field(() => User)
+  @ManyToOne(
+    () => User,
+    (u) => u.postedRecipes,
+  )
+  createdBy: User;
+
+  @Field(() => [User], { defaultValue: [] })
+  @ManyToMany(
+    () => User,
+    (u) => u.favorites,
+  ) // Relationship owned by User
   favoritedBy: User[];
 
-  @Field(() => [User])
-  @Column()
+  @ManyToMany(() => User)
+  @JoinTable()
   upvotedBy: User[];
+  @Field(() => Int, { defaultValue: 0 })
+  async upvoteCount(): Promise<number> {
+    return this.upvotedBy.length;
+  }
 
-  @Field(() => [User])
-  @Column()
+  @ManyToMany(() => User)
+  @JoinTable()
   downvotedBy: User[];
+  @Field(() => Int, { defaultValue: 0 })
+  async downvoteCount(): Promise<number> {
+    return this.downvotedBy.length;
+  }
+
+  // RecipeIngredient relations
+  @Field(() => [RecipeIngredient])
+  @ManyToMany(() => RecipeIngredient)
+  @JoinTable()
+  ingredients: RecipeIngredient[];
 
   // RecipeComment relations
-  // TODO: Add relation
-  @Field(() => [RecipeComment])
-  @Column()
+  @Field(() => [RecipeComment], { defaultValue: [] })
+  @OneToMany(
+    () => RecipeComment,
+    (rc) => rc.recipe,
+  )
   comments: RecipeComment[];
-
-  // Menu relations
-  // TODO: replace with replace with Menu and add relation
-  @Field(() => [Menu])
-  @Column()
-  inMenus: Menu[];
   /* End relational columns */
 }

@@ -19,6 +19,6 @@ export class CreateUserInput implements UserRequiredValues {
   @Field()
   birthday: Date;
 
-  @Field(() => UserGender)
+  @Field(() => String)
   gender: UserGender;
 }
