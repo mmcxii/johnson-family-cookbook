@@ -1,4 +1,5 @@
 export interface UserRequiredValues {
+  _permissionLevel: UserPermissionLevel;
   firstName: string;
   lastName: string;
   password: string;

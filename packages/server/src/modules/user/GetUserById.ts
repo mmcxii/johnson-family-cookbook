@@ -7,19 +7,18 @@ import { UserResolverReturn } from "./common/UserResolverReturn";
 export class GetUserByIdResolver {
   @Query(() => UserResolverReturn)
   async getUserById(@Arg("id") id: number): Promise<UserResolverReturn> {
-    const user = await User.findOne(id);
-
+    const user = await User.findOne({ where: { id } });
     if (!user) {
       return {
         _status: "ERROR",
-        message: "The requested user could not be found.",
+        message: "The requested user was not found.",
         payload: null,
       };
     }
 
     return {
       _status: "SUCCESS",
-      message: "User was found successfully.",
+      message: "Found requested user successfully.",
       payload: user,
     };
   }
