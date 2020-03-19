@@ -10,10 +10,12 @@ import {
 
 import { User } from "./User";
 import { Recipe } from "./Recipe";
+import { RecipeCommentRequiredValues } from "../types/recipeComment.types";
 
 @ObjectType()
 @Entity("recipe_comments")
-export class RecipeComment extends BaseEntity {
+export class RecipeComment extends BaseEntity
+  implements RecipeCommentRequiredValues {
   /*
     Begin generated values
   */
