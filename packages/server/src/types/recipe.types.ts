@@ -1,3 +1,14 @@
+import { User } from "../entities/User";
+import { RecipeIngredient } from "../entities/RecipeIngredient";
+
+export interface RecipeRequiredValues {
+  name: string;
+  directions: string;
+  category: RecipeCategory;
+  createdBy: User;
+  ingredients: RecipeIngredient[];
+}
+
 export type RecipeCategory =
   | "APPETIZER"
   | "BREAD"

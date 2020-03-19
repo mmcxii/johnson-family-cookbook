@@ -11,7 +11,7 @@ import {
   ManyToOne,
 } from "typeorm";
 
-import { RecipeCategory } from "../types/recipe.types";
+import { RecipeCategory, RecipeRequiredValues } from "../types/recipe.types";
 import { User } from "./User";
 import { RecipeIngredient } from "./RecipeIngredient";
 import { RecipeComment } from "./RecipeComment";
@@ -19,7 +19,7 @@ import { STRING_DELINIATOR } from "../constants/utilities";
 
 @ObjectType()
 @Entity("recipes")
-export class Recipe extends BaseEntity {
+export class Recipe extends BaseEntity implements RecipeRequiredValues {
   /*
     Begin generated values
   */
@@ -59,6 +59,11 @@ export class Recipe extends BaseEntity {
     (u) => u.postedRecipes,
   )
   createdBy: User;
+
+  @Field(() => [RecipeIngredient])
+  @ManyToMany(() => RecipeIngredient)
+  @JoinTable()
+  ingredients: RecipeIngredient[];
   /* End relational values */
 
   /*
@@ -114,11 +119,6 @@ export class Recipe extends BaseEntity {
   async downvoteCount(): Promise<number> {
     return this.downvotedBy.length;
   }
-
-  @Field(() => [RecipeIngredient])
-  @ManyToMany(() => RecipeIngredient)
-  @JoinTable()
-  ingredients: RecipeIngredient[];
 
   @Field(() => [RecipeComment], { defaultValue: [] })
   @OneToMany(
