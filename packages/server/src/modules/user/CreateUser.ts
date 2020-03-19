@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { UserResolverReturn } from "./common/UserResolverReturn";
 import { CreateUserInput } from "./createUser/CreateUserInput";
 import { User } from "../../entities/User";
+import { PASSWORD_SALT } from "../../constants/envVariables";
 
 @Resolver()
 export class CreateUserResolver {
@@ -22,10 +23,7 @@ export class CreateUserResolver {
     }
 
     /* Hash the user's password */
-    const hashedPassword = await bcrypt.hash(
-      data.password,
-      await bcrypt.genSalt(),
-    );
+    const hashedPassword = await bcrypt.hash(data.password, PASSWORD_SALT!);
 
     console.log({ hashedPassword });
 
