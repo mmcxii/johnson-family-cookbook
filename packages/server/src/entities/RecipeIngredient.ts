@@ -8,10 +8,12 @@ import {
 } from "typeorm";
 
 import { Recipe } from "./Recipe";
+import { RecipeIngredientRequiredValues } from "../types/recipeIngredient.types";
 
 @ObjectType()
 @Entity("recipe_ingredients")
-export class RecipeIngredient extends BaseEntity {
+export class RecipeIngredient extends BaseEntity
+  implements RecipeIngredientRequiredValues {
   /*
     Begin generated values
   */
