@@ -10,7 +10,7 @@ import {
 import {
   UserRequiredValues,
   UserGender,
-  UserConfirmationStatus,
+  UserAccountStatus,
   UserPermissionLevel,
 } from "../types/user.types";
 
@@ -50,7 +50,7 @@ export class User extends BaseEntity implements UserRequiredValues {
 
   @Field(() => String)
   @Column("text", { default: "NOT_CONFIRMED" })
-  _confirmationStatus: UserConfirmationStatus;
+  _status: UserAccountStatus;
 
   @Field(() => String)
   @Column("text", { default: "USER" })

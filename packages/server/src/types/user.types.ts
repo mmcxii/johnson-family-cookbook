@@ -1,5 +1,4 @@
 export interface UserRequiredValues {
-  _permissionLevel: UserPermissionLevel;
   firstName: string;
   lastName: string;
   password: string;
@@ -9,5 +8,5 @@ export interface UserRequiredValues {
 }
 
 export type UserGender = "M" | "F";
-export type UserConfirmationStatus = "NOT_CONFIRMED" | "CONFIRMED";
+export type UserAccountStatus = "NOT_CONFIRMED" | "DISABLED" | "ACTIVE";
 export type UserPermissionLevel = "USER" | "ADMIN" | "GUEST";
