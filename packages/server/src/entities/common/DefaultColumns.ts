@@ -7,21 +7,25 @@ import {
 } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 
+/**
+ * Default columns that should exist across all entities.
+ * For internal use and tracking.
+ */
 @ObjectType()
-export class DefaultColumns extends BaseEntity {
+export abstract class DefaultColumns extends BaseEntity {
   @Field()
-  @PrimaryGeneratedColumn({ name: "id" })
+  @PrimaryGeneratedColumn({ name: "_id_" })
   id: number;
 
   @Field()
-  @CreateDateColumn({ name: "created_at" })
+  @CreateDateColumn({ name: "_created_at_" })
   createdAt: Date;
 
   @Field()
-  @UpdateDateColumn({ name: "updated_at" })
+  @UpdateDateColumn({ name: "_updated_at_" })
   updatedAt: Date;
 
   @Field()
-  @DeleteDateColumn({ name: "archived_at", nullable: true })
+  @DeleteDateColumn({ name: "_archived_at_", nullable: true })
   archivedAt: Date;
 }
