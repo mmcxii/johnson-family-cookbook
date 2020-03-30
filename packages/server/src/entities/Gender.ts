@@ -1,20 +1,9 @@
 import { Column, Entity } from "typeorm";
-import { ObjectType, Field, registerEnumType } from "type-graphql";
+import { ObjectType, Field } from "type-graphql";
 
 import { tableNames } from "../constants/tableNames";
+import { GenderNameEnum } from "../types/gender.types";
 import { DefaultColumns } from "./common/DefaultColumns";
-
-export enum GenderIdEnum {
-  Male = 1,
-  Female = 2,
-}
-enum GenderNameEnum {
-  Male = "M",
-  Female = "F",
-}
-registerEnumType(GenderIdEnum, {
-  name: "GenderEnum",
-});
 
 @ObjectType()
 @Entity(tableNames.gender)

@@ -1,7 +1,7 @@
 import { InputType, Field } from "type-graphql";
 
-import { GenderIdEnum } from "../../../entities/Gender";
-import { PermissionLevelIdEnum } from "../../../entities/PermissionLevel";
+import { GenderIdEnum } from "../../../types/gender.types";
+import { PermissionLevelIdEnum } from "../../../types/permissionLevel.types";
 
 @InputType()
 export class CreateUserInput {

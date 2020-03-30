@@ -2,14 +2,10 @@ import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 
 import { tableNames } from "../constants/tableNames";
+import { UserAccountStatusEnum } from "../types/user.types";
 import { DefaultColumns } from "./common/DefaultColumns";
 import { Gender } from "./Gender";
 import { PermissionLevel } from "./PermissionLevel";
-
-enum UserAccountStatusEnum {
-  NotConfirmed = "NOT_CONFIRMED",
-  Confirmed = "CONFIRMED",
-}
 
 @ObjectType()
 @Entity(tableNames.user)
