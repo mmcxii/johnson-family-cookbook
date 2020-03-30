@@ -28,13 +28,13 @@ export class CreateUserResolver {
     }
 
     /**
-     * The password, gender, and permissionLevel are extracted from the data object.
+     * The password, genderId, and permissionLevelId are extracted from the data object.
      * The remaining values are marked as needing to be normalized.
      */
     const {
       password,
-      gender: genderId,
-      permissionLevel: permissionLevelId,
+      genderId,
+      permissionLevelId,
       ...dataToBeNormalized
     } = data;
 
