@@ -8,6 +8,8 @@ import { User } from "../../entities/User";
 import { Gender } from "../../entities/Gender";
 import { PermissionLevel } from "../../entities/PermissionLevel";
 import { normalizeData } from "../../utils/normalizeData";
+import { sendConfirmationEmail } from "../utils/sendConfirmationEmail";
+import { createConfirmationUrl } from "../utils/createConfirmationUrl";
 
 @Resolver()
 export class CreateUserResolver {
@@ -79,12 +81,18 @@ export class CreateUserResolver {
       };
     }
 
+    await sendConfirmationEmail(
+      user.email,
+      await createConfirmationUrl(user._externalId_),
+    );
+
     /**
      * Once all checks have passed the user is informed that their account has been successfully created.
      */
     return {
       status: "SUCCESS",
-      message: "Your account has been successfully created!",
+      message:
+        "Your account has been successfully created! Please check your email to confirm your account",
       payload: user,
     };
   }

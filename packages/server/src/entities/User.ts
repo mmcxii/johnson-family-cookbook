@@ -10,7 +10,6 @@ import { PermissionLevel } from "./PermissionLevel";
 @ObjectType()
 @Entity(tableNames.user)
 export class User extends DefaultColumns {
-  @Field(() => String)
   @Column("enum", {
     name: "account_status",
     enum: UserAccountStatusEnum,

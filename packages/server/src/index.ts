@@ -21,13 +21,11 @@ import { buildSchema } from "./utils/buildSchema";
     port: 5432,
     synchronize: true,
     entities: [__dirname + "/entities/**/*.{t,j}s"],
-  })
-    .then((db) => console.log(`Connection established with db ${db.name}`))
-    .catch((err) => console.log(err.message));
+  }).then((db) => console.log(`Connection established with db ${db.name}`));
   const schema = await buildSchema();
   const apolloServer = new ApolloServer({ schema });
-
   const app = express();
+
   apolloServer.applyMiddleware({ app, path: "/api/graphql" });
 
   app.listen(PORT, () => {
