@@ -33,8 +33,8 @@ export class CreateUserResolver {
      */
     const {
       password,
-      genderId,
-      permissionLevelId,
+      gender: genderId,
+      permissionLevel: permissionLevelId,
       ...dataToBeNormalized
     } = data;
 

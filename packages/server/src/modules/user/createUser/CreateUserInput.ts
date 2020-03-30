@@ -21,11 +21,11 @@ export class CreateUserInput {
   birthday: Date;
 
   @Field(() => GenderIdEnum, { name: "gender" })
-  genderId: GenderIdEnum;
+  gender: GenderIdEnum;
 
   @Field(() => PermissionLevelIdEnum, {
     defaultValue: PermissionLevelIdEnum.User,
     name: "permissionLevel",
   })
-  permissionLevelId: PermissionLevelIdEnum;
+  permissionLevel: PermissionLevelIdEnum;
 }
