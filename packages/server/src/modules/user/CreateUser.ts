@@ -44,14 +44,12 @@ export class CreateUserResolver {
     const hashedPassword = await bcrypt.hash(password, SALT!);
 
     /**
-     * The user's gender is retrieved from the gender table.
+     * The user's gender and permissionLevel are retrieved from their respective tables.
      */
-    const gender = await Gender.findOne(genderId);
-
-    /**
-     * The user's permission level is retrieved from the permission_level table.
-     */
-    const permissionLevel = await PermissionLevel.findOne(permissionLevelId);
+    const [gender, permissionLevel] = await Promise.all([
+      Gender.findOne(genderId),
+      PermissionLevel.findOne(permissionLevelId),
+    ]);
 
     /**
      * Remaining data is sanitized, all text is converted to lowercase and whitespace is trimmed.

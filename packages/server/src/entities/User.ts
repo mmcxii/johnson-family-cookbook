@@ -21,7 +21,7 @@ export class User extends DefaultColumns {
   @Field(() => PermissionLevel)
   @ManyToOne(
     () => PermissionLevel,
-    (pl) => pl.id,
+    (pl) => pl._id_,
   )
   @JoinColumn({ name: "permission_level_id" })
   permissionLevel: PermissionLevel;
@@ -52,7 +52,7 @@ export class User extends DefaultColumns {
   @Field(() => Gender)
   @ManyToOne(
     () => Gender,
-    (g) => g.id,
+    (g) => g._id_,
     { onDelete: "CASCADE" },
   )
   @JoinColumn({ name: "gender_id" })

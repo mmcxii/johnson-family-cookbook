@@ -4,6 +4,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  Column,
+  Generated,
 } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 
@@ -13,19 +15,23 @@ import { Field, ObjectType } from "type-graphql";
  */
 @ObjectType()
 export abstract class DefaultColumns extends BaseEntity {
-  @Field()
   @PrimaryGeneratedColumn({ name: "_id_" })
-  id: number;
+  _id_: number;
+
+  @Field()
+  @Generated("uuid")
+  @Column("uuid", { name: "_external_id_" })
+  _externalId_: string;
 
   @Field()
   @CreateDateColumn({ name: "_created_at_" })
-  createdAt: Date;
+  _createdAt_: Date;
 
   @Field()
   @UpdateDateColumn({ name: "_updated_at_" })
-  updatedAt: Date;
+  _updatedAt_: Date;
 
   @Field()
   @DeleteDateColumn({ name: "_archived_at_", nullable: true })
-  archivedAt: Date;
+  _archivedAt_: Date;
 }
