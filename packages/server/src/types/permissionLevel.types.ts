@@ -1,4 +1,4 @@
-import { registerEnumType } from "type-graphql";
+import { registerEnumType } from 'type-graphql';
 
 /**
  * Interface for ensuring that PermissionLevel contains all expected columns.
@@ -15,11 +15,11 @@ export enum PermissionLevelIdEnum {
 }
 
 export enum PermissionLevelNameEnum {
-  Admin = "ADMIN",
-  User = "USER",
-  Guest = "GUEST",
+  Admin = 'ADMIN',
+  User = 'USER',
+  Guest = 'GUEST',
 }
 
 registerEnumType(PermissionLevelIdEnum, {
-  name: "PermissionLevelIdEnum",
+  name: 'PermissionLevelIdEnum',
 });

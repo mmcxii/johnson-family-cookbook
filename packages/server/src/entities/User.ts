@@ -1,4 +1,6 @@
-import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
+import {
+  Entity, Column, ManyToOne, JoinColumn,
+} from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 
 import { TableNames } from "../types/tableNames";
@@ -20,7 +22,7 @@ export class User extends DefaultColumns implements IUser {
   @Field(() => PermissionLevel)
   @ManyToOne(
     () => PermissionLevel,
-    (pl) => pl._id_,
+    (pl) => pl._id_, // eslint-disable-line no-underscore-dangle
   )
   @JoinColumn({ name: "permission_level_id" })
   permissionLevel: PermissionLevel;
@@ -51,7 +53,7 @@ export class User extends DefaultColumns implements IUser {
   @Field(() => Gender)
   @ManyToOne(
     () => Gender,
-    (g) => g._id_,
+    (g) => g._id_, // eslint-disable-line no-underscore-dangle
     { onDelete: "CASCADE" },
   )
   @JoinColumn({ name: "gender_id" })

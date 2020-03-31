@@ -1,5 +1,5 @@
-import { PermissionLevel } from "../entities/PermissionLevel";
-import { Gender } from "../entities/Gender";
+import { PermissionLevel } from '../entities/PermissionLevel';
+import { Gender } from '../entities/Gender';
 
 /**
  * Interface for ensuring that User contains all expected columns.
@@ -18,6 +18,6 @@ export interface IUser {
 }
 
 export enum UserAccountStatusEnum {
-  NotConfirmed = "NOT_CONFIRMED",
-  Confirmed = "CONFIRMED",
+  NotConfirmed = 'NOT_CONFIRMED',
+  Confirmed = 'CONFIRMED',
 }

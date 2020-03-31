@@ -7,7 +7,9 @@ import { UserResponse } from "./common/UserResponse";
 @Resolver()
 export class ConfirmUserResolver {
   @Mutation(() => UserResponse)
-  async confirmUser(@Arg("userId") userId: string): Promise<UserResponse> {
+  static async confirmUser(
+    @Arg("userId") userId: string,
+  ): Promise<UserResponse> {
     /**
      * Check for the presence of the user requesting confirmation.
      */
@@ -49,7 +51,7 @@ export class ConfirmUserResolver {
      * based on the final check before the user is updated in the database. This checking
      * is desired because it will catch unexpected errors coming from the database or ORM.
      */
-    //@ts-ignore
+    // @ts-ignore
     if (user.confirmationStatus !== UserAccountStatusEnum.Confirmed) {
       return {
         status: "ERROR",

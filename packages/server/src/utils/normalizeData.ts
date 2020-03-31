@@ -1,13 +1,19 @@
 export function normalizeData(data: { [key: string]: any }) {
-  let normalizedData: typeof data = {};
-  for (const key in data) {
-    const currentValue = data[key];
-    switch (typeof currentValue) {
+  const normalizedData: typeof data = {};
+  const dataKeys = Object.keys(data);
+
+  for (let i = 0; i < dataKeys.length; i++) {
+    const key = dataKeys[i];
+    const value = data[key];
+
+    switch (typeof value) {
       case "string":
-        normalizedData[key] = currentValue.toLowerCase().trim();
+        normalizedData[key] = value.toLowerCase().trim();
         break;
+
       default:
-        normalizedData[key] = currentValue;
+        normalizedData[key] = value;
+        break;
     }
   }
   return normalizedData;

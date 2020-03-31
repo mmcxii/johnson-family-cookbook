@@ -14,7 +14,9 @@ import { createConfirmationUrl } from "../utils/createConfirmationUrl";
 @Resolver()
 export class CreateUserResolver {
   @Mutation(() => UserResponse)
-  async createUser(@Arg("data") data: CreateUserInput): Promise<UserResponse> {
+  static async createUser(
+    @Arg("data") data: CreateUserInput,
+  ): Promise<UserResponse> {
     /**
      * Confirm the requested email is not already in use by attempting to find
      * an existing user with that email.
@@ -83,11 +85,12 @@ export class CreateUserResolver {
 
     await sendConfirmationEmail(
       user.email,
-      await createConfirmationUrl(user._externalId_),
+      await createConfirmationUrl(user._externalId_), // eslint-disable-line no-underscore-dangle
     );
 
     /**
-     * Once all checks have passed the user is informed that their account has been successfully created.
+     * Once all checks have passed the user is informed that their account
+     * has been successfully created.
      */
     return {
       status: "SUCCESS",

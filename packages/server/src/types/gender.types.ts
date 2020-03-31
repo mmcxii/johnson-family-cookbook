@@ -1,4 +1,4 @@
-import { registerEnumType } from "type-graphql";
+import { registerEnumType } from 'type-graphql';
 
 /**
  * Interface for ensuring that Gender contains all expected columns.
@@ -14,8 +14,8 @@ export enum GenderIdEnum {
 }
 
 export enum GenderNameEnum {
-  Male = "M",
-  Female = "F",
+  Male = 'M',
+  Female = 'F',
 }
 
 /**
@@ -23,5 +23,5 @@ export enum GenderNameEnum {
  * the Type-GraphQL API and used as an input.
  */
 registerEnumType(GenderIdEnum, {
-  name: "GenderIdEnum",
+  name: 'GenderIdEnum',
 });
