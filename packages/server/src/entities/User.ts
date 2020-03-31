@@ -1,14 +1,14 @@
 import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 
-import { tableNames } from "../constants/tableNames";
+import { TableNames } from "../types/tableNames";
 import { UserAccountStatusEnum } from "../types/user.types";
 import { DefaultColumns } from "./common/DefaultColumns";
 import { Gender } from "./Gender";
 import { PermissionLevel } from "./PermissionLevel";
 
 @ObjectType()
-@Entity(tableNames.user)
+@Entity(TableNames.User)
 export class User extends DefaultColumns {
   @Column("enum", {
     name: "account_status",
