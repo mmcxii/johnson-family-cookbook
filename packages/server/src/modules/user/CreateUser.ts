@@ -5,11 +5,10 @@ import { SALT } from "../../constants/envVariables";
 import { UserResponse } from "./common/UserResponse";
 import { CreateUserInput } from "./createUser/CreateUserInput";
 import { User } from "../../entities/User";
-import { Gender } from "../../entities/Gender";
-import { PermissionLevel } from "../../entities/PermissionLevel";
 import { normalizeData } from "../../utils/normalizeData";
 import { sendConfirmationEmail } from "../utils/sendConfirmationEmail";
 import { createConfirmationUrl } from "../utils/createConfirmationUrl";
+import { mapAssociatedValuesToUser } from "./common/mapAssociatedValuesToUser";
 
 @Resolver()
 export class CreateUserResolver {
@@ -19,7 +18,7 @@ export class CreateUserResolver {
      * Confirm the requested email is not already in use by attempting to find
      * an existing user with that email.
      */
-    const emailIsInUse = await User.findOne({ where: { email: data.email } });
+    const emailIsInUse = await User.findOne({ where: { email: data.email } })!!;
     if (emailIsInUse) {
       return {
         status: "ERROR",
@@ -48,25 +47,17 @@ export class CreateUserResolver {
     const hashedPassword = await bcrypt.hash(password, SALT!);
 
     /**
-     * The user's gender and permissionLevel are retrieved from their respective tables.
-     */
-    const [gender, permissionLevel] = await Promise.all([
-      Gender.findOne(genderId),
-      PermissionLevel.findOne(permissionLevelId),
-    ]);
-
-    /**
      * Remaining data is sanitized, all text is converted to lowercase and whitespace is trimmed.
      */
     const normalizedData = normalizeData(dataToBeNormalized);
 
     /**
-     * The user is recorded in the database using the modified, found, and secured data.
+     * The user is recorded in the database using the modified and secured data.
      */
-    const user = await User.create({
+    let user = await User.create({
       ...normalizedData,
-      gender,
-      permissionLevel,
+      genderId,
+      permissionLevelId,
       password: hashedPassword,
     }).save();
 
@@ -85,10 +76,18 @@ export class CreateUserResolver {
       };
     }
 
+    /**
+     * The user is sent a confirmation email with their unique id as a url parameter.
+     */
     await sendConfirmationEmail(
       user.email,
       await createConfirmationUrl(user._externalId_), // eslint-disable-line no-underscore-dangle
     );
+
+    /**
+     * The associated gender and permissionLevel are retrieved from their tables.
+     */
+    user = await mapAssociatedValuesToUser(user);
 
     /**
      * Once all checks have passed the user is informed that their account

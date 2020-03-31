@@ -1,6 +1,4 @@
-import {
-  Entity, Column, ManyToOne, JoinColumn,
-} from "typeorm";
+import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 
 import { TableNames } from "../types/tableNames";
@@ -18,6 +16,9 @@ export class User extends DefaultColumns implements IUser {
     default: UserAccountStatusEnum.NotConfirmed,
   })
   confirmationStatus: UserAccountStatusEnum;
+
+  @Column({ name: "permission_level_id" })
+  permissionLevelId: number;
 
   @Field(() => PermissionLevel)
   @ManyToOne(
@@ -49,6 +50,9 @@ export class User extends DefaultColumns implements IUser {
   @Field(() => String, { nullable: true })
   @Column("text", { name: "profile_picture_url", nullable: true })
   profilePictureUrl: string | null;
+
+  @Column({ name: "gender_id" })
+  genderId: number;
 
   @Field(() => Gender)
   @ManyToOne(

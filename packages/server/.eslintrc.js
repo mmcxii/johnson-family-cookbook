@@ -38,5 +38,9 @@ module.exports = {
      * This rule breaks the single purpose classes used to interact with the Type-GraphQL API.
      */
     "class-methods-use-this": 0,
+    /**
+     * This rule causes conflict with prettier.
+     */
+    "object-curly-newline": 0,
   },
 };
