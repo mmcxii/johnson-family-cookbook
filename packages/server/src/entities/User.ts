@@ -2,14 +2,14 @@ import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 
 import { TableNames } from "../types/tableNames";
-import { UserAccountStatusEnum } from "../types/user.types";
+import { IUser, UserAccountStatusEnum } from "../types/user.types";
 import { DefaultColumns } from "./common/DefaultColumns";
 import { Gender } from "./Gender";
 import { PermissionLevel } from "./PermissionLevel";
 
 @ObjectType()
 @Entity(TableNames.User)
-export class User extends DefaultColumns {
+export class User extends DefaultColumns implements IUser {
   @Column("enum", {
     name: "account_status",
     enum: UserAccountStatusEnum,
@@ -46,7 +46,7 @@ export class User extends DefaultColumns {
 
   @Field()
   @Column({ name: "profile_picture_url", nullable: true })
-  profilePictureUrl: string;
+  profilePictureUrl: string | null;
 
   @Field(() => Gender)
   @ManyToOne(
