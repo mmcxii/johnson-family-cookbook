@@ -1,5 +1,13 @@
 import { registerEnumType } from "type-graphql";
 
+/**
+ * Interface for ensuring that Gender contains all expected columns.
+ * If new fields should be added to Gender they should first be added here.
+ */
+export interface IGender {
+  name: GenderNameEnum;
+}
+
 export enum GenderIdEnum {
   Male = 1,
   Female = 2,
