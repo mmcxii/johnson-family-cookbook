@@ -7,9 +7,7 @@ import { UserResponse } from "./common/UserResponse";
 @Resolver()
 export class ConfirmUserResolver {
   @Mutation(() => UserResponse)
-  static async confirmUser(
-    @Arg("userId") userId: string,
-  ): Promise<UserResponse> {
+  async confirmUser(@Arg("userId") userId: string): Promise<UserResponse> {
     /**
      * Check for the presence of the user requesting confirmation.
      */

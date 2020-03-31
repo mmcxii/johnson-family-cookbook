@@ -34,7 +34,7 @@ export abstract class DefaultColumns extends BaseEntity
   @UpdateDateColumn({ name: "_updated_at_" })
   _updatedAt_: Date;
 
-  @Field()
+  @Field(() => Date, { nullable: true })
   @DeleteDateColumn({ name: "_archived_at_", nullable: true })
   _archivedAt_: Date | null;
 }

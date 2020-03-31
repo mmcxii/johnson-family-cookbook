@@ -14,9 +14,7 @@ import { createConfirmationUrl } from "../utils/createConfirmationUrl";
 @Resolver()
 export class CreateUserResolver {
   @Mutation(() => UserResponse)
-  static async createUser(
-    @Arg("data") data: CreateUserInput,
-  ): Promise<UserResponse> {
+  async createUser(@Arg("data") data: CreateUserInput): Promise<UserResponse> {
     /**
      * Confirm the requested email is not already in use by attempting to find
      * an existing user with that email.

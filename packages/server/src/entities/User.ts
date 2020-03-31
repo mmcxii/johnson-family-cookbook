@@ -46,8 +46,8 @@ export class User extends DefaultColumns implements IUser {
   @Column({ name: "birthday" })
   birthday: Date;
 
-  @Field()
-  @Column({ name: "profile_picture_url", nullable: true })
+  @Field(() => String, { nullable: true })
+  @Column("text", { name: "profile_picture_url", nullable: true })
   profilePictureUrl: string | null;
 
   @Field(() => Gender)

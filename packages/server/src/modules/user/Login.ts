@@ -11,7 +11,7 @@ import { normalizeData } from "../../utils/normalizeData";
 @Resolver()
 export class LoginResolver {
   @Mutation(() => UserResponse)
-  static async login(@Arg("data") data: LoginInput): Promise<UserResponse> {
+  async login(@Arg("data") data: LoginInput): Promise<UserResponse> {
     /**
      * The user's email is normalized before the login is attempted to
      * prevent accidental rejections of correct credentials.
