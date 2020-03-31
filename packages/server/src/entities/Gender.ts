@@ -10,5 +10,5 @@ import { DefaultColumns } from "./common/DefaultColumns";
 export class Gender extends DefaultColumns {
   @Field(() => String)
   @Column("enum", { name: "name", enum: GenderNameEnum })
-  name: Gender;
+  name: GenderNameEnum;
 }
