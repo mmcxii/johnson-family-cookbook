@@ -9,12 +9,15 @@ import {
 } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 
+import { IDefaultColumns } from "../../types/defaultColumns.types";
+
 /**
  * Default columns that should exist across all entities.
  * For internal use and tracking.
  */
 @ObjectType()
-export abstract class DefaultColumns extends BaseEntity {
+export abstract class DefaultColumns extends BaseEntity
+  implements IDefaultColumns {
   @PrimaryGeneratedColumn({ name: "_id_" })
   _id_: number;
 
@@ -33,5 +36,5 @@ export abstract class DefaultColumns extends BaseEntity {
 
   @Field()
   @DeleteDateColumn({ name: "_archived_at_", nullable: true })
-  _archivedAt_: Date;
+  _archivedAt_: Date | null;
 }
