@@ -36,7 +36,9 @@ export class LoginResolver {
       return {
         status: "ERROR",
         message: invalidLoginCredentialsMessage,
-        payload: null,
+        payload: {
+          user: null,
+        },
       };
     }
 
@@ -50,7 +52,9 @@ export class LoginResolver {
         status: "ERROR",
         message:
           "You must confirm your account before loggin in. Please check your email for your verification link.",
-        payload: null,
+        payload: {
+          user: null,
+        },
       };
     }
 
@@ -62,7 +66,9 @@ export class LoginResolver {
       return {
         status: "ERROR",
         message: invalidLoginCredentialsMessage,
-        payload: null,
+        payload: {
+          user: null,
+        },
       };
     }
 
@@ -74,7 +80,12 @@ export class LoginResolver {
     return {
       status: "SUCCESS",
       message: `Welcome back ${capitalizeString(user.firstName)}!`,
-      payload: user,
+      payload: {
+        user,
+        tokens: {
+          accessToken: "",
+        },
+      },
     };
   }
 }

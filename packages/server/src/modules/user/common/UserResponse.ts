@@ -1,5 +1,6 @@
 import { ObjectType, Field } from "type-graphql";
-import { User } from "../../../entities/User";
+
+import { UserResponsePayload } from "./userResponse/UserResponsePayload";
 
 @ObjectType()
 export class UserResponse {
@@ -9,6 +10,6 @@ export class UserResponse {
   @Field()
   message: string;
 
-  @Field(() => User, { nullable: true })
-  payload: User | null;
+  @Field(() => UserResponsePayload)
+  payload: UserResponsePayload;
 }

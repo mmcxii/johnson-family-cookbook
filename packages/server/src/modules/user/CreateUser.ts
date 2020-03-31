@@ -25,7 +25,9 @@ export class CreateUserResolver {
         status: "ERROR",
         message:
           "That email address is already in use. Please select another email address.",
-        payload: null,
+        payload: {
+          user: null,
+        },
       };
     }
 
@@ -77,7 +79,9 @@ export class CreateUserResolver {
         status: "ERROR",
         message:
           "An error occured while creating your account. Please try again.",
-        payload: null,
+        payload: {
+          user: null,
+        },
       };
     }
 
@@ -94,7 +98,9 @@ export class CreateUserResolver {
       status: "SUCCESS",
       message:
         "Your account has been successfully created! Please check your email to confirm your account",
-      payload: user,
+      payload: {
+        user,
+      },
     };
   }
 }

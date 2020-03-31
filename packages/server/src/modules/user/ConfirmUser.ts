@@ -16,7 +16,9 @@ export class ConfirmUserResolver {
       return {
         status: "ERROR",
         message: "No account was found.",
-        payload: null,
+        payload: {
+          user: null,
+        },
       };
     }
 
@@ -28,7 +30,9 @@ export class ConfirmUserResolver {
       return {
         status: "ERROR",
         message: "Your account has already been confirmed.",
-        payload: null,
+        payload: {
+          user: null,
+        },
       };
     }
 
@@ -55,7 +59,9 @@ export class ConfirmUserResolver {
         status: "ERROR",
         message:
           "An unexpected error occured confirming your account. Please try again.",
-        payload: null,
+        payload: {
+          user: null,
+        },
       };
     }
 
@@ -68,7 +74,9 @@ export class ConfirmUserResolver {
     return {
       status: "SUCCESS",
       message: "Account confirmed successfully.",
-      payload: user,
+      payload: {
+        user,
+      },
     };
   }
 }
