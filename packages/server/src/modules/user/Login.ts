@@ -1,7 +1,6 @@
 import { Resolver, Mutation, Arg, Ctx } from "type-graphql";
 import bcrypt from "bcryptjs";
 
-import { REFRESH_TOKEN_COOKIE_NAME } from "../../constants/envVariables";
 import { UserResponse } from "./common/UserResponse";
 import { LoginInput } from "./login/LoginInput";
 import { UserAccountStatusEnum } from "../../types/user.types";
@@ -9,7 +8,11 @@ import { capitalizeString } from "../../utils/capitalizeString";
 import { normalizeData } from "../../utils/normalizeData";
 import { findUserWithRelations } from "./utils/findUserWithRelations";
 import { MyContext } from "../../types/MyContext";
-import { createAccessToken, createRefreshToken } from "./utils/auth";
+import {
+  createAccessToken,
+  createRefreshToken,
+  sendRefreshToken,
+} from "./utils/auth";
 
 @Resolver()
 export class LoginResolver {
@@ -78,9 +81,7 @@ export class LoginResolver {
       };
     }
 
-    res.cookie(REFRESH_TOKEN_COOKIE_NAME!, createRefreshToken(user), {
-      httpOnly: true,
-    });
+    sendRefreshToken(res, createRefreshToken(user));
 
     /**
      * Once all checks have passed the user is welcomed back to the app and logged in.
