@@ -9,19 +9,14 @@ import {
 } from "../../../constants/envVariables";
 
 export const createAccessToken = (user: User) => {
-  return sign(
-    { userId: user._externalId_ }, // eslint-disable-line no-underscore-dangle
-    ACCESS_TOKEN_SECRET!,
-    {
-      expiresIn: "15m",
-    },
-  );
+  return sign({ userId: user.externalId }, ACCESS_TOKEN_SECRET!, {
+    expiresIn: "15m",
+  });
 };
 
 export const createRefreshToken = (user: User) => {
   return sign(
-    // eslint-disable-next-line no-underscore-dangle
-    { userId: user._externalId_, tokenVersion: user.tokenVersion },
+    { userId: user.externalId, tokenVersion: user.tokenVersion },
     REFRESH_TOKEN_SECRET!,
     {
       expiresIn: "1y",

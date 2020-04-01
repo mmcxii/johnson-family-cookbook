@@ -1,3 +1,2 @@
-export async function createConfirmationUrl(id: string): Promise<string> {
-  return `http://localhost:3000/user/confirm/${id}`;
-}
+export const createConfirmationUrl = (id: string): string =>
+  `http://localhost:3000/user/confirm/${id}`;

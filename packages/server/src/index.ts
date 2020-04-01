@@ -55,7 +55,7 @@ import {
     }
 
     const user = await User.findOne({
-      where: { _externalId_: payload.userId },
+      where: { externalId: payload.userId },
     });
     if (!user) {
       return res.send({ ok: false, accessToken: "" });

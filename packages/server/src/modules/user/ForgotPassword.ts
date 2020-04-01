@@ -2,6 +2,10 @@ import { Resolver, Mutation, Arg } from "type-graphql";
 
 import { UserResponse } from "./common/UserResponse";
 import { User } from "../../entities/User";
+import { UserAccountStatusEnum } from "../../types/user.types";
+import { revokeRefreshTokens } from "./utils/revokeRefreshTokens";
+import { sendResetPasswordEmail } from "../utils/sendResetPasswordEmai";
+import { createResetPasswordUrl } from "../utils/createResetPasswordUrl";
 
 @Resolver()
 export class ForgotPasswordResolver {
@@ -17,5 +21,26 @@ export class ForgotPasswordResolver {
         },
       };
     }
+
+    await User.update(
+      { email },
+      { accountStatus: UserAccountStatusEnum.Disabled },
+    );
+
+    await revokeRefreshTokens(user.externalId);
+
+    await sendResetPasswordEmail(
+      user.email,
+      createResetPasswordUrl(user.externalId),
+    );
+
+    return {
+      status: "SUCCESS",
+      message:
+        "Your account has been disabled. Please check your email for a link to reset your password.",
+      payload: {
+        user: null,
+      },
+    };
   }
 }

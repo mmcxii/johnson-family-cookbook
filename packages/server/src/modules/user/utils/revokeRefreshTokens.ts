@@ -5,7 +5,7 @@ export const revokeRefreshTokens = async (userId: string) => {
   try {
     await getConnection()
       .getRepository(User)
-      .increment({ _externalId_: userId }, "tokenVersion", 1);
+      .increment({ externalId: userId }, "tokenVersion", 1);
 
     return true;
   } catch (err) {

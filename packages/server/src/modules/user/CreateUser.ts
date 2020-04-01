@@ -90,7 +90,7 @@ export class CreateUserResolver {
      */
     await sendConfirmationEmail(
       user.email,
-      await createConfirmationUrl(user.externalId), // eslint-disable-line no-underscore-dangle
+      createConfirmationUrl(user.externalId), // eslint-disable-line no-underscore-dangle
     );
 
     /**
