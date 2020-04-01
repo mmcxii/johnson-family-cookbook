@@ -8,7 +8,8 @@ import { User } from "../../entities/User";
 import { normalizeData } from "../../utils/normalizeData";
 import { sendConfirmationEmail } from "../utils/sendConfirmationEmail";
 import { createConfirmationUrl } from "../utils/createConfirmationUrl";
-import { mapAssociatedValuesToUser } from "./common/mapAssociatedValuesToUser";
+import { Gender } from "../../entities/Gender";
+import { PermissionLevel } from "../../entities/PermissionLevel";
 
 @Resolver()
 export class CreateUserResolver {
@@ -47,17 +48,25 @@ export class CreateUserResolver {
     const hashedPassword = await bcrypt.hash(password, SALT!);
 
     /**
-     * Remaining data is sanitized, all text is converted to lowercase and whitespace is trimmed.
+     * The associated gender and permissionLevel are retrieved from their tables.
+     */
+    const [gender, permissionLevel] = await Promise.all([
+      Gender.findOne({ where: { _id_: genderId } }),
+      PermissionLevel.findOne({ where: { _id_: permissionLevelId } }),
+    ]);
+
+    /**
+     * Remaining data is sanitized.
      */
     const normalizedData = normalizeData(dataToBeNormalized);
 
     /**
      * The user is recorded in the database using the modified and secured data.
      */
-    let user = await User.create({
+    const user = await User.create({
       ...normalizedData,
-      genderId,
-      permissionLevelId,
+      gender,
+      permissionLevel,
       password: hashedPassword,
     }).save();
 
@@ -83,11 +92,6 @@ export class CreateUserResolver {
       user.email,
       await createConfirmationUrl(user._externalId_), // eslint-disable-line no-underscore-dangle
     );
-
-    /**
-     * The associated gender and permissionLevel are retrieved from their tables.
-     */
-    user = await mapAssociatedValuesToUser(user);
 
     /**
      * Once all checks have passed the user is informed that their account

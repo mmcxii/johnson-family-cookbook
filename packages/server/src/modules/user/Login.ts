@@ -3,11 +3,10 @@ import bcrypt from "bcryptjs";
 
 import { UserResponse } from "./common/UserResponse";
 import { LoginInput } from "./login/LoginInput";
-import { User } from "../../entities/User";
 import { UserAccountStatusEnum } from "../../types/user.types";
 import { capitalizeString } from "../../utils/capitalizeString";
 import { normalizeData } from "../../utils/normalizeData";
-import { mapAssociatedValuesToUser } from "./common/mapAssociatedValuesToUser";
+import { findUserWithRelations } from "./utils/findUserWithRelations";
 
 @Resolver()
 export class LoginResolver {
@@ -32,7 +31,7 @@ export class LoginResolver {
      * If no matching account is found the user is informed that their
      * credentials are incorrect.
      */
-    let user = await User.findOne({ where: { email: normailizedEmail } });
+    const user = await findUserWithRelations({ email: normailizedEmail });
     if (!user) {
       return {
         status: "ERROR",
@@ -72,11 +71,6 @@ export class LoginResolver {
         },
       };
     }
-
-    /**
-     * The associated gender and permissionLevel are retrieved from their tables.
-     */
-    user = await mapAssociatedValuesToUser(user);
 
     /**
      * Once all checks have passed the user is welcomed back to the app and logged in.

@@ -3,7 +3,7 @@ import { Resolver, Mutation, Arg } from "type-graphql";
 import { UserAccountStatusEnum } from "../../types/user.types";
 import { User } from "../../entities/User";
 import { UserResponse } from "./common/UserResponse";
-import { mapAssociatedValuesToUser } from "./common/mapAssociatedValuesToUser";
+import { findUserWithRelations } from "./utils/findUserWithRelations";
 
 @Resolver()
 export class ConfirmUserResolver {
@@ -12,7 +12,7 @@ export class ConfirmUserResolver {
     /**
      * Check for the presence of the user requesting confirmation.
      */
-    let user = await User.findOne({ where: { _externalId_: userId } });
+    const user = await findUserWithRelations({ _externalId_: userId });
     if (!user) {
       return {
         status: "ERROR",
@@ -65,11 +65,6 @@ export class ConfirmUserResolver {
         },
       };
     }
-
-    /**
-     * The associated gender and permissionLevel are retrieved from their tables.
-     */
-    user = await mapAssociatedValuesToUser(user);
 
     /**
      * Once all checks have passed the user is informed that their account is now active
