@@ -14,6 +14,9 @@ import { buildSchema } from "./utils/buildSchema";
 import { refreshTokenRoute } from "./refreshTokenRoute";
 
 (async () => {
+  /**
+   * Database Connection
+   */
   await createConnection({
     type: "postgres",
     database: POSTGRES_DB,
@@ -25,18 +28,41 @@ import { refreshTokenRoute } from "./refreshTokenRoute";
     logging: true,
     entities: [`${__dirname}/entities/**/*.{t,j}s`],
   }).then((db) => console.log(`Connection established with db ${db.name}`)); // eslint-disable-line no-console
+
+  /**
+   * Apollo Server Setup
+   */
   const schema = await buildSchema();
   const apolloServer = new ApolloServer({
     schema,
     context: ({ req, res }) => ({ req, res }),
   });
+
+  /**
+   * Express Setup
+   */
   const app = express();
+
+  /**
+   * Middleware Setup
+   */
+
+  // Cookie Parser
   app.use(cookieParser());
 
+  /**
+   * Connect Express and Apollo
+   */
   apolloServer.applyMiddleware({ app, path: "/api/graphql" });
 
+  /**
+   * External route for generating tokens.
+   */
   app.use("/api/refresh_token", refreshTokenRoute);
 
+  /**
+   * Start the server.
+   */
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`); // eslint-disable-line no-console
   });
