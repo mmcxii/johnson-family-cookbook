@@ -10,6 +10,7 @@ import {
   createRefreshToken,
 } from "./utils/auth";
 import { MyContext } from "../../types/MyContext";
+import { findUserWithRelations } from "./utils/findUserWithRelations";
 
 @Resolver()
 export class ChangePasswordResolver {
@@ -19,7 +20,7 @@ export class ChangePasswordResolver {
     @Arg("newPassword") newPassword: string,
     @Ctx() { res }: MyContext,
   ): Promise<UserResponse> {
-    const user = await User.findOne({ where: { externalId: token } });
+    const user = await findUserWithRelations({ externalId: token });
     if (!user) {
       return {
         status: "ERROR",
