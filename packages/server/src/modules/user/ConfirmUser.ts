@@ -1,14 +1,23 @@
-import { Resolver, Mutation, Arg } from "type-graphql";
+import { Resolver, Mutation, Arg, Ctx } from "type-graphql";
 
 import { UserAccountStatusEnum } from "../../types/user.types";
 import { User } from "../../entities/User";
 import { UserResponse } from "./common/UserResponse";
 import { findUserWithRelations } from "./utils/findUserWithRelations";
+import {
+  sendRefreshToken,
+  createRefreshToken,
+  createAccessToken,
+} from "./utils/auth";
+import { MyContext } from "../../types/MyContext";
 
 @Resolver()
 export class ConfirmUserResolver {
   @Mutation(() => UserResponse)
-  async confirmUser(@Arg("userId") userId: string): Promise<UserResponse> {
+  async confirmUser(
+    @Arg("userId") userId: string,
+    @Ctx() { res }: MyContext,
+  ): Promise<UserResponse> {
     /**
      * Check for the presence of the user requesting confirmation.
      */
@@ -70,16 +79,23 @@ export class ConfirmUserResolver {
     }
 
     /**
+     * Create and send a new set of tokens.
+     */
+    sendRefreshToken(res, createRefreshToken(user));
+    const accessToken = createAccessToken(user);
+
+    /**
      * Once all checks have passed the user is informed that their account is now active
      * and ready for use.
-     *
-     * TODO: Assign tokens once JWT auth has been implemented.
      */
     return {
       status: "SUCCESS",
       message: "Account confirmed successfully.",
       payload: {
         user,
+        tokens: {
+          accessToken,
+        },
       },
     };
   }
