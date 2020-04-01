@@ -1,110 +1,68 @@
-import { Field, ObjectType, ID } from "type-graphql";
-import {
-  BaseEntity,
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  ManyToMany,
-  JoinTable,
-  OneToMany,
-} from "typeorm";
+import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
+import { ObjectType, Field } from "type-graphql";
 
-import {
-  UserGender,
-  UserConfirmationStatus,
-  UserPermissionLevel,
-  UserRequiredValues,
-} from "../types/User";
-
-import { Recipe } from "./Recipe";
-import { Menu } from "./Menu";
-import { RecipeComment } from "./RecipeComment";
+import { TableNames } from "../types/tableNames";
+import { IUser, UserAccountStatusEnum } from "../types/user.types";
+import { DefaultColumns } from "./common/DefaultColumns";
+import { Gender } from "./Gender";
+import { PermissionLevel } from "./PermissionLevel";
 
 @ObjectType()
-@Entity("users")
-export class User extends BaseEntity implements UserRequiredValues {
-  /* Begin Generated Columns */
-  @Field(() => ID, { nullable: true })
-  @PrimaryGeneratedColumn()
-  id: number;
+@Entity(TableNames.User)
+export class User extends DefaultColumns implements IUser {
+  @Column("enum", {
+    name: "account_status",
+    enum: UserAccountStatusEnum,
+    default: UserAccountStatusEnum.NotConfirmed,
+  })
+  accountStatus: UserAccountStatusEnum;
+
+  @Column({ name: "permission_level_id" })
+  permissionLevelId: number;
+
+  @Field(() => PermissionLevel)
+  @ManyToOne(
+    () => PermissionLevel,
+    (pl) => pl.id,
+  )
+  @JoinColumn({ name: "permission_level_id" })
+  permissionLevel: PermissionLevel;
 
   @Field()
-  @CreateDateColumn()
-  joinedAt: Date;
-
-  @Field(() => String)
-  @Column("text", { default: "NOT_CONFIRMED" })
-  _confirmationStatus: UserConfirmationStatus;
-
-  @Field(() => String)
-  @Column("text", { default: "USER" })
-  _userPermissionLevel: UserPermissionLevel;
-  /* End Generated Columns */
-
-  /* Begin Columns needed to create entity */
-  @Field()
-  @Column()
+  @Column({ name: "first_name" })
   firstName: string;
 
   @Field()
-  @Column()
+  @Column({ name: "last_name" })
   lastName: string;
 
   @Field()
-  @Column({ unique: true })
+  @Column({ name: "email", unique: true })
   email: string;
 
-  // Password is not accessable as a field
-  @Column()
+  @Column({ name: "password" })
   password: string;
 
+  @Column("int", { name: "token_version", default: 0 })
+  tokenVersion: number;
+
   @Field()
-  @Column()
+  @Column({ name: "birthday" })
   birthday: Date;
 
-  @Field(() => String)
-  @Column("text")
-  gender: UserGender;
-  /* End Columns needed to create entity */
+  @Field(() => String, { nullable: true })
+  @Column("text", { name: "profile_picture_url", nullable: true })
+  profilePictureUrl: string | null;
 
-  /* Begin optional Columns */
-  @Field()
-  @Column({ nullable: true })
-  image?: string; // TODO: Save user images in S3
-  /* End optional Columns */
+  @Column({ name: "gender_id" })
+  genderId: number;
 
-  /* Begin Relational Columns */
-  // Recipe relations
-  @Field(() => [Recipe], { defaultValue: [] })
-  @ManyToMany(
-    () => Recipe,
-    (r) => r.favoritedBy,
+  @Field(() => Gender)
+  @ManyToOne(
+    () => Gender,
+    (g) => g.id,
+    { onDelete: "CASCADE" },
   )
-  @JoinTable()
-  favorites: Recipe[];
-
-  @Field(() => [Recipe], { defaultValue: [] })
-  @OneToMany(
-    () => Recipe,
-    (r) => r.createdBy,
-  )
-  postedRecipes: Recipe[];
-
-  // RecipeComment relations
-  @Field(() => [RecipeComment], { defaultValue: [] })
-  @OneToMany(
-    () => RecipeComment,
-    (rc) => rc.author,
-  )
-  comments: RecipeComment[];
-
-  // Menu relations
-  @Field(() => [Menu], { defaultValue: [] })
-  @OneToMany(
-    () => Menu,
-    (m) => m.createdBy,
-  )
-  menus: Menu[];
-  /* End Relational Columns */
+  @JoinColumn({ name: "gender_id" })
+  gender: Gender;
 }

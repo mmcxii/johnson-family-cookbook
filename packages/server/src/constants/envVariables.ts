@@ -1,4 +1,12 @@
-import dotenv from "dotenv";
-dotenv.config();
+import "dotenv/config";
 
-export const { PORT = 4000, PASSWORD_HASH } = process.env;
+export const {
+  PORT = 4000,
+  SALT,
+  POSTGRES_USER,
+  POSTGRES_PASSWORD,
+  POSTGRES_DB,
+  ACCESS_TOKEN_SECRET,
+  REFRESH_TOKEN_SECRET,
+  REFRESH_TOKEN_COOKIE_NAME,
+} = process.env;

@@ -1,9 +1,10 @@
 import { InputType, Field } from "type-graphql";
 
-import { UserRequiredValues, UserGender } from "../../../types/User";
+import { GenderIdEnum } from "../../../types/gender.types";
+import { PermissionLevelIdEnum } from "../../../types/permissionLevel.types";
 
 @InputType()
-export class CreateUserInput implements UserRequiredValues {
+export class CreateUserInput {
   @Field()
   firstName: string;
 
@@ -11,14 +12,20 @@ export class CreateUserInput implements UserRequiredValues {
   lastName: string;
 
   @Field()
-  password: string;
-
-  @Field()
   email: string;
 
   @Field()
+  password: string;
+
+  @Field(() => Date)
   birthday: Date;
 
-  @Field(() => String)
-  gender: UserGender;
+  @Field(() => GenderIdEnum, { name: "genderId" })
+  genderId: GenderIdEnum;
+
+  @Field(() => PermissionLevelIdEnum, {
+    defaultValue: PermissionLevelIdEnum.User,
+    name: "permissionLevelId",
+  })
+  permissionLevelId: PermissionLevelIdEnum;
 }

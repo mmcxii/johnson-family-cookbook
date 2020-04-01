@@ -1,49 +1,109 @@
 import { Resolver, Mutation, Arg } from "type-graphql";
-// import bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 
-import { UserResolverReturn } from "./common/UserResolverReturn";
+import { SALT } from "../../constants/envVariables";
+import { UserResponse } from "./common/UserResponse";
 import { CreateUserInput } from "./createUser/CreateUserInput";
 import { User } from "../../entities/User";
-// import { PASSWORD_HASH } from "../../constants/envVariables";
+import { normalizeData } from "../../utils/normalizeData";
+import { sendConfirmationEmail } from "../utils/sendConfirmationEmail";
+import { createConfirmationUrl } from "../utils/createConfirmationUrl";
+import { Gender } from "../../entities/Gender";
+import { PermissionLevel } from "../../entities/PermissionLevel";
 
 @Resolver()
 export class CreateUserResolver {
-  @Mutation(() => UserResolverReturn)
-  async createUser(
-    @Arg("data") data: CreateUserInput,
-  ): Promise<UserResolverReturn> {
-    /* Confirm that the email the user has entered is not already in use */
-    const validEmail = await User.find({ where: { email: data.email } });
-    if (!validEmail) {
+  @Mutation(() => UserResponse)
+  async createUser(@Arg("data") data: CreateUserInput): Promise<UserResponse> {
+    /**
+     * Confirm the requested email is not already in use by attempting to find
+     * an existing user with that email.
+     */
+    const emailIsInUse = await User.findOne({ where: { email: data.email } })!!;
+    if (emailIsInUse) {
       return {
-        _status: "ERROR",
-        message: "That email is in use, please enter a valid email.",
-        payload: null,
+        status: "ERROR",
+        message:
+          "That email address is already in use. Please select another email address.",
+        payload: {
+          user: null,
+        },
       };
     }
 
-    /* Hash the user's password */
-    // const hashedPassword = await bcrypt.hash(PASSWORD_HASH!, data.password);
+    /**
+     * The password, genderId, and permissionLevelId are extracted from the data object.
+     * The remaining values are marked as needing to be normalized.
+     */
+    const {
+      password,
+      genderId,
+      permissionLevelId,
+      ...dataToBeNormalized
+    } = data;
 
-    /* Confirm the account was created successfully */
+    /**
+     * Paswords are secured using a hidden SALT value stored in an environment variable.
+     */
+    const hashedPassword = await bcrypt.hash(password, SALT!);
+
+    /**
+     * The associated gender and permissionLevel are retrieved from their tables.
+     */
+    const [gender, permissionLevel] = await Promise.all([
+      Gender.findOne({ where: { id: genderId } }),
+      PermissionLevel.findOne({ where: { id: permissionLevelId } }),
+    ]);
+
+    /**
+     * Remaining data is sanitized.
+     */
+    const normalizedData = normalizeData(dataToBeNormalized);
+
+    /**
+     * The user is recorded in the database using the modified and secured data.
+     */
     const user = await User.create({
-      ...data,
-      // password: hashedPassword, // Overwrite with the hashed password
+      ...normalizedData,
+      gender,
+      permissionLevel,
+      password: hashedPassword,
     }).save();
+
+    /**
+     * If for any reason an error occurs when creating the account the user is informed
+     * and asked to reattempt account creation.
+     */
     if (!user) {
       return {
-        _status: "ERROR",
-        message: "There was an error creating your account, please try again.",
-        payload: null,
+        status: "ERROR",
+        message:
+          "An error occured while creating your account. Please try again.",
+        payload: {
+          user: null,
+        },
       };
     }
 
-    /* All checks have passed, the account may be returned */
+    /**
+     * The user is sent a confirmation email with their unique id as a url parameter.
+     */
+    await sendConfirmationEmail(
+      user.email,
+      createConfirmationUrl(user.externalId), // eslint-disable-line no-underscore-dangle
+    );
+
+    /**
+     * Once all checks have passed the user is informed that their account
+     * has been successfully created.
+     */
     return {
-      _status: "SUCCESS",
+      status: "SUCCESS",
       message:
-        "Your account has been created. Please check your email to confirm your account.",
-      payload: user,
+        "Your account has been successfully created! Please check your email to confirm your account",
+      payload: {
+        user,
+      },
     };
   }
 }
