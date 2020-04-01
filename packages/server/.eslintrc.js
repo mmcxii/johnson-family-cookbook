@@ -7,6 +7,7 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "airbnb-typescript/base",
+    "prettier",
   ],
   globals: {
     Atomics: "readonly",
@@ -42,5 +43,11 @@ module.exports = {
      * This rule causes conflict with prettier.
      */
     "object-curly-newline": 0,
+    /**
+     * This rule causes conflict with prettier.
+     * It mandates that arguments that are separated onto multitple lines be further indented by 2 characters
+     * for each additional line, which is not desired behavior.
+     */
+    "@typescript-eslint/indent": 0,
   },
 };

@@ -1,17 +1,23 @@
-import { Resolver, Mutation, Arg } from "type-graphql";
+import { Resolver, Mutation, Arg, Ctx } from "type-graphql";
 import bcrypt from "bcryptjs";
 
+import { REFRESH_TOKEN_COOKIE_NAME } from "../../constants/envVariables";
 import { UserResponse } from "./common/UserResponse";
 import { LoginInput } from "./login/LoginInput";
 import { UserAccountStatusEnum } from "../../types/user.types";
 import { capitalizeString } from "../../utils/capitalizeString";
 import { normalizeData } from "../../utils/normalizeData";
 import { findUserWithRelations } from "./utils/findUserWithRelations";
+import { MyContext } from "../../types/MyContext";
+import { createAccessToken, createRefreshToken } from "./utils/auth";
 
 @Resolver()
 export class LoginResolver {
   @Mutation(() => UserResponse)
-  async login(@Arg("data") data: LoginInput): Promise<UserResponse> {
+  async login(
+    @Ctx() { res }: MyContext,
+    @Arg("data") data: LoginInput,
+  ): Promise<UserResponse> {
     /**
      * The user's email is normalized before the login is attempted to
      * prevent accidental rejections of correct credentials.
@@ -72,6 +78,10 @@ export class LoginResolver {
       };
     }
 
+    res.cookie(REFRESH_TOKEN_COOKIE_NAME!, createRefreshToken(user), {
+      httpOnly: true,
+    });
+
     /**
      * Once all checks have passed the user is welcomed back to the app and logged in.
      *
@@ -83,7 +93,7 @@ export class LoginResolver {
       payload: {
         user,
         tokens: {
-          accessToken: user.email,
+          accessToken: createAccessToken(user),
         },
       },
     };

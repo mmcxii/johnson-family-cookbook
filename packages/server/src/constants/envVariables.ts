@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import "dotenv/config";
 
 export const {
   PORT = 4000,
@@ -6,7 +6,7 @@ export const {
   POSTGRES_USER,
   POSTGRES_PASSWORD,
   POSTGRES_DB,
-  REDIS_SECRET,
-  REDIS_URL,
-  LOGIN_COOKIE_NAME,
+  ACCESS_TOKEN_SECRET,
+  REFRESH_TOKEN_SECRET,
+  REFRESH_TOKEN_COOKIE_NAME,
 } = process.env;

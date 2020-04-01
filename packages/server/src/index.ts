@@ -24,7 +24,10 @@ import { buildSchema } from "./utils/buildSchema";
     entities: [`${__dirname}/entities/**/*.{t,j}s`],
   }).then((db) => console.log(`Connection established with db ${db.name}`)); // eslint-disable-line no-console
   const schema = await buildSchema();
-  const apolloServer = new ApolloServer({ schema });
+  const apolloServer = new ApolloServer({
+    schema,
+    context: ({ req, res }) => ({ req, res }),
+  });
   const app = express();
 
   apolloServer.applyMiddleware({ app, path: "/api/graphql" });
