@@ -51,8 +51,8 @@ export class CreateUserResolver {
      * The associated gender and permissionLevel are retrieved from their tables.
      */
     const [gender, permissionLevel] = await Promise.all([
-      Gender.findOne({ where: { _id_: genderId } }),
-      PermissionLevel.findOne({ where: { _id_: permissionLevelId } }),
+      Gender.findOne({ where: { id: genderId } }),
+      PermissionLevel.findOne({ where: { id: permissionLevelId } }),
     ]);
 
     /**
@@ -90,7 +90,7 @@ export class CreateUserResolver {
      */
     await sendConfirmationEmail(
       user.email,
-      await createConfirmationUrl(user._externalId_), // eslint-disable-line no-underscore-dangle
+      await createConfirmationUrl(user.externalId), // eslint-disable-line no-underscore-dangle
     );
 
     /**

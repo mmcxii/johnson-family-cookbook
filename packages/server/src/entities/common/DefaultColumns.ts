@@ -18,23 +18,23 @@ import { IDefaultColumns } from "../../types/defaultColumns.types";
 @ObjectType()
 export abstract class DefaultColumns extends BaseEntity
   implements IDefaultColumns {
-  @PrimaryGeneratedColumn({ name: "_id_" })
-  _id_: number;
+  @PrimaryGeneratedColumn({ name: "id" })
+  id: number;
 
   @Field()
   @Generated("uuid")
-  @Column("uuid", { name: "_external_id_" })
-  _externalId_: string;
+  @Column("uuid", { name: "external_id" })
+  externalId: string;
 
   @Field()
-  @CreateDateColumn({ name: "_created_at_" })
-  _createdAt_: Date;
+  @CreateDateColumn({ name: "created_at" })
+  createdAt: Date;
 
   @Field()
-  @UpdateDateColumn({ name: "_updated_at_" })
-  _updatedAt_: Date;
+  @UpdateDateColumn({ name: "updated_at" })
+  updatedAt: Date;
 
   @Field(() => Date, { nullable: true })
-  @DeleteDateColumn({ name: "_archived_at_", nullable: true })
-  _archivedAt_: Date | null;
+  @DeleteDateColumn({ name: "archived_at", nullable: true })
+  archivedAt: Date | null;
 }

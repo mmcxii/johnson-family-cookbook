@@ -56,7 +56,7 @@ export class LoginResolver {
      * If the user has not confirmed their account they are informed and instructed to check
      * their email for the link.
      */
-    if (user.confirmationStatus !== UserAccountStatusEnum.Confirmed) {
+    if (user.accountStatus !== UserAccountStatusEnum.Active) {
       return {
         status: "ERROR",
         message:

@@ -12,7 +12,7 @@ export class ConfirmUserResolver {
     /**
      * Check for the presence of the user requesting confirmation.
      */
-    const user = await findUserWithRelations({ _externalId_: userId });
+    const user = await findUserWithRelations({ externalId: userId });
     if (!user) {
       return {
         status: "ERROR",
@@ -27,7 +27,7 @@ export class ConfirmUserResolver {
      * If the use has already confirmed their account the operation can
      * be exited early.
      */
-    if (user.confirmationStatus !== UserAccountStatusEnum.NotConfirmed) {
+    if (user.accountStatus !== UserAccountStatusEnum.NotConfirmed) {
       return {
         status: "ERROR",
         message: "Your account has already been confirmed.",
@@ -41,8 +41,8 @@ export class ConfirmUserResolver {
      * Once all checks have passed the user's confirmation status is set to "CONFIRMED"
      */
     await User.update(
-      { _externalId_: userId },
-      { confirmationStatus: UserAccountStatusEnum.Confirmed },
+      { externalId: userId },
+      { accountStatus: UserAccountStatusEnum.Active },
     );
     await user.reload();
 
@@ -55,7 +55,7 @@ export class ConfirmUserResolver {
      * is desired because it will catch unexpected errors coming from the database or ORM.
      */
     // @ts-ignore
-    if (user.confirmationStatus !== UserAccountStatusEnum.Confirmed) {
+    if (user.accountStatus !== UserAccountStatusEnum.Active) {
       return {
         status: "ERROR",
         message:

@@ -15,7 +15,7 @@ export class User extends DefaultColumns implements IUser {
     enum: UserAccountStatusEnum,
     default: UserAccountStatusEnum.NotConfirmed,
   })
-  confirmationStatus: UserAccountStatusEnum;
+  accountStatus: UserAccountStatusEnum;
 
   @Column({ name: "permission_level_id" })
   permissionLevelId: number;
@@ -23,7 +23,7 @@ export class User extends DefaultColumns implements IUser {
   @Field(() => PermissionLevel)
   @ManyToOne(
     () => PermissionLevel,
-    (pl) => pl._id_, // eslint-disable-line no-underscore-dangle
+    (pl) => pl.id,
   )
   @JoinColumn({ name: "permission_level_id" })
   permissionLevel: PermissionLevel;
@@ -60,7 +60,7 @@ export class User extends DefaultColumns implements IUser {
   @Field(() => Gender)
   @ManyToOne(
     () => Gender,
-    (g) => g._id_, // eslint-disable-line no-underscore-dangle
+    (g) => g.id,
     { onDelete: "CASCADE" },
   )
   @JoinColumn({ name: "gender_id" })

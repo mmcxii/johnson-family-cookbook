@@ -14,5 +14,5 @@ export async function findUserWithRelations(
 
 interface Params {
   email?: string;
-  _externalId_?: string;
+  externalId?: string;
 }
