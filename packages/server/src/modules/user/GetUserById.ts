@@ -2,6 +2,7 @@ import { Resolver, Query, Arg } from "type-graphql";
 
 import { UserResponse } from "./common/UserResponse";
 import { findUserWithRelations } from "./utils/findUserWithRelations";
+import { capitalizeString } from "../../utils/capitalizeString";
 
 @Resolver()
 export class GetUserByIdResolver {
@@ -20,7 +21,7 @@ export class GetUserByIdResolver {
 
     return {
       status: "SUCCESS",
-      message: `Loading ${user.firstName}'s profile.`,
+      message: `Loading ${capitalizeString(user.firstName)}'s profile.`,
       payload: {
         user,
       },
