@@ -43,6 +43,9 @@ export class User extends DefaultColumns implements IUser {
   @Column({ name: "password" })
   password: string;
 
+  @Column("int", { name: "token_version", default: 0 })
+  tokenVersion: number;
+
   @Field()
   @Column({ name: "birthday" })
   birthday: Date;

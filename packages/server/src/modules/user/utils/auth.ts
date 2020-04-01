@@ -19,10 +19,14 @@ export const createAccessToken = (user: User) => {
 };
 
 export const createRefreshToken = (user: User) => {
-  // eslint-disable-next-line no-underscore-dangle
-  return sign({ userId: user._externalId_ }, REFRESH_TOKEN_SECRET!, {
-    expiresIn: "1y",
-  });
+  return sign(
+    // eslint-disable-next-line no-underscore-dangle
+    { userId: user._externalId_, tokenVersion: user.tokenVersion },
+    REFRESH_TOKEN_SECRET!,
+    {
+      expiresIn: "1y",
+    },
+  );
 };
 
 export const sendRefreshToken = (res: Response, token: string) => {
