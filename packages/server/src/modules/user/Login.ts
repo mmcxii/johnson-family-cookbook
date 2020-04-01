@@ -84,8 +84,6 @@ export class LoginResolver {
 
     /**
      * Once all checks have passed the user is welcomed back to the app and logged in.
-     *
-     * TODO: Implement JWT auth
      */
     return {
       status: "SUCCESS",
