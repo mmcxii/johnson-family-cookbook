@@ -38,13 +38,16 @@ export class ConfirmUserResolver {
     }
 
     /**
-     * Once all checks have passed the user's confirmation status is set to "CONFIRMED"
+     * Once all checks have passed the user's confirmation status is set to "ACTIVE"
+     * and the account information is reloaded.
      */
-    await User.update(
-      { externalId: userId },
-      { accountStatus: UserAccountStatusEnum.Active },
-    );
-    await user.reload();
+    await Promise.all([
+      User.update(
+        { externalId: userId },
+        { accountStatus: UserAccountStatusEnum.Active },
+      ),
+      user.reload(),
+    ]);
 
     /**
      * If for any reason the database is not updated the user is informed of the error
