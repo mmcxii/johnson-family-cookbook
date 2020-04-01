@@ -8,6 +8,9 @@ import { capitalizeString } from "../../utils/capitalizeString";
 export class GetUserByIdResolver {
   @Query(() => UserResponse)
   async getUserById(@Arg("userId") userId: string): Promise<UserResponse> {
+    /**
+     * Find the requested user.
+     */
     const user = await findUserWithRelations({ externalId: userId });
     if (!user) {
       return {

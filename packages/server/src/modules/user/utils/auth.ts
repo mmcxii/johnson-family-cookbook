@@ -27,5 +27,6 @@ export const createRefreshToken = (user: User) => {
 export const sendRefreshToken = (res: Response, token: string) => {
   res.cookie(REFRESH_TOKEN_COOKIE_NAME!, token, {
     httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
   });
 };

@@ -11,6 +11,9 @@ import { createResetPasswordUrl } from "../utils/createResetPasswordUrl";
 export class ForgotPasswordResolver {
   @Mutation(() => UserResponse)
   async forgotPassword(@Arg("email") email: string): Promise<UserResponse> {
+    /**
+     * Find and verify the requested user account.
+     */
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return {
@@ -22,13 +25,22 @@ export class ForgotPasswordResolver {
       };
     }
 
+    /**
+     * Set the account status to "DISABLED".
+     */
     await User.update(
       { email },
       { accountStatus: UserAccountStatusEnum.Disabled },
     );
 
+    /**
+     * Revoke existing refresh tokens by incrementing the token version.
+     */
     await revokeRefreshTokens(user.externalId);
 
+    /**
+     * Send the user's email a link to reset their password.
+     */
     await sendResetPasswordEmail(
       user.email,
       createResetPasswordUrl(user.externalId),
