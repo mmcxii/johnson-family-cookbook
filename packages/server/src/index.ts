@@ -20,8 +20,9 @@ import { buildSchema } from "./utils/buildSchema";
     password: POSTGRES_PASSWORD,
     port: 5432,
     synchronize: true,
-    entities: [__dirname + "/entities/**/*.{t,j}s"],
-  }).then((db) => console.log(`Connection established with db ${db.name}`));
+    logging: true,
+    entities: [`${__dirname}/entities/**/*.{t,j}s`],
+  }).then((db) => console.log(`Connection established with db ${db.name}`)); // eslint-disable-line no-console
   const schema = await buildSchema();
   const apolloServer = new ApolloServer({ schema });
   const app = express();
@@ -29,6 +30,6 @@ import { buildSchema } from "./utils/buildSchema";
   apolloServer.applyMiddleware({ app, path: "/api/graphql" });
 
   app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`); // eslint-disable-line no-console
   });
 })();
