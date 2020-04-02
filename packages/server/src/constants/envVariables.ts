@@ -1,4 +1,8 @@
-import "dotenv/config";
+import { config } from "dotenv";
+
+import { findEnv } from "../utils/findEnv";
+
+config({ path: findEnv() });
 
 export const {
   PORT = 4000,
