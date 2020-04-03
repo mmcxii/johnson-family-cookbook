@@ -1,0 +1,26 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./docker-data/db-data:/var/lib/postgresql/data
+      - ./scripts:/docker-entrypoint-initdb.d/create-extension.sh
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - 5432:5432
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+#   server:
+#     ports:
+#       - 4000:4000
+#     depends_on:
+#       - db

@@ -6,9 +6,11 @@
   "license": "MIT",
   "scripts": {
     "build": "./node_modules/.bin/tsc",
+    "ci:test": "yarn test",
     "lint:fix": "eslint src/**/*.ts --fix",
     "start:dev": "tsnd src/index.ts --respawn",
-    "start:prod": "node dist/index.js"
+    "start:prod": "node dist/index.js",
+    "test": "echo \"Haven't written any yet...\""
   },
   "dependencies": {
     "apollo-server-express": "^2.11.0",
