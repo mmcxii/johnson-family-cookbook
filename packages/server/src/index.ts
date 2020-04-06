@@ -3,6 +3,7 @@ import express from "express";
 import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-express";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import {
   PORT,
@@ -47,13 +48,16 @@ import { refreshTokenRoute } from "./refreshTokenRoute";
    * Middleware Setup
    */
 
+  // Cors
+  app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+
   // Cookie Parser
   app.use(cookieParser());
 
   /**
    * Connect Express and Apollo
    */
-  apolloServer.applyMiddleware({ app, path: "/api/graphql" });
+  apolloServer.applyMiddleware({ app, path: "/api/graphql", cors: false });
 
   /**
    * External route for generating tokens.
