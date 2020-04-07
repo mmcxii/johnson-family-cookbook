@@ -7,6 +7,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "ci:test": "yarn test:e2e:run",
     "test:e2e": "cypress open",
     "test:e2e:run": "cypress run"
   },

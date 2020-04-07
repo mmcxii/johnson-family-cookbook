@@ -6,6 +6,9 @@
   "author": "Nich Secord",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "ci:test": "lerna run ci:test"
+  },
   "workspaces": [
     "packages/*"
   ],
