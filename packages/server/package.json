@@ -10,7 +10,8 @@
     "lint:fix": "eslint src/**/*.ts --fix",
     "start:dev": "tsnd src/index.ts --respawn",
     "start:prod": "node dist/index.js",
-    "test": "echo \"Haven't written any yet...\""
+    "test": "echo \"Haven't written any yet...\"",
+    "validate-server": "yarn lint:fix && yarn test"
   },
   "dependencies": {
     "apollo-server-express": "^2.11.0",
@@ -44,6 +45,7 @@
     "eslint-config-airbnb-typescript": "^7.2.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-import": "^2.20.2",
+    "husky": "^4.2.3",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.3"
   }
