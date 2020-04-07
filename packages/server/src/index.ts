@@ -1,3 +1,5 @@
+import path from "path";
+
 import "reflect-metadata";
 import express from "express";
 import { createConnection } from "typeorm";
@@ -27,7 +29,7 @@ import { refreshTokenRoute } from "./refreshTokenRoute";
     port: 5432,
     synchronize: true,
     logging: true,
-    entities: [`${__dirname}/entities/**/*.{t,j}s`],
+    entities: [path.resolve(__dirname, "entities", "**", "*.{t,j}s")],
   }).then((db) => console.log(`Connection established with db ${db.name}`)); // eslint-disable-line no-console
 
   /**
