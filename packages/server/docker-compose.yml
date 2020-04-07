@@ -19,8 +19,9 @@ services:
       - 8080:8080
     depends_on:
       - db
-#   server:
-#     ports:
-#       - 4000:4000
-#     depends_on:
-#       - db
+  server:
+    image: node
+    ports:
+      - 4000:4000
+    depends_on:
+      - db
