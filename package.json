@@ -7,7 +7,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "ci:test": "lerna run ci:test"
+    "ci:test": "lerna run ci:test",
+    "ci:deploy": "lerna run ci:deploy --since $TAG",
+    "new-version": "lerna version --conventional-commits --yes"
   },
   "workspaces": [
     "packages/*"
