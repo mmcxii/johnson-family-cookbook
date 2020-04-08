@@ -17,8 +17,8 @@ let connectionAttempts = 5;
   /**
    * Database Connection
    */
-  try {
-    while (connectionAttempts) {
+  while (connectionAttempts) {
+    try {
       // eslint-disable-next-line no-await-in-loop
       const db = await createConnection({
         type: "postgres",
@@ -40,14 +40,15 @@ let connectionAttempts = 5;
         `Migrations ran: ${JSON.stringify(migrations.map((m) => m.name))}`,
       );
       break;
+    } catch (err) {
+      connectionAttempts -= 1;
+
+      console.log(err); // eslint-disable-line no-console
+      console.log(`Connection attempts remaining: ${connectionAttempts}`); // eslint-disable-line no-console
+
+      // eslint-disable-next-line no-await-in-loop
+      await new Promise((res) => setTimeout(res, 5000));
     }
-  } catch (err) {
-    connectionAttempts -= 1;
-
-    console.log(err); // eslint-disable-line no-console
-    console.log(`Connection attempts remaining: ${connectionAttempts}`); // eslint-disable-line no-console
-
-    await new Promise((res) => setTimeout(res, 5000));
   }
 
   /**
