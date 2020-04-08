@@ -36,7 +36,7 @@ import { refreshTokenRoute } from "./refreshTokenRoute";
       `Migrations ran: ${JSON.stringify(migrations.map((m) => m.name))}`,
     );
   } catch (err) {
-    console.log(err.message); // eslint-disable-line no-console
+    console.log(err); // eslint-disable-line no-console
   }
 
   /**

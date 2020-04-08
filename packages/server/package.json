@@ -23,6 +23,7 @@
     "typeorm:migration:generate": "npx typeorm migration:generate -n",
     "typeorm:migration:generate:src": "yarn typeorm migration:generate -n",
     "typeorm:migration:revert": "typeorm migration:revert",
+    "typeorm:migration:revert:src": "yarn typeorm migration:revert",
     "typeorm:migration:run": "typeorm migration:run",
     "typeorm:migration:run:src": "typeorm migration:run",
     "validate-server": "yarn lint:fix && yarn test"
