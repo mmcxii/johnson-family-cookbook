@@ -7,9 +7,13 @@
   "scripts": {
     "build": "./node_modules/.bin/tsc",
     "ci:test": "yarn test",
+    "docker:build": "docker-compose up --build",
+    "docker:start": "docker-compose up -d",
+    "docker:nuke": "docker-compose down && rm -rf docker-data/db-data",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "start:dev": "tsnd src/index.ts --respawn",
-    "start:prod": "node dist/index.js",
+    "start:dev": "yarn docker:start && yarn start:server:dev",
+    "start:server:dev": "tsnd src/index.ts --respawn",
+    "start:server:prod": "node dist/index.js",
     "test": "echo \"Haven't written any yet...\"",
     "validate-server": "yarn lint:fix && yarn test"
   },

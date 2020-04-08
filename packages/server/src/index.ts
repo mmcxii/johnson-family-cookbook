@@ -12,6 +12,7 @@ import {
   POSTGRES_USER,
   POSTGRES_PASSWORD,
   POSTGRES_DB,
+  WEB_URL,
 } from "./constants/envVariables";
 import { buildSchema } from "./utils/buildSchema";
 import { refreshTokenRoute } from "./refreshTokenRoute";
@@ -20,17 +21,23 @@ import { refreshTokenRoute } from "./refreshTokenRoute";
   /**
    * Database Connection
    */
-  await createConnection({
-    type: "postgres",
-    database: POSTGRES_DB,
-    name: "default",
-    username: POSTGRES_USER,
-    password: POSTGRES_PASSWORD,
-    port: 5432,
-    synchronize: true,
-    logging: true,
-    entities: [path.resolve(__dirname, "entities", "**", "*.{t,j}s")],
-  }).then((db) => console.log(`Connection established with db ${db.name}`)); // eslint-disable-line no-console
+  try {
+    const db = await createConnection({
+      type: "postgres",
+      database: POSTGRES_DB,
+      name: "default",
+      username: POSTGRES_USER,
+      password: POSTGRES_PASSWORD,
+      port: 5432,
+      synchronize: true,
+      logging: true,
+      entities: [path.resolve(__dirname, "entities", "**", "*.{t,j}s")],
+    });
+
+    console.log(`Connection established with database: ${db.name}`); // eslint-disable-line no-console
+  } catch (err) {
+    console.log(err); // eslint-disable-line no-console
+  }
 
   /**
    * Apollo Server Setup
@@ -51,7 +58,7 @@ import { refreshTokenRoute } from "./refreshTokenRoute";
    */
 
   // Cors
-  app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+  app.use(cors({ credentials: true, origin: WEB_URL }));
 
   // Cookie Parser
   app.use(cookieParser());
