@@ -5,9 +5,13 @@ VALUES
     ('F'),
     ('O');
 
+SELECT * FROM gender;
+
 -- Populate Permission Level Table
 INSERT INTO permission_level ("name")
 VALUES
     ('ADMIN'),
     ('USER'),
     ('GUEST');
+
+SELECT * FROM permission_level;
