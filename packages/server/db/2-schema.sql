@@ -3,7 +3,7 @@
 */
 
 -- Create Gender Enum
-CREATE TYPE "gender_name_enum" AS ENUM('M', 'F');
+CREATE TYPE "gender_name_enum" AS ENUM('M', 'F', 'O');
 
 -- Create Gender Table
 CREATE TABLE IF NOT EXISTS "gender" (

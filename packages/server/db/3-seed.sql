@@ -2,7 +2,8 @@
 INSERT INTO gender ("name")
 VALUES
     ('M'),
-    ('F');
+    ('F'),
+    ('O');
 
 -- Populate Permission Level Table
 INSERT INTO permission_level ("name")
