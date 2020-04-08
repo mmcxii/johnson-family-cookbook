@@ -6,9 +6,10 @@ import { registerEnumType } from "type-graphql";
  */
 export interface IGender {
   name: GenderNameEnum;
+  code: GenderCodeEnum;
 }
 
-export enum GenderIdEnum {
+export enum GenderCodeEnum {
   Male = 1,
   Female = 2,
   Other = 3,
@@ -24,6 +25,6 @@ export enum GenderNameEnum {
  * The GenderIdEnum is registed so it can be recognized by
  * the Type-GraphQL API and used as an input.
  */
-registerEnumType(GenderIdEnum, {
-  name: "GenderIdEnum",
+registerEnumType(GenderCodeEnum, {
+  name: "GenderCodeEnum",
 });

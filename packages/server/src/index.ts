@@ -7,13 +7,8 @@ import { ApolloServer } from "apollo-server-express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import {
-  PORT,
-  POSTGRES_USER,
-  POSTGRES_PASSWORD,
-  POSTGRES_DB,
-  WEB_URL,
-} from "./constants/envVariables";
+import { PORT, WEB_URL } from "./constants/envVariables";
+import { srcOrDist } from "./constants/srcOrDist";
 import { buildSchema } from "./utils/buildSchema";
 import { refreshTokenRoute } from "./refreshTokenRoute";
 
@@ -24,19 +19,24 @@ import { refreshTokenRoute } from "./refreshTokenRoute";
   try {
     const db = await createConnection({
       type: "postgres",
-      database: POSTGRES_DB,
+      database: "jfcb_db",
       name: "default",
-      username: POSTGRES_USER,
-      password: POSTGRES_PASSWORD,
+      username: "postgres",
+      password: "postgres",
       port: 5432,
-      synchronize: true,
-      logging: true,
-      entities: [path.resolve(__dirname, "entities", "**", "*.{t,j}s")],
+      logging: process.env.NODE_ENV !== "production",
+      entities: [path.join(srcOrDist, "entities", "**", "*.{t,j}s")],
+      migrations: [path.join(srcOrDist, "migrations", "**", "*.{t,j}s")],
     });
+    const migrations = await db.runMigrations();
 
     console.log(`Connection established with database: ${db.name}`); // eslint-disable-line no-console
+    // eslint-disable-next-line no-console
+    console.log(
+      `Migrations ran: ${JSON.stringify(migrations.map((m) => m.name))}`,
+    );
   } catch (err) {
-    console.log(err); // eslint-disable-line no-console
+    console.log(err.message); // eslint-disable-line no-console
   }
 
   /**

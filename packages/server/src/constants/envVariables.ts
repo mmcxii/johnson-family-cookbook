@@ -14,4 +14,5 @@ export const {
   REFRESH_TOKEN_SECRET,
   REFRESH_TOKEN_COOKIE_NAME,
   WEB_URL = "http://localhost:3000",
+  NODE_ENV,
 } = process.env;

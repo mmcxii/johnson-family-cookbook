@@ -37,8 +37,8 @@ export class CreateUserResolver {
      */
     const {
       password,
-      genderId,
-      permissionLevelId,
+      genderCode,
+      permissionLevelCode,
       ...dataToBeNormalized
     } = data;
 
@@ -51,8 +51,8 @@ export class CreateUserResolver {
      * The associated gender and permissionLevel are retrieved from their tables.
      */
     const [gender, permissionLevel] = await Promise.all([
-      Gender.findOne({ where: { id: genderId } }),
-      PermissionLevel.findOne({ where: { id: permissionLevelId } }),
+      Gender.findOne({ where: { code: genderCode } }),
+      PermissionLevel.findOne({ where: { code: permissionLevelCode } }),
     ]);
 
     /**
