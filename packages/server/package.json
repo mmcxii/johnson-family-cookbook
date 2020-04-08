@@ -6,10 +6,11 @@
   "license": "MIT",
   "scripts": {
     "ci:test": "yarn test",
-    "docker:build": "docker-compose up --build",
+    "docker:build": "yarn docker:up --build",
     "docker:down": "docker-compose down",
     "docker:nuke": "yarn docker:down && rm -rf docker-data/db-data",
-    "docker:start": "docker-compose up -d",
+    "docker:start": "yarn docker:up -d",
+    "docker:up": "docker-compose up",
     "lint:fix": "eslint src/**/*.ts --fix",
     "server:build": "./node_modules/.bin/tsc",
     "start:dev": "yarn docker:start && yarn start:server:dev",
