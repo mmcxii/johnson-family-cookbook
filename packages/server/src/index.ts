@@ -12,31 +12,42 @@ import { srcOrDist } from "./constants/srcOrDist";
 import { buildSchema } from "./utils/buildSchema";
 import { refreshTokenRoute } from "./refreshTokenRoute";
 
+let connectionAttempts = 5;
 (async () => {
   /**
    * Database Connection
    */
   try {
-    const db = await createConnection({
-      type: "postgres",
-      database: "jfcb_db",
-      name: "default",
-      username: "postgres",
-      password: "postgres",
-      port: 5432,
-      logging: process.env.NODE_ENV !== "production",
-      entities: [path.join(srcOrDist, "entities", "**", "*.{t,j}s")],
-      migrations: [path.join(srcOrDist, "migrations", "**", "*.{t,j}s")],
-    });
-    const migrations = await db.runMigrations();
+    while (connectionAttempts) {
+      // eslint-disable-next-line no-await-in-loop
+      const db = await createConnection({
+        type: "postgres",
+        database: "jfcb_db",
+        name: "default",
+        username: "postgres",
+        password: "postgres",
+        port: 5432,
+        logging: process.env.NODE_ENV !== "production",
+        entities: [path.join(srcOrDist, "entities", "**", "*.{t,j}s")],
+        migrations: [path.join(srcOrDist, "migrations", "**", "*.{t,j}s")],
+      });
+      // eslint-disable-next-line no-await-in-loop
+      const migrations = await db.runMigrations();
 
-    console.log(`Connection established with database: ${db.name}`); // eslint-disable-line no-console
-    // eslint-disable-next-line no-console
-    console.log(
-      `Migrations ran: ${JSON.stringify(migrations.map((m) => m.name))}`,
-    );
+      console.log(`Connection established with database: ${db.name}`); // eslint-disable-line no-console
+      // eslint-disable-next-line no-console
+      console.log(
+        `Migrations ran: ${JSON.stringify(migrations.map((m) => m.name))}`,
+      );
+      break;
+    }
   } catch (err) {
+    connectionAttempts -= 1;
+
     console.log(err); // eslint-disable-line no-console
+    console.log(`Connection attempts remaining: ${connectionAttempts}`); // eslint-disable-line no-console
+
+    await new Promise((res) => setTimeout(res, 5000));
   }
 
   /**

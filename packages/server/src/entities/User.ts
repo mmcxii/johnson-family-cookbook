@@ -21,10 +21,7 @@ export class User extends DefaultColumns implements IUser {
   permissionLevelId: number;
 
   @Field(() => PermissionLevel)
-  @ManyToOne(
-    () => PermissionLevel,
-    (pl) => pl.id,
-  )
+  @ManyToOne(() => PermissionLevel, (pl) => pl.id, { onDelete: "CASCADE" })
   @JoinColumn({ name: "permission_level_id" })
   permissionLevel: PermissionLevel;
 
@@ -58,11 +55,7 @@ export class User extends DefaultColumns implements IUser {
   genderId: number;
 
   @Field(() => Gender)
-  @ManyToOne(
-    () => Gender,
-    (g) => g.id,
-    { onDelete: "CASCADE" },
-  )
+  @ManyToOne(() => Gender, (g) => g.id, { onDelete: "CASCADE" })
   @JoinColumn({ name: "gender_id" })
   gender: Gender;
 }
