@@ -7,7 +7,13 @@ import { ApolloServer } from "apollo-server-express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import { PORT, WEB_URL } from "./constants/envVariables";
+import {
+  PORT,
+  WEB_URL,
+  POSTGRES_DB,
+  POSTGRES_PASSWORD,
+  POSTGRES_USER,
+} from "./constants/envVariables";
 import { srcOrDist } from "./constants/srcOrDist";
 import { buildSchema } from "./utils/buildSchema";
 import { refreshTokenRoute } from "./refreshTokenRoute";
@@ -22,10 +28,10 @@ let connectionAttempts = 5;
       // eslint-disable-next-line no-await-in-loop
       const db = await createConnection({
         type: "postgres",
-        database: "jfcb_db",
+        database: POSTGRES_DB,
         name: "default",
-        username: "postgres",
-        password: "postgres",
+        username: POSTGRES_USER,
+        password: POSTGRES_PASSWORD,
         port: 5432,
         logging: process.env.NODE_ENV !== "production",
         entities: [path.join(srcOrDist, "entities", "**", "*.{t,j}s")],
