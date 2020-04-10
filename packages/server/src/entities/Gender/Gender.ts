@@ -1,9 +1,13 @@
 import { Column, Entity } from "typeorm";
 import { ObjectType, Field, Int } from "type-graphql";
 
-import { TableNames } from "../types/tableNames";
-import { IGender, GenderNameEnum, GenderCodeEnum } from "../types/gender.types";
-import { DefaultColumns } from "./common/DefaultColumns";
+import { TableNames } from "../../types/tableNames";
+import {
+  IGender,
+  GenderNameEnum,
+  GenderCodeEnum,
+} from "../../types/gender.types";
+import { DefaultColumns } from "../common/DefaultColumns";
 
 /**
  * Name: gender

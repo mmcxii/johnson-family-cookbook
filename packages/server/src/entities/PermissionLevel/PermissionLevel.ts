@@ -1,13 +1,13 @@
 import { ObjectType, Field, Int } from "type-graphql";
 import { Entity, Column } from "typeorm";
 
-import { TableNames } from "../types/tableNames";
+import { TableNames } from "../../types/tableNames";
 import {
   IPermissionLevel,
   PermissionLevelNameEnum,
   PermissionLevelCodeEnum,
-} from "../types/permissionLevel.types";
-import { DefaultColumns } from "./common/DefaultColumns";
+} from "../../types/permissionLevel.types";
+import { DefaultColumns } from "../common/DefaultColumns";
 
 /**
  * Name: permission_level

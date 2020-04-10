@@ -1,11 +1,11 @@
 import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 
-import { TableNames } from "../types/tableNames";
-import { IUser, UserAccountStatusEnum } from "../types/user.types";
-import { DefaultColumns } from "./common/DefaultColumns";
-import { Gender } from "./Gender";
-import { PermissionLevel } from "./PermissionLevel";
+import { TableNames } from "../../types/tableNames";
+import { IUser, UserAccountStatusEnum } from "../../types/user.types";
+import { DefaultColumns } from "../common/DefaultColumns";
+import { Gender } from "../Gender";
+import { PermissionLevel } from "../PermissionLevel";
 
 /**
  * Name: user
