@@ -18,6 +18,9 @@ import { srcOrDist } from "./constants/srcOrDist";
 import { buildSchema } from "./utils/buildSchema";
 import { refreshTokenRoute } from "./refreshTokenRoute";
 
+/**
+ * When the app is initialized it can make up to 5 attempts to connect to the database.
+ */
 let connectionAttempts = 5;
 (async () => {
   /**
@@ -37,6 +40,10 @@ let connectionAttempts = 5;
         entities: [path.join(srcOrDist, "entities", "**", "*.{t,j}s")],
         migrations: [path.join(srcOrDist, "migrations", "**", "*.{t,j}s")],
       });
+      /**
+       * Once the connection with the database is established the schema is checked to
+       * determine which migrations, if any, need to be executed.
+       */
       // eslint-disable-next-line no-await-in-loop
       const migrations = await db.runMigrations();
 
@@ -45,13 +52,24 @@ let connectionAttempts = 5;
       console.log(
         `Migrations ran: ${JSON.stringify(migrations.map((m) => m.name))}`,
       );
+
+      /**
+       * Once the connection has been established and all migrations are ran
+       * the loop can be exited.
+       */
       break;
     } catch (err) {
+      /**
+       * If an error occurs the number of remaining connection attempts is decermented,
+       */
       connectionAttempts -= 1;
 
       console.log(err); // eslint-disable-line no-console
       console.log(`Connection attempts remaining: ${connectionAttempts}`); // eslint-disable-line no-console
 
+      /**
+       * The app should wait five (5) seconds before reattempting to connect.
+       */
       // eslint-disable-next-line no-await-in-loop
       await new Promise((res) => setTimeout(res, 5000));
     }
