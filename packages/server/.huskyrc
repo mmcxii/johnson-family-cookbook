@@ -1,5 +1,6 @@
 {
     hooks: {
-        "pre-commit": "validate-server"
+        "pre-commit": "lint:fix",
+        "pre-push": "validate-client"
     }
 }

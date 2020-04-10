@@ -18,6 +18,7 @@
     "start:server:dev": "tsnd src/index.ts --respawn",
     "start:server:prod": "node dist/index.js",
     "test": "yarn test:setup && NODE_ENV=test jest",
+    "test:coverage": "yarn test --collectCoverage",
     "test:setup": "yarn docker:start && ts-node ./src/testUtils/setup.ts",
     "test:watch": "yarn test:setup && NODE_ENV=test jest --watch",
     "typeorm:ts": "ts-node ../../node_modules/typeorm/cli.js",
@@ -28,7 +29,7 @@
     "typeorm:migration:revert:src": "yarn typeorm:ts migration:revert",
     "typeorm:migration:run": "npx typeormx migration:run",
     "typeorm:migration:run:src": "npx typeorm migration:run",
-    "validate-server": "yarn lint:fix && yarn test"
+    "validate-server": "yarn lint:fix && yarn test:coverage"
   },
   "dependencies": {
     "apollo-server-express": "^2.11.0",
