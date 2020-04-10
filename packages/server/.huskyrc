@@ -1,6 +1,6 @@
 {
     hooks: {
-        "pre-commit": "lint:fix",
-        "pre-push": "validate-client"
+        "pre-commit": "yarn lint:fix",
+        "pre-push": "yarn validate-client"
     }
 }
