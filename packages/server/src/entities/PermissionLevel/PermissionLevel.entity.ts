@@ -7,7 +7,7 @@ import {
   PermissionLevelNameEnum,
   PermissionLevelCodeEnum,
 } from "../../types/permissionLevel.types";
-import { DefaultColumns } from "../common/DefaultColumns";
+import { DefaultColumns } from "../common/DefaultColumns.abstract";
 
 /**
  * Name: permission_level

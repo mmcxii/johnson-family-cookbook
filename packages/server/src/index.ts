@@ -37,10 +37,10 @@ let connectionAttempts = 5;
         password: POSTGRES_PASSWORD,
         port: 5432,
         logging: process.env.NODE_ENV !== "production",
-        entities: [
-          path.join(srcOrDist, "entities", "**", "*.{,!(test).}{t,j}s"),
+        entities: [path.join(srcOrDist, "entities", "**", "*.entity.{t,j}s")],
+        migrations: [
+          path.join(srcOrDist, "migrations", "**", "*.migration.{t,j}s"),
         ],
-        migrations: [path.join(srcOrDist, "migrations", "**", "*.{t,j}s")],
       });
       /**
        * Once the connection with the database is established the schema is checked to

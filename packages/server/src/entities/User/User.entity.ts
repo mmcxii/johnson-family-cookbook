@@ -3,7 +3,7 @@ import { ObjectType, Field } from "type-graphql";
 
 import { TableNames } from "../../types/tableNames";
 import { IUser, UserAccountStatusEnum } from "../../types/user.types";
-import { DefaultColumns } from "../common/DefaultColumns";
+import { DefaultColumns } from "../common/DefaultColumns.abstract";
 import { Gender } from "../Gender";
 import { PermissionLevel } from "../PermissionLevel";
 

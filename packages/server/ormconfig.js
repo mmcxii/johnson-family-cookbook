@@ -10,8 +10,8 @@ module.exports = {
   name: "default",
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
-  entities: [path.join(srcOrDist, "entities", "**", "*.{t,j}s")],
-  migrations: [path.join("src", "migrations", "**", "*.{t,j}s")],
+  entities: [path.join(srcOrDist, "entities", "**", "*.entity.{t,j}s")],
+  migrations: [path.join("src", "migrations", "**", "*.migration.{t,j}s")],
   cli: {
     entitiesDir: path.join(srcOrDist, "entities"),
     migrationsDir: path.join(srcOrDist, "migrations"),

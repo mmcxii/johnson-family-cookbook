@@ -1,1 +1,1 @@
-export * from "./PermissionLevel";
+export * from "./PermissionLevel.entity";

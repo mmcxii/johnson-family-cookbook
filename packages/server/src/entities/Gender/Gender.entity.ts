@@ -7,7 +7,7 @@ import {
   GenderNameEnum,
   GenderCodeEnum,
 } from "../../types/gender.types";
-import { DefaultColumns } from "../common/DefaultColumns";
+import { DefaultColumns } from "../common/DefaultColumns.abstract";
 
 /**
  * Name: gender
