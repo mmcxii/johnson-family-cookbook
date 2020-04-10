@@ -1,15 +1,15 @@
 const path = require("path");
 require("dotenv").config();
 
-// const { POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, NODE_ENV } = process.env;
-const srcOrDist = process.env.NODE_ENV === "production" ? "dist" : "src";
+const { POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, NODE_ENV } = process.env;
+const srcOrDist = NODE_ENV === "production" ? "dist" : "src";
 
 module.exports = {
   type: "postgres",
-  database: "jfcb_db",
+  database: POSTGRES_DB,
   name: "default",
-  username: "postgres",
-  password: "postgres",
+  username: POSTGRES_USER,
+  password: POSTGRES_PASSWORD,
   entities: [path.join(srcOrDist, "entities", "**", "*.{t,j}s")],
   migrations: [path.join("src", "migrations", "**", "*.{t,j}s")],
   cli: {

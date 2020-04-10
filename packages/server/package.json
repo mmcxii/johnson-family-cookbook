@@ -17,8 +17,9 @@
     "start:prod": "yarn docker:start && NODE_ENV=production yarn start:server:prod",
     "start:server:dev": "tsnd src/index.ts --respawn",
     "start:server:prod": "node dist/index.js",
-    "test": "NODE_ENV=test jest",
-    "test:jest": "NODE_ENV=test jest --watch",
+    "test": "yarn test:setup && NODE_ENV=test jest",
+    "test:setup": "ts-node ./src/testUtils/setup.ts",
+    "test:jest": "yarn test:setup && NODE_ENV=test jest --watch",
     "typeorm:ts": "ts-node ../../node_modules/typeorm/cli.js",
     "typeorm:migration:create": "npx typeorm migration:create -n",
     "typeorm:migration:generate": "npx typeorm migration:generate -n",
@@ -67,6 +68,7 @@
     "husky": "^4.2.3",
     "jest": "^25.3.0",
     "ts-jest": "^25.3.1",
+    "ts-node": "^8.8.2",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.3"
   }
