@@ -16,10 +16,28 @@ export class CreateUserResolver {
   @Mutation(() => UserResponse)
   async createUser(@Arg("data") data: CreateUserInput): Promise<UserResponse> {
     /**
+     * The password, genderId, and permissionLevelId are extracted from the data object.
+     * The remaining values are marked as needing to be normalized.
+     */
+    const {
+      password,
+      genderCode,
+      permissionLevelCode,
+      ...dataToBeNormalized
+    } = data;
+
+    /**
+     * Remaining data is sanitized.
+     */
+    const normalizedData = normalizeData(dataToBeNormalized);
+
+    /**
      * Confirm the requested email is not already in use by attempting to find
      * an existing user with that email.
      */
-    const emailIsInUse = await User.findOne({ where: { email: data.email } })!!;
+    const emailIsInUse = !!(await User.findOne({
+      where: { email: normalizedData.email },
+    }));
     if (emailIsInUse) {
       return {
         status: "ERROR",
@@ -30,17 +48,6 @@ export class CreateUserResolver {
         },
       };
     }
-
-    /**
-     * The password, genderId, and permissionLevelId are extracted from the data object.
-     * The remaining values are marked as needing to be normalized.
-     */
-    const {
-      password,
-      genderCode,
-      permissionLevelCode,
-      ...dataToBeNormalized
-    } = data;
 
     /**
      * Paswords are secured using a hidden SALT value stored in an environment variable.
@@ -54,11 +61,6 @@ export class CreateUserResolver {
       Gender.findOne({ where: { code: genderCode } }),
       PermissionLevel.findOne({ where: { code: permissionLevelCode } }),
     ]);
-
-    /**
-     * Remaining data is sanitized.
-     */
-    const normalizedData = normalizeData(dataToBeNormalized);
 
     /**
      * The user is recorded in the database using the modified and secured data.
