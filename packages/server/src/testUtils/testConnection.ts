@@ -1,19 +1,30 @@
 import path from "path";
 
-import { createConnection } from "typeorm";
+import {
+  POSTGRES_USER,
+  POSTGRES_PASSWORD,
+  POSTGRES_DB_TEST,
+} from "../constants/envVariables";
+import { createDatabaseConnection } from "../utils/createDatabaseConnection";
 
-import { POSTGRES_USER, POSTGRES_PASSWORD } from "../constants/envVariables";
-
-export const testConnection = (drop: boolean) =>
-  createConnection({
+export const testConnection = async (drop: boolean = false) => {
+  const db = await createDatabaseConnection({
     type: "postgres",
-    database: "jfcb_db_test",
+    database: POSTGRES_DB_TEST,
     name: "default",
     username: POSTGRES_USER,
     password: POSTGRES_PASSWORD,
-    port: 5432,
+    port: 5433,
     dropSchema: drop,
-    synchronize: drop,
-    entities: [path.join("..", "entities", "**", "*.{,!(test).}{t,j}s")],
-    migrations: [path.join("..", "migrations", "**", "*.{t,j}s")],
+    entities: [path.join(__dirname, "..", "entities", "**", "*.entity.{t,j}s")],
+    migrations: [
+      path.join(__dirname, "..", "migrations", "**", "*.migration.{t,j}s"),
+    ],
   });
+
+  if (db) {
+    await db.runMigrations();
+  }
+
+  return db;
+};
