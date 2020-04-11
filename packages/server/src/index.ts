@@ -1,33 +1,19 @@
 import "reflect-metadata";
 import express from "express";
-import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-express";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
-import {
-  PORT,
-  POSTGRES_USER,
-  POSTGRES_PASSWORD,
-  POSTGRES_DB,
-} from "./constants/envVariables";
+import { PORT, WEB_URL } from "./constants/envVariables";
 import { buildSchema } from "./utils/buildSchema";
 import { refreshTokenRoute } from "./refreshTokenRoute";
+import { callDatabaseConnection } from "./utils/callDatabaseConnection";
 
 (async () => {
   /**
    * Database Connection
    */
-  await createConnection({
-    type: "postgres",
-    database: POSTGRES_DB,
-    name: "default",
-    username: POSTGRES_USER,
-    password: POSTGRES_PASSWORD,
-    port: 5432,
-    synchronize: true,
-    logging: true,
-    entities: [`${__dirname}/entities/**/*.{t,j}s`],
-  }).then((db) => console.log(`Connection established with db ${db.name}`)); // eslint-disable-line no-console
+  await callDatabaseConnection();
 
   /**
    * Apollo Server Setup
@@ -47,13 +33,16 @@ import { refreshTokenRoute } from "./refreshTokenRoute";
    * Middleware Setup
    */
 
+  // Cors
+  app.use(cors({ credentials: true, origin: WEB_URL }));
+
   // Cookie Parser
   app.use(cookieParser());
 
   /**
    * Connect Express and Apollo
    */
-  apolloServer.applyMiddleware({ app, path: "/api/graphql" });
+  apolloServer.applyMiddleware({ app, path: "/api/graphql", cors: false });
 
   /**
    * External route for generating tokens.

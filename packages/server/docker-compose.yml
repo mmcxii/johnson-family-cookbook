@@ -1,0 +1,44 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./docker-data/db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - 5432:5432
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+  db_test:
+    image: postgres
+    restart: always
+    volumes:
+      - ./docker-data/test-db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: "jfcb_db_test"
+    ports:
+      - 5433:5432
+  adminer_test:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+    depends_on:
+      - db_test
+  # server:
+  #   image: node
+  #   ports:
+  #     - 4000:4000
+  #   depends_on:
+  #     - db

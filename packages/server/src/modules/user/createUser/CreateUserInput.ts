@@ -1,7 +1,7 @@
 import { InputType, Field } from "type-graphql";
 
-import { GenderIdEnum } from "../../../types/gender.types";
-import { PermissionLevelIdEnum } from "../../../types/permissionLevel.types";
+import { GenderCodeEnum } from "../../../types/gender.types";
+import { PermissionLevelCodeEnum } from "../../../types/permissionLevel.types";
 
 @InputType()
 export class CreateUserInput {
@@ -20,12 +20,12 @@ export class CreateUserInput {
   @Field(() => Date)
   birthday: Date;
 
-  @Field(() => GenderIdEnum, { name: "genderId" })
-  genderId: GenderIdEnum;
+  @Field(() => GenderCodeEnum, { name: "genderCode" })
+  genderCode: GenderCodeEnum;
 
-  @Field(() => PermissionLevelIdEnum, {
-    defaultValue: PermissionLevelIdEnum.User,
-    name: "permissionLevelId",
+  @Field(() => PermissionLevelCodeEnum, {
+    defaultValue: PermissionLevelCodeEnum.User,
+    name: "permissionLevelCode",
   })
-  permissionLevelId: PermissionLevelIdEnum;
+  permissionLevelCode: PermissionLevelCodeEnum;
 }
