@@ -6,14 +6,19 @@ import { buildSchema } from "../utils/buildSchema";
 
 interface Options {
   source: string;
-  variableValues: Maybe<{
+  variableValues?: Maybe<{
     [key: string]: any;
   }>;
+  clearCookie?: jest.Mock<any, any>;
 }
 
 let schema: GraphQLSchema;
 
-export const gCall = async ({ source, variableValues }: Options) => {
+export const gCall = async ({
+  source,
+  variableValues,
+  clearCookie,
+}: Options) => {
   if (!schema) {
     schema = await buildSchema();
   }
@@ -26,7 +31,7 @@ export const gCall = async ({ source, variableValues }: Options) => {
       req: {},
       res: {
         cookie: jest.fn(),
-        clearCookie: jest.fn(),
+        clearCookie,
       },
     },
   });

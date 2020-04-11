@@ -1,5 +1,3 @@
-import {} from "bcryptjs";
-
 import { handleTestDatabaseConnection } from "../../../testUtils/handleTestDatabaseConnection";
 import { UserAccountStatusEnum } from "../../../types/user.types";
 import { User } from "../../../entities/User";
