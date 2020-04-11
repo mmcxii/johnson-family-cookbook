@@ -30,16 +30,19 @@ describe("LoginResolver tests", () => {
       email: user.email,
       password: "password",
     };
+    const cookie = jest.fn();
 
     //* Act
     const res = await gCall({
       source: loginMutation,
       variableValues: { data },
+      cookie,
     });
     const resData: UserResponse = res.data!.login!;
 
     //* Assert
     expect(resData.status).toBe("SUCCESS");
+    expect(cookie).toBeCalled();
   });
 
   it("wont let a user log in with an invalid email", async () => {

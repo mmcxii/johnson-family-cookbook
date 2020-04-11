@@ -23,10 +23,14 @@ beforeAll(async () => {
 
 describe("ConfirmUserResolver tests", () => {
   it(`confirms a user with account status: ${UserAccountStatusEnum.NotConfirmed}`, async () => {
+    //* Arrange
+    const cookie = jest.fn();
+
     //* Act
     const res = await gCall({
       source: confirmUserMutation,
       variableValues: { userId: user?.externalId },
+      cookie,
     });
     await user?.reload();
 
@@ -34,6 +38,7 @@ describe("ConfirmUserResolver tests", () => {
     expect(res.data!.confirmUser!.status).toBe("SUCCESS");
 
     expect(user?.accountStatus).toBe(UserAccountStatusEnum.Active);
+    expect(cookie).toBeCalled();
   });
 
   it(`wont attemt to confirm a user with confirmation status: ${UserAccountStatusEnum.Active}`, async () => {

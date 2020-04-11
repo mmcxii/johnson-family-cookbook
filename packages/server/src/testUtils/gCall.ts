@@ -9,6 +9,7 @@ interface Options {
   variableValues?: Maybe<{
     [key: string]: any;
   }>;
+  cookie?: jest.Mock<any, any>;
   clearCookie?: jest.Mock<any, any>;
 }
 
@@ -17,6 +18,7 @@ let schema: GraphQLSchema;
 export const gCall = async ({
   source,
   variableValues,
+  cookie,
   clearCookie,
 }: Options) => {
   if (!schema) {
@@ -30,7 +32,7 @@ export const gCall = async ({
     contextValue: {
       req: {},
       res: {
-        cookie: jest.fn(),
+        cookie,
         clearCookie,
       },
     },
