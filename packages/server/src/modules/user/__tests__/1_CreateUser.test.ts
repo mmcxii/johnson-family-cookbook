@@ -30,7 +30,8 @@ describe("CreateUserResolver tests", () => {
     firstName: `${faker.name.firstName().toUpperCase()}   `,
     lastName: `    ${faker.name.lastName()}      `,
     email: faker.internet.email(),
-    password: faker.internet.password(),
+    // This string is used so the created entity can be used to test the login resolver
+    password: "password",
     birthday: faker.date.past(),
     genderCode:
       // eslint-disable-next-line no-nested-ternary
