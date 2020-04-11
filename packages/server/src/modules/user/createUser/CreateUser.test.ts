@@ -1,21 +1,11 @@
-import { Connection } from "typeorm";
 import faker from "faker";
 
-import { testConnection } from "../../../testUtils/testConnection";
 import { gCall } from "../../../testUtils/gCall";
 import { User } from "../../../entities/User";
 import { UserAccountStatusEnum } from "../../../types/user.types";
+import { handleTestDatabaseConnection } from "../../../testUtils/handleTestDatabaseConnection";
 
-let conn: Connection | undefined;
-beforeAll(async () => {
-  conn = await testConnection();
-});
-
-afterAll(() => {
-  if (conn) {
-    conn.close();
-  }
-});
+handleTestDatabaseConnection();
 
 const createUserMutation = `
   mutation CreateUser($data: CreateUserInput!) {
