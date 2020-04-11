@@ -22,5 +22,12 @@ export const gCall = async ({ source, variableValues }: Options) => {
     schema,
     source,
     variableValues,
+    contextValue: {
+      req: {},
+      res: {
+        cookie: jest.fn(),
+        clearCookie: jest.fn(),
+      },
+    },
   });
 };

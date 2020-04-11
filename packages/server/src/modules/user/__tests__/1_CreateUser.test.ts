@@ -23,7 +23,7 @@ const createUserMutation = `
   }
 `;
 
-describe("CreateUserResolver", () => {
+describe("CreateUserResolver tests", () => {
   //* Arrange
   const randomNumber = Math.floor(Math.random() * 3) + 1;
   const data = {
@@ -78,5 +78,6 @@ describe("CreateUserResolver", () => {
 
     //* Assert
     expect(res.data!.createUser!.status).toBe("ERROR");
+    expect(res.data!.createUser!.payload).toMatchObject({ user: null });
   });
 });
