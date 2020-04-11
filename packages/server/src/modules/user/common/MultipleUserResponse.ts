@@ -1,15 +1,10 @@
 import { ObjectType, Field } from "type-graphql";
 
-import { User } from "../../../entities/User";
+import { DefaultResponseObject } from "../../common/DefaultResponseObject.abstract";
+import { MultipleUserResponsePayload } from "./userResponse/MultipleUserResponsePayload";
 
 @ObjectType()
-export class MultipleUserResponse {
-  @Field()
-  status: "ERROR" | "SUCCESS";
-
-  @Field()
-  message: string;
-
-  @Field(() => [User])
-  users: User[];
+export class MultipleUserResponse extends DefaultResponseObject {
+  @Field(() => MultipleUserResponsePayload)
+  payload: MultipleUserResponsePayload;
 }

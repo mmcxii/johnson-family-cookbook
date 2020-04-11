@@ -1,1 +1,1 @@
-export type ResolverReturnStatus = "SUCCESS" | "ERROR";
+export type ResponseStatus = "SUCCESS" | "ERROR";
