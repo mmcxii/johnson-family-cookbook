@@ -22,9 +22,5 @@ export const testConnection = async (drop: boolean = false) => {
     ],
   });
 
-  if (db) {
-    await db.runMigrations();
-  }
-
   return db;
 };

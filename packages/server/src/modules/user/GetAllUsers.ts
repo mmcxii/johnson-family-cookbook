@@ -10,10 +10,13 @@ export class GetAllUsersResolver {
     const users = await User.find({
       relations: ["gender", "permissionLevel"],
     });
+
     return {
       status: "SUCCESS",
-      message: `Found ${users.length} users.`,
-      users,
+      message: `Found ${users.length} user${users.length === 1 ? "" : "s"}.`,
+      payload: {
+        users,
+      },
     };
   }
 }

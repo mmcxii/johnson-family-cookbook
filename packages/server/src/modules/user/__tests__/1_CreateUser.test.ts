@@ -1,21 +1,11 @@
-import { Connection } from "typeorm";
 import faker from "faker";
 
-import { testConnection } from "../../../testUtils/testConnection";
 import { gCall } from "../../../testUtils/gCall";
 import { User } from "../../../entities/User";
 import { UserAccountStatusEnum } from "../../../types/user.types";
+import { handleTestDatabaseConnection } from "../../../testUtils/handleTestDatabaseConnection";
 
-let conn: Connection | undefined;
-beforeAll(async () => {
-  conn = await testConnection();
-});
-
-afterAll(() => {
-  if (conn) {
-    conn.close();
-  }
-});
+handleTestDatabaseConnection();
 
 const createUserMutation = `
   mutation CreateUser($data: CreateUserInput!) {
@@ -33,14 +23,15 @@ const createUserMutation = `
   }
 `;
 
-describe("CreateUserResolver", () => {
+describe("CreateUserResolver tests", () => {
   //* Arrange
   const randomNumber = Math.floor(Math.random() * 3) + 1;
   const data = {
     firstName: `${faker.name.firstName().toUpperCase()}   `,
     lastName: `    ${faker.name.lastName()}      `,
     email: faker.internet.email(),
-    password: faker.internet.password(),
+    // This string is used so the created entity can be used to test the login resolver
+    password: "password",
     birthday: faker.date.past(),
     genderCode:
       // eslint-disable-next-line no-nested-ternary
@@ -88,5 +79,6 @@ describe("CreateUserResolver", () => {
 
     //* Assert
     expect(res.data!.createUser!.status).toBe("ERROR");
+    expect(res.data!.createUser!.payload).toMatchObject({ user: null });
   });
 });
