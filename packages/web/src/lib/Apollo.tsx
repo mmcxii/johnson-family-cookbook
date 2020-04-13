@@ -1,3 +1,7 @@
+/**
+ * No console is disabled for this file because logging of errors is intended behavior.
+ */
+/* eslint-disable no-console */
 import React from "react";
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";

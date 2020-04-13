@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import logo from "../logo.svg";
-import "./App.css";
-import { DisplayUsers } from "../components/DisplayUsers";
+import logo from '../logo.svg';
+import './App.css';
+import { DisplayUsers } from '../components/DisplayUsers';
 
 export const App: React.FC = () => (
   <div className="App">

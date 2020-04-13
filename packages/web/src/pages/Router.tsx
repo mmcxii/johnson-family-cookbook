@@ -1,4 +1,4 @@
-import React from "react";
-import { Switch } from "react-router-dom";
+import React from 'react';
+import { Switch } from 'react-router-dom';
 
-export const Router: React.FC = () => <Switch></Switch>;
+export const Router: React.FC = () => <Switch />;

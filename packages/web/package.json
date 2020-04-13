@@ -3,15 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "ci:test": "yarn test",
+    "ci:test:e2e": "yarn test:e2e:run",
     "eject": "react-scripts eject",
-    "ci:test": "yarn test:e2e:run",
+    "lint:fix": "eslint src/**/*.ts{,x} --fix",
+    "start": "react-scripts start",
+    "test": "react-scripts test",
     "test:e2e": "cypress open",
     "test:e2e:run": "cypress run"
   },
   "dependencies": {
+    "@apollo/react-hooks": "^3.1.4",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link": "^1.2.13",
@@ -28,7 +31,6 @@
     "react-scripts": "3.4.1"
   },
   "devDependencies": {
-    "@apollo/react-hooks": "^3.1.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^10.0.2",
     "@testing-library/user-event": "^7.1.2",
@@ -39,7 +41,16 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.3",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
     "cypress": "^4.3.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-typescript": "^7.2.1",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.0",
     "jest": "24.9.0",
     "typescript": "~3.7.2"
   },
