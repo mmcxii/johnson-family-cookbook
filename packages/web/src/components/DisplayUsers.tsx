@@ -5,8 +5,10 @@ import { useQuery } from "@apollo/react-hooks";
 const QUERY = gql`
   query {
     getAllUsers {
-      users {
-        email
+      payload {
+        users {
+          email
+        }
       }
     }
   }
