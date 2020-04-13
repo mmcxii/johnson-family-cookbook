@@ -1,3 +1,7 @@
 import React from "react";
 
-export const Container: React.FC = ({ children }) => <div>{children}</div>;
+import styles from "./Container.module.scss";
+
+export const Container: React.FC = ({ children }) => (
+  <div className={styles.main}>{children}</div>
+);
