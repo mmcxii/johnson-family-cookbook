@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 import styles from "./Navbar.module.scss";
 
@@ -14,10 +14,6 @@ export const Navbar: React.FC = () => {
       name: "home",
       link: "/",
     },
-    {
-      name: "login",
-      link: "/login",
-    },
   ];
 
   return (
@@ -31,6 +27,13 @@ export const Navbar: React.FC = () => {
           </li>
         ))}
       </ul>
+
+      <Link to="/user/create" data-testid="create-account_button">
+        Sign Up
+      </Link>
+      <Link to="/login" data-testid="login_button">
+        Login
+      </Link>
     </nav>
   );
 };
