@@ -47,9 +47,5 @@ describe("user creation tests", () => {
     );
 
     cy.get("[data-testid='create-account_form__submit-button']").click();
-
-    cy.get("[data-testid='create-account_form__email-error']").should(
-      "not.exist",
-    );
   });
 });
