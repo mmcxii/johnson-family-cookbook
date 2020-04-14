@@ -11,7 +11,8 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "test:e2e": "cypress open",
-    "test:e2e:run": "cypress run"
+    "test:e2e:run": "cypress run",
+    "validate-web": "yarn lint:fix && yarn test:e2e:run"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.4",
@@ -55,6 +56,7 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
     "faker": "^4.1.0",
+    "husky": "^4.2.5",
     "jest": "24.9.0",
     "typescript": "~3.7.2"
   },
