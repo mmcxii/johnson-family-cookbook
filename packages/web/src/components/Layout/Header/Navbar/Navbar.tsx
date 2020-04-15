@@ -1,7 +1,6 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
-
-import styles from "./Navbar.module.scss";
+import { NavLink } from "react-router-dom";
+import { Button } from "../../../elements";
 
 interface IPage {
   name: string;
@@ -14,26 +13,49 @@ export const Navbar: React.FC = () => {
       name: "home",
       link: "/",
     },
+    {
+      name: "profile",
+      link: "/profile",
+    },
+    {
+      name: "favorites",
+      link: "/favorites",
+    },
   ];
 
   return (
-    <nav className={styles.nav}>
-      <ul className={styles.nav__list}>
+    <nav className="">
+      <ul className="flex justify-evenly capitalize">
         {pages.map((p) => (
-          <li key={p.link} className={styles.nav__item}>
-            <NavLink exact to={p.link} className={styles.nav__link}>
+          <li key={p.link} className="px-1">
+            <NavLink exact to={p.link} className="">
               {p.name}
             </NavLink>
           </li>
         ))}
       </ul>
 
-      <Link to="/user/create" data-testid="create-account_button">
-        Sign Up
-      </Link>
-      <Link to="/login" data-testid="login_button">
-        Login
-      </Link>
+      <Button
+        asLink
+        onClick="/user/create"
+        label="sign up"
+        testid="create-account"
+      />
+      <Button
+        asLink
+        onClick="/login"
+        label="login"
+        testid="login"
+        level="secondary"
+      />
+      <Button
+        asLink
+        onClick="/test"
+        label="test"
+        testid="test"
+        level="tertiary"
+      />
+      <Button label="hello" testid="hello" onClick={() => alert("hello")} />
     </nav>
   );
 };

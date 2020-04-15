@@ -4,15 +4,17 @@
   "private": true,
   "scripts": {
     "build": "react-scripts build",
+    "build:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
     "ci:test": "yarn test",
     "ci:test:e2e": "yarn test:e2e:run",
     "eject": "react-scripts eject",
     "lint:fix": "eslint src/**/*.ts{,x} --fix",
-    "start": "react-scripts start",
+    "start": "yarn build:css && react-scripts start",
     "test": "react-scripts test",
     "test:e2e": "cypress open",
     "test:e2e:run": "cypress run",
-    "validate-web": "yarn lint:fix"
+    "validate-web": "yarn lint:fix",
+    "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.4",
@@ -25,13 +27,13 @@
     "formik": "^2.1.4",
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
-    "node-sass": "^4.13.1",
     "react": "^16.13.1",
     "react-apollo": "^3.1.4",
     "react-dom": "^16.13.1",
     "react-normalize": "^0.4.4",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "tailwindcss": "^1.2.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -47,6 +49,7 @@
     "@types/react-router-dom": "^5.1.3",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
+    "autoprefixer": "^9.7.6",
     "cypress": "^4.3.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-typescript": "^7.2.1",
@@ -58,6 +61,7 @@
     "faker": "^4.1.0",
     "husky": "^4.2.5",
     "jest": "24.9.0",
+    "postcss-cli": "^7.1.0",
     "typescript": "~3.7.2"
   },
   "eslintConfig": {

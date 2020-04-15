@@ -1,5 +1,5 @@
 import React from "react";
 
-import "./CSSReset.scss";
+import "./CSSReset.css";
 
 export const CSSReset: React.FC = () => <></>;

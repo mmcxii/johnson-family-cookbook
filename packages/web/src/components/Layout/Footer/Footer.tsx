@@ -1,10 +1,9 @@
 import React from "react";
 
 import { Container } from "../Container";
-import styles from "./Footer.module.scss";
 
 export const Footer: React.FC = () => (
-  <footer className={styles.main}>
+  <footer className="mt-auto py-2 px-4 bg-gray-400">
     <Container>
       {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
       <p>Nich Secord &copy;2019 -{new Date().getFullYear()}</p>

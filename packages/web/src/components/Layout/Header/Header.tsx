@@ -2,14 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { Container } from "../Container";
-import styles from "./Header.module.scss";
 import { Navbar } from "./Navbar";
 
 export const Header: React.FC = () => (
-  <header className={styles.main}>
-    <Container>
-      <h1 className={styles.logo}>
-        <Link to="/">Johnson Family Cookbook</Link>
+  <header>
+    <Container className="flex justify-between">
+      <h1 className="m-0">
+        <Link to="/" className="no-underline">
+          Johnson Family Cookbook
+        </Link>
       </h1>
 
       <Navbar />
