@@ -1,46 +1,32 @@
 import React from "react";
 import { Form as FormikForm, FormikErrors } from "formik";
 
-import { IField } from "../../store/types";
-import { Input } from "./Input";
+import { IFieldGroup } from "../../store/types";
 import { Button } from "./Button";
+import { FieldGroup } from "./FieldGroup";
 
 interface Props {
   testId: string;
   submitLabel?: string;
-  fields: IField[];
+  fieldGroups: IFieldGroup[];
   errors: FormikErrors<any>;
-  setFieldValue: (
-    field: string,
-    value: any,
-    shouldValidate?: boolean | undefined,
-  ) => void;
 }
 
 export const Form: React.FC<Props> = ({
   testId,
   submitLabel = testId,
-  fields,
+  fieldGroups,
   errors,
-  setFieldValue,
-}) => {
-  return (
-    <FormikForm className="flex flex-col">
-      {fields.map((field) => (
-        <Input
-          formTestId={testId}
-          field={field}
-          errors={errors}
-          key={field.name}
-          setFieldValue={setFieldValue}
-        />
-      ))}
-      <Button
-        label={submitLabel}
-        testid={`${testId}_form__submit`}
-        submit
-        floating
-      />
-    </FormikForm>
-  );
-};
+}) => (
+  <FormikForm className="flex flex-col">
+    {fieldGroups.map((fieldGroup) => (
+      <FieldGroup {...fieldGroup} testId={testId} errors={errors} />
+    ))}
+    <Button
+      label={submitLabel}
+      testid={`${testId}_form__submit`}
+      submit
+      floating
+    />
+  </FormikForm>
+);

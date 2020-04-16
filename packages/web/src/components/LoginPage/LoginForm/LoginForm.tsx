@@ -2,7 +2,7 @@ import React from "react";
 import { Formik } from "formik";
 import { MutationFunctionOptions, ExecutionResult } from "react-apollo";
 
-import { IField } from "../../../store/types";
+import { IFieldGroup } from "../../../store/types";
 import { Card, Form } from "../../elements";
 
 interface Props {
@@ -35,25 +35,26 @@ export const LoginForm: React.FC<Props> = ({ login }) => (
       return setErrors(errors);
     }}
   >
-    {({ errors, setFieldValue }) => {
-      const fields: IField[] = [
+    {({ errors }) => {
+      const fieldGroups: IFieldGroup[] = [
         {
-          name: "email",
-        },
-        {
-          name: "password",
-          type: "password",
+          title: "login",
+          description: "Enter your email and password.",
+          fields: [
+            {
+              name: "email",
+            },
+            {
+              name: "password",
+              type: "password",
+            },
+          ],
         },
       ];
 
       return (
         <Card>
-          <Form
-            testId="login"
-            fields={fields}
-            errors={errors}
-            setFieldValue={setFieldValue}
-          />
+          <Form testId="login" fieldGroups={fieldGroups} errors={errors} />
         </Card>
       );
     }}

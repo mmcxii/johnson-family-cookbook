@@ -2,7 +2,7 @@ import React from "react";
 import { Formik } from "formik";
 import { MutationFunctionOptions, ExecutionResult } from "react-apollo";
 
-import { IField } from "../../../store/types";
+import { IFieldGroup } from "../../../store/types";
 import { Form, Card } from "../../elements";
 
 interface Props {
@@ -49,38 +49,51 @@ export const CreateUserForm: React.FC<Props> = ({ createUser }) => (
       }
     }}
   >
-    {({ errors, setFieldValue }) => {
-      const fields: IField[] = [
+    {({ errors }) => {
+      const fieldGroups: IFieldGroup[] = [
         {
-          name: "email",
+          title: "account information",
+          description:
+            "You will use this email and password to sign in to the Cookbook.",
+          fields: [
+            {
+              name: "email",
+            },
+            {
+              name: "password",
+              type: "password",
+            },
+            {
+              name: "confirmPassword",
+              formattedName: "Confirm Password",
+              type: "password",
+              placeholder: "Reenter your password",
+            },
+          ],
         },
         {
-          name: "password",
-          type: "password",
-        },
-        {
-          name: "confirmPassword",
-          formattedName: "Confirm Password",
-          type: "password",
-          placeholder: "Reenter your password",
-        },
-        {
-          name: "firstName",
-          formattedName: "first name",
-        },
-        {
-          name: "lastName",
-          formattedName: "last name",
-        },
-        {
-          name: "genderCode",
-          formattedName: "gender",
-          type: "radio",
-          radioOptions: ["Male", "Female", "Other"],
-        },
-        {
-          name: "birthday",
-          type: "date",
+          title: "personal information",
+          description: "Complete the rest of your profile.",
+          fields: [
+            {
+              name: "firstName",
+              formattedName: "first name",
+            },
+            {
+              name: "lastName",
+              formattedName: "last name",
+            },
+            {
+              name: "genderCode",
+              formattedName: "gender",
+              type: "radio",
+              radioOptions: ["Male", "Female", "Other"],
+            },
+            {
+              name: "birthday",
+              type: "date",
+            },
+          ],
         },
       ];
 
@@ -89,9 +102,8 @@ export const CreateUserForm: React.FC<Props> = ({ createUser }) => (
           <Form
             testId="sign_up"
             submitLabel="sign up"
-            fields={fields}
+            fieldGroups={fieldGroups}
             errors={errors}
-            setFieldValue={setFieldValue}
           />
         </Card>
       );

@@ -6,21 +6,9 @@ import { IField } from "../../store/types";
 interface Props {
   formTestId: string;
   field: IField;
-  setFieldValue: (
-    field: string,
-    value: any,
-    shouldValidate?: boolean | undefined,
-  ) => void;
 }
 
-export const Datepicker: React.FC<Props> = ({
-  field,
-  setFieldValue,
-  formTestId,
-}) => {
-  const handleSetFieldValue = (dataField: string, value: string | number) => {
-    setFieldValue(dataField, value);
-  };
+export const Datepicker: React.FC<Props> = ({ field, formTestId }) => {
   const currentYear = new Date().getFullYear();
   const previousHundredYears = [];
   for (let i = 0; i < 100; i++) {
@@ -100,9 +88,6 @@ export const Datepicker: React.FC<Props> = ({
             name={field.name + dd.name}
             data-testid={`${formTestId}_form__${field.name + dd.name}-input`}
             className="capitalize"
-            onChange={(e: any) => {
-              handleSetFieldValue(e.target.name, e.target.value);
-            }}
           >
             <option disabled>{dd.name}</option>
             {dd.options.map((o) => (

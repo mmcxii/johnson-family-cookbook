@@ -7,3 +7,9 @@ export interface IField {
   radioOptions?: string[];
   selectOptions?: string[];
 }
+
+export interface IFieldGroup {
+  title?: string;
+  description?: string;
+  fields: IField[];
+}

@@ -8,7 +8,7 @@ import { Button } from "../../elements";
 export const Header: React.FC = () => (
   <header className="bg-gray-400 py-4">
     <Container className="flex flex-col justify-between items-center">
-      <h1 className="m-0">
+      <h1 className="m-0 text-center">
         <Link to="/" className="no-underline">
           Johnson Family Cookbook
         </Link>

@@ -9,19 +9,9 @@ interface Props {
   formTestId: string;
   field: IField;
   errors: FormikErrors<any>;
-  setFieldValue: (
-    field: string,
-    value: any,
-    shouldValidate?: boolean | undefined,
-  ) => void;
 }
 
-export const Input: React.FC<Props> = ({
-  formTestId,
-  field,
-  errors,
-  setFieldValue,
-}) => (
+export const Input: React.FC<Props> = ({ formTestId, field, errors }) => (
   <div className="py-4">
     <label htmlFor={field.name} className="block pb-2 pl-2 capitalize">
       {field.formattedName || field.name}
@@ -50,13 +40,7 @@ export const Input: React.FC<Props> = ({
           );
 
         case "date":
-          return (
-            <Datepicker
-              field={field}
-              setFieldValue={setFieldValue}
-              formTestId={formTestId}
-            />
-          );
+          return <Datepicker field={field} formTestId={formTestId} />;
 
         default:
           return (
