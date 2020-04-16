@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Button } from "../../../elements";
 
 interface IPage {
   name: string;
@@ -24,38 +23,21 @@ export const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className="">
-      <ul className="flex justify-evenly capitalize">
+    <nav>
+      <ul className="flex justify-evenly> capitalize px-2">
         {pages.map((p) => (
-          <li key={p.link} className="px-1">
-            <NavLink exact to={p.link} className="">
+          <li key={p.link} className="text-gray-200">
+            <NavLink
+              exact
+              to={p.link}
+              className="px-1 hover:text-gray-500"
+              activeClassName="text-gray-700 hover:text-gray-700"
+            >
               {p.name}
             </NavLink>
           </li>
         ))}
       </ul>
-
-      <Button
-        asLink
-        onClick="/user/create"
-        label="sign up"
-        testid="create-account"
-      />
-      <Button
-        asLink
-        onClick="/login"
-        label="login"
-        testid="login"
-        level="secondary"
-      />
-      <Button
-        asLink
-        onClick="/test"
-        label="test"
-        testid="test"
-        level="tertiary"
-      />
-      <Button label="hello" testid="hello" onClick={() => alert("hello")} />
     </nav>
   );
 };

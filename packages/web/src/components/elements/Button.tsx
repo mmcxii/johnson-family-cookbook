@@ -8,6 +8,7 @@ interface Props {
   testid: string;
   level?: "primary" | "secondary" | "tertiary";
   asLink?: boolean;
+  className?: string;
 }
 
 export const Button: React.FC<Props> = ({
@@ -16,6 +17,7 @@ export const Button: React.FC<Props> = ({
   testid,
   level = "primary",
   asLink = false,
+  className = "",
 }) => {
   const modifiers = `text-${level === "primary" ? "white" : "gray-900"} ${
     // eslint-disable-next-line no-nested-ternary
@@ -27,7 +29,7 @@ export const Button: React.FC<Props> = ({
   } hover:bg-gray-${
     // eslint-disable-next-line no-nested-ternary
     level === "primary" ? "800" : level === "secondary" ? "600" : "300"
-  } ${level === "secondary" ? "hover:text-white" : ""}`;
+  } ${level === "secondary" ? "hover:text-white" : ""} ${className}`;
 
   return asLink ? (
     <Link
