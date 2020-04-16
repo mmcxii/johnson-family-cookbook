@@ -1,7 +1,9 @@
 import React from "react";
 
-import styles from "./Container.module.scss";
+interface Props {
+  className?: string;
+}
 
-export const Container: React.FC = ({ children }) => (
-  <div className={styles.main}>{children}</div>
+export const Container: React.FC<Props> = ({ className, children }) => (
+  <div className={`container mx-auto px-2 ${className}`}>{children}</div>
 );

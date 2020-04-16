@@ -1,6 +1,9 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik } from "formik";
 import { MutationFunctionOptions, ExecutionResult } from "react-apollo";
+
+import { IFieldGroup } from "../../../store/types";
+import { Form, Card } from "../../elements";
 
 interface Props {
   createUser: (
@@ -11,23 +14,34 @@ interface Props {
 export const CreateUserForm: React.FC<Props> = ({ createUser }) => (
   <Formik
     initialValues={{
+      permissionLevelCode: "User",
       email: "",
       password: "",
       confirmPassword: "",
       firstName: "",
       lastName: "",
-      birthday: "",
       genderCode: "",
-      permissionLevelCode: "",
+      birthdayDay: "",
+      birthdayMonth: "",
+      birthdayYear: "",
     }}
     onSubmit={async (values, { setErrors }) => {
       const errors: { [key: string]: string } = {};
-      const { confirmPassword, ...vals } = values;
+      const {
+        confirmPassword,
+        birthdayDay,
+        birthdayMonth,
+        birthdayYear,
+        ...vals
+      } = values;
       if (confirmPassword !== vals.password) {
         return;
       }
+      const birthday = `${birthdayDay} ${birthdayMonth}, ${birthdayYear}`;
 
-      const { data } = await createUser({ variables: { data: vals } });
+      const { data } = await createUser({
+        variables: { data: { ...vals, birthday } },
+      });
 
       if (data.createUser.status === "ERROR") {
         errors.email = data.createUser.message;
@@ -35,34 +49,63 @@ export const CreateUserForm: React.FC<Props> = ({ createUser }) => (
       }
     }}
   >
-    {({ values, errors }) => {
-      const fields = Object.keys(values);
+    {({ errors }) => {
+      const fieldGroups: IFieldGroup[] = [
+        {
+          title: "account information",
+          description:
+            "You will use this email and password to sign in to the Cookbook.",
+          fields: [
+            {
+              name: "email",
+            },
+            {
+              name: "password",
+              type: "password",
+            },
+            {
+              name: "confirmPassword",
+              formattedName: "Confirm Password",
+              type: "password",
+              placeholder: "Reenter your password",
+            },
+          ],
+        },
+        {
+          title: "personal information",
+          description: "Complete the rest of your profile.",
+          fields: [
+            {
+              name: "firstName",
+              formattedName: "first name",
+            },
+            {
+              name: "lastName",
+              formattedName: "last name",
+            },
+            {
+              name: "genderCode",
+              formattedName: "gender",
+              type: "radio",
+              radioOptions: ["Male", "Female", "Other"],
+            },
+            {
+              name: "birthday",
+              type: "date",
+            },
+          ],
+        },
+      ];
+
       return (
-        <Form>
-          {fields.map((v) => (
-            <div key={v}>
-              <Field
-                name={v}
-                data-testid={`create-account_form__${v}-input`}
-                placeholder={v}
-                type={
-                  v.toLowerCase().includes("password") ? "password" : "text"
-                }
-              />
-              {v === "email" && errors.email && (
-                <p data-testid="create-account_form__email-error">
-                  {errors.email}
-                </p>
-              )}
-            </div>
-          ))}
-          <button
-            type="submit"
-            data-testid="create-account_form__submit-button"
-          >
-            Create Account
-          </button>
-        </Form>
+        <Card>
+          <Form
+            testId="sign_up"
+            submitLabel="sign up"
+            fieldGroups={fieldGroups}
+            errors={errors}
+          />
+        </Card>
       );
     }}
   </Formik>

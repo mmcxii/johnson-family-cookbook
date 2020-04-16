@@ -39,5 +39,13 @@ module.exports = {
      * Double quotes are more obvious as to where strings begin and end
      */
     "@typescript-eslint/quotes": 0,
+    /**
+     * The plusplus operator is useful in for-loops and should be allowed there.
+     */
+    "no-plusplus": [2, { allowForLoopAfterthoughts: true }],
+    /**
+     * Prop spreading is desired.
+     */
+    "react/jsx-props-no-spreading": 0,
   },
 };
