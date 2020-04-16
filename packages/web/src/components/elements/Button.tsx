@@ -3,21 +3,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 interface Props {
-  onClick: any;
+  onClick?: any;
   label: string;
-  testid: string;
+  testid?: string;
   level?: "primary" | "secondary" | "tertiary";
   asLink?: boolean;
   className?: string;
+  submit?: boolean;
+  floating?: boolean;
 }
 
 export const Button: React.FC<Props> = ({
   onClick,
   label,
-  testid,
+  testid = label,
   level = "primary",
-  asLink = false,
   className = "",
+  asLink = false,
+  submit = false,
+  floating = false,
 }) => {
   const modifiers = `text-${level === "primary" ? "white" : "gray-900"} ${
     // eslint-disable-next-line no-nested-ternary
@@ -29,7 +33,9 @@ export const Button: React.FC<Props> = ({
   } hover:bg-gray-${
     // eslint-disable-next-line no-nested-ternary
     level === "primary" ? "800" : level === "secondary" ? "600" : "300"
-  } ${level === "secondary" ? "hover:text-white" : ""} ${className}`;
+  } ${level === "secondary" ? "hover:text-white" : ""} ${
+    floating ? "shadow-md" : ""
+  } ${className}`;
 
   return asLink ? (
     <Link
@@ -40,8 +46,9 @@ export const Button: React.FC<Props> = ({
       {label}
     </Link>
   ) : (
+    // eslint-disable-next-line react/button-has-type
     <button
-      type="button"
+      type={submit ? "submit" : "button"}
       className={`px-4 py-2 text-center capitalize rounded-lg ${modifiers}`}
       onClick={onClick}
     >

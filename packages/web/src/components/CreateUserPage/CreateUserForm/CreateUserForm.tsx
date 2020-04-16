@@ -1,6 +1,9 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik } from "formik";
 import { MutationFunctionOptions, ExecutionResult } from "react-apollo";
+
+import { IField } from "../../../store/types";
+import { Form, Card } from "../../elements";
 
 interface Props {
   createUser: (
@@ -18,7 +21,7 @@ export const CreateUserForm: React.FC<Props> = ({ createUser }) => (
       lastName: "",
       birthday: "",
       genderCode: "",
-      permissionLevelCode: "",
+      permissionLevelCode: "User",
     }}
     onSubmit={async (values, { setErrors }) => {
       const errors: { [key: string]: string } = {};
@@ -35,34 +38,46 @@ export const CreateUserForm: React.FC<Props> = ({ createUser }) => (
       }
     }}
   >
-    {({ values, errors }) => {
-      const fields = Object.keys(values);
+    {({ errors }) => {
+      const fields: IField[] = [
+        {
+          name: "email",
+        },
+        {
+          name: "password",
+          type: "password",
+        },
+        {
+          name: "confirmPassword",
+          formattedName: "Confirm Password",
+          type: "password",
+          placeholder: "Reenter your password",
+        },
+        {
+          name: "firstName",
+          formattedName: "first name",
+        },
+        {
+          name: "lastName",
+          formattedName: "last name",
+        },
+        {
+          name: "genderCode",
+          formattedName: "gender",
+          type: "radio",
+          radioOptions: ["Male", "Female", "Other"],
+        },
+      ];
+
       return (
-        <Form>
-          {fields.map((v) => (
-            <div key={v}>
-              <Field
-                name={v}
-                data-testid={`create-account_form__${v}-input`}
-                placeholder={v}
-                type={
-                  v.toLowerCase().includes("password") ? "password" : "text"
-                }
-              />
-              {v === "email" && errors.email && (
-                <p data-testid="create-account_form__email-error">
-                  {errors.email}
-                </p>
-              )}
-            </div>
-          ))}
-          <button
-            type="submit"
-            data-testid="create-account_form__submit-button"
-          >
-            Create Account
-          </button>
-        </Form>
+        <Card>
+          <Form
+            testId="sign_up"
+            submitLabel="sign up"
+            fields={fields}
+            errors={errors}
+          />
+        </Card>
       );
     }}
   </Formik>

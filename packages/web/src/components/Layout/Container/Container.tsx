@@ -5,5 +5,5 @@ interface Props {
 }
 
 export const Container: React.FC<Props> = ({ className, children }) => (
-  <div className={`container mx-auto ${className}`}>{children}</div>
+  <div className={`container mx-auto px-2 ${className}`}>{children}</div>
 );

@@ -26,9 +26,6 @@ describe("user creation tests", () => {
     cy.get("[data-testid='create-account_form__genderCode-input']").type(
       "Male",
     );
-    cy.get(
-      "[data-testid='create-account_form__permissionLevelCode-input']",
-    ).type("User");
   });
 
   it("will not allow a user to create an account with an email that is already in use", () => {

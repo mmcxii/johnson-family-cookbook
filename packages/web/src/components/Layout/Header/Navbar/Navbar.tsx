@@ -23,15 +23,15 @@ export const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav>
-      <ul className="flex justify-evenly> capitalize px-2">
+    <nav className="pt-3">
+      <ul className="flex justify-evenly> capitalize">
         {pages.map((p) => (
-          <li key={p.link} className="text-gray-200">
+          <li key={p.link} className="text-gray-200 px-1">
             <NavLink
               exact
               to={p.link}
-              className="px-1 hover:text-gray-500"
-              activeClassName="text-gray-700 hover:text-gray-700"
+              className="pb-1 hover:text-gray-500"
+              activeClassName="text-gray-700 hover:text-gray-700 border-b-2 border-gray-500"
             >
               {p.name}
             </NavLink>
