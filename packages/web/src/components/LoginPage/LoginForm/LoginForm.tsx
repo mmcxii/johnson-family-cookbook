@@ -35,7 +35,7 @@ export const LoginForm: React.FC<Props> = ({ login }) => (
       return setErrors(errors);
     }}
   >
-    {({ errors }) => {
+    {({ errors, setFieldValue }) => {
       const fields: IField[] = [
         {
           name: "email",
@@ -48,7 +48,12 @@ export const LoginForm: React.FC<Props> = ({ login }) => (
 
       return (
         <Card>
-          <Form testId="login" fields={fields} errors={errors} />
+          <Form
+            testId="login"
+            fields={fields}
+            errors={errors}
+            setFieldValue={setFieldValue}
+          />
         </Card>
       );
     }}

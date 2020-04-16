@@ -10,6 +10,11 @@ interface Props {
   submitLabel?: string;
   fields: IField[];
   errors: FormikErrors<any>;
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined,
+  ) => void;
 }
 
 export const Form: React.FC<Props> = ({
@@ -17,11 +22,18 @@ export const Form: React.FC<Props> = ({
   submitLabel = testId,
   fields,
   errors,
+  setFieldValue,
 }) => {
   return (
     <FormikForm className="flex flex-col">
       {fields.map((field) => (
-        <Input formTestId={testId} field={field} errors={errors} />
+        <Input
+          formTestId={testId}
+          field={field}
+          errors={errors}
+          key={field.name}
+          setFieldValue={setFieldValue}
+        />
       ))}
       <Button
         label={submitLabel}

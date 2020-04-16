@@ -14,23 +14,34 @@ interface Props {
 export const CreateUserForm: React.FC<Props> = ({ createUser }) => (
   <Formik
     initialValues={{
+      permissionLevelCode: "User",
       email: "",
       password: "",
       confirmPassword: "",
       firstName: "",
       lastName: "",
-      birthday: "",
       genderCode: "",
-      permissionLevelCode: "User",
+      birthdayDay: "",
+      birthdayMonth: "",
+      birthdayYear: "",
     }}
     onSubmit={async (values, { setErrors }) => {
       const errors: { [key: string]: string } = {};
-      const { confirmPassword, ...vals } = values;
+      const {
+        confirmPassword,
+        birthdayDay,
+        birthdayMonth,
+        birthdayYear,
+        ...vals
+      } = values;
       if (confirmPassword !== vals.password) {
         return;
       }
+      const birthday = `${birthdayDay} ${birthdayMonth}, ${birthdayYear}`;
 
-      const { data } = await createUser({ variables: { data: vals } });
+      const { data } = await createUser({
+        variables: { data: { ...vals, birthday } },
+      });
 
       if (data.createUser.status === "ERROR") {
         errors.email = data.createUser.message;
@@ -38,7 +49,7 @@ export const CreateUserForm: React.FC<Props> = ({ createUser }) => (
       }
     }}
   >
-    {({ errors }) => {
+    {({ errors, setFieldValue }) => {
       const fields: IField[] = [
         {
           name: "email",
@@ -67,6 +78,10 @@ export const CreateUserForm: React.FC<Props> = ({ createUser }) => (
           type: "radio",
           radioOptions: ["Male", "Female", "Other"],
         },
+        {
+          name: "birthday",
+          type: "date",
+        },
       ];
 
       return (
@@ -76,6 +91,7 @@ export const CreateUserForm: React.FC<Props> = ({ createUser }) => (
             submitLabel="sign up"
             fields={fields}
             errors={errors}
+            setFieldValue={setFieldValue}
           />
         </Card>
       );
