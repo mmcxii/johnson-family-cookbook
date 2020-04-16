@@ -4,17 +4,15 @@
   "private": true,
   "scripts": {
     "build": "react-scripts build",
-    "build:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
     "ci:test": "yarn test",
     "ci:test:e2e": "yarn test:e2e:run",
     "eject": "react-scripts eject",
     "lint:fix": "eslint src/**/*.ts{,x} --fix",
-    "start": "yarn build:css && react-scripts start",
+    "start": "react-scripts start",
     "test": "react-scripts test",
     "test:e2e": "cypress open",
     "test:e2e:run": "cypress run",
-    "validate-web": "yarn lint:fix",
-    "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
+    "validate-web": "yarn lint:fix"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.4",
@@ -33,6 +31,7 @@
     "react-normalize": "^0.4.4",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "styled-components": "^5.1.0",
     "tailwindcss": "^1.2.0"
   },
   "devDependencies": {
@@ -47,6 +46,7 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.3",
+    "@types/styled-components": "^5.1.0",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
     "autoprefixer": "^9.7.6",

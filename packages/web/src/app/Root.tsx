@@ -5,7 +5,6 @@ import Normalize from "react-normalize";
 import { ApolloWrapper } from "../lib/Apollo";
 import { App } from "./App";
 import { CSSReset } from "./CSSReset";
-import "../assets/main.css";
 
 export const Root: React.FC = () => (
   <>
