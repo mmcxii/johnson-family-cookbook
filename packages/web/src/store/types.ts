@@ -13,3 +13,8 @@ export interface IFieldGroup {
   description?: string;
   fields: IField[];
 }
+
+export interface IDropdown {
+  name: string;
+  options: (string | number)[];
+}

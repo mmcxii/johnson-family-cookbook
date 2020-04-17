@@ -1,7 +1,8 @@
 import React from "react";
-import { Field } from "formik";
 
-import { IField } from "../../store/types";
+import { IField, IDropdown } from "../../../../../../store/types";
+import { Dropdown } from "../Dropdown";
+import { DatepickerWrapper } from "./Datepicker.style";
 
 interface Props {
   formTestId: string;
@@ -64,7 +65,7 @@ export const Datepicker: React.FC<Props> = ({ field, formTestId }) => {
     31,
   ];
 
-  const dropdowns: { name: string; options: (string | number)[] }[] = [
+  const dropdowns: IDropdown[] = [
     {
       name: "Day",
       options: days,
@@ -80,24 +81,16 @@ export const Datepicker: React.FC<Props> = ({ field, formTestId }) => {
   ];
 
   return (
-    <section className="flex justify-evenly">
+    <DatepickerWrapper>
       {dropdowns.map((dd) => (
         <article key={dd.name}>
-          <Field
-            as="select"
-            name={field.name + dd.name}
-            data-testid={`${formTestId}_form__${field.name + dd.name}-input`}
-            className="capitalize"
-          >
-            <option disabled>{dd.name}</option>
-            {dd.options.map((o) => (
-              <option value={o} key={o}>
-                {o}
-              </option>
-            ))}
-          </Field>
+          <Dropdown
+            formTestId={formTestId}
+            fieldName={field.name}
+            dropdown={dd}
+          />
         </article>
       ))}
-    </section>
+    </DatepickerWrapper>
   );
 };

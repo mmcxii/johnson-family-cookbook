@@ -1,9 +1,10 @@
 import React from "react";
-import { Form as FormikForm, FormikErrors } from "formik";
+import { FormikErrors } from "formik";
 
-import { IFieldGroup } from "../../store/types";
-import { Button } from "./Button";
+import { IFieldGroup } from "../../../store/types";
+import { Button } from "../Button";
 import { FieldGroup } from "./FieldGroup";
+import { StyledForm } from "./Form.style";
 
 interface Props {
   testId: string;
@@ -18,7 +19,7 @@ export const Form: React.FC<Props> = ({
   fieldGroups,
   errors,
 }) => (
-  <FormikForm className="flex flex-col">
+  <StyledForm>
     {fieldGroups.map((fieldGroup) => (
       <FieldGroup {...fieldGroup} testId={testId} errors={errors} />
     ))}
@@ -29,5 +30,5 @@ export const Form: React.FC<Props> = ({
       floating
       level="primary"
     />
-  </FormikForm>
+  </StyledForm>
 );

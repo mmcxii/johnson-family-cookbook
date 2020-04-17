@@ -142,6 +142,9 @@ export const bg = {
       hover: gray[300],
     },
   },
+  form: {
+    input: gray[200],
+  },
 };
 
 export const text = {
@@ -154,5 +157,9 @@ export const text = {
     secondary: {
       hover: white,
     },
+  },
+  form: {
+    errorMessage: gray[500],
+    input: gray[700],
   },
 };

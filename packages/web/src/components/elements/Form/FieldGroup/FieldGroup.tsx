@@ -1,8 +1,14 @@
 import React from "react";
 import { FormikErrors } from "formik";
 
-import { IFieldGroup } from "../../store/types";
+import { IFieldGroup } from "../../../../store/types";
 import { Input } from "./Input";
+import {
+  StyledFieldGroup,
+  FGTitle,
+  FGDescription,
+  FGFields,
+} from "./FieldGroup.style";
 
 interface Props extends IFieldGroup {
   testId: string;
@@ -16,11 +22,11 @@ export const FieldGroup: React.FC<Props> = ({
   description,
   title,
 }) => (
-  <section>
-    {title && <h3 className="capitalize text-xl">{title}</h3>}
-    {description && <p className="pt-2">{description}</p>}
+  <StyledFieldGroup>
+    {title && <FGTitle>{title}</FGTitle>}
+    {description && <FGDescription>{description}</FGDescription>}
 
-    <section className="pt-2 pb-6">
+    <FGFields>
       {fields.map((field) => (
         <Input
           formTestId={testId}
@@ -29,6 +35,6 @@ export const FieldGroup: React.FC<Props> = ({
           key={field.name}
         />
       ))}
-    </section>
-  </section>
+    </FGFields>
+  </StyledFieldGroup>
 );
