@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DatepickerWrapper = styled.section`
+export const ColumnWrapper = styled.section`
   display: flex;
   justify-content: space-evenly;
 `;

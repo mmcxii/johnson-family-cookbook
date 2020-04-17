@@ -17,5 +17,6 @@ export const GlobalStyles = createGlobalStyle`
         min-height: 100vh;
         background-color: ${bg.root};
         color: ${text.root};
+        font-family: sans-serif;
     }
 `;

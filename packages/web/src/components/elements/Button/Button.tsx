@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import React from "react";
 
-import { ButtonStyle } from "./Button.style";
+import { StyledButton } from "./Button.style";
 
 interface Props {
   onClick?: any;
@@ -13,4 +13,4 @@ interface Props {
   floating?: boolean;
 }
 
-export const Button: React.FC<Props> = (props) => <ButtonStyle {...props} />;
+export const Button: React.FC<Props> = (props) => <StyledButton {...props} />;

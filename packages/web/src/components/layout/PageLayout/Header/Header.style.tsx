@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 import { bg, spacing } from "../../../../utils/style";
+import { Columns } from "../../Columns";
+import { StyledButton } from "../../../elements/Button/Button.style";
 
 export const StyledHeader = styled.header`
   background-color: ${bg.headerFooter};
@@ -17,9 +19,10 @@ export const Logo = styled.h1`
   }
 `;
 
-export const ButtonGroup = styled.section`
-  padding-top: ${spacing[4]};
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: ${spacing[2]};
+export const ButtonGroup = styled(Columns)`
+  padding-top: ${spacing[3]};
+
+  > ${StyledButton} {
+    margin: 0 ${spacing[2]};
+  }
 `;

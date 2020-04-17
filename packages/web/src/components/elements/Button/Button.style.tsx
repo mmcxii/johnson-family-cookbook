@@ -12,7 +12,7 @@ import {
   elevation,
 } from "../../../utils/style";
 
-export const ButtonStyle = styled(
+export const StyledButton = styled(
   ({
     floating,
     asLink = false,

@@ -15,22 +15,24 @@ export const Header: React.FC = () => (
 
       <Navbar />
 
-      <ButtonGroup>
-        <Button
-          level="primary"
-          label="sign up"
-          testid="sign_up"
-          onClick="/user/create"
-          asLink
-        />
-        <Button
-          level="secondary"
-          label="login"
-          testid="login"
-          onClick="/login"
-          asLink
-        />
-      </ButtonGroup>
+      <ButtonGroup
+        items={[
+          <Button
+            level="primary"
+            label="sign up"
+            testid="sign_up"
+            onClick="/user/create"
+            asLink
+          />,
+          <Button
+            level="secondary"
+            label="login"
+            testid="login"
+            onClick="/login"
+            asLink
+          />,
+        ]}
+      />
     </Container>
   </StyledHeader>
 );

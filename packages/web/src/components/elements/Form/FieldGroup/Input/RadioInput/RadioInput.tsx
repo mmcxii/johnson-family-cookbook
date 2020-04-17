@@ -1,7 +1,8 @@
 import React from "react";
 
 import { IField } from "../../../../../../store/types";
-import { RadioWrapper, RadioButton } from "./RadioInput.style";
+import { RadioButton } from "./RadioInput.style";
+import { Columns } from "../../../../../layout";
 
 interface Props {
   field: IField;
@@ -9,8 +10,8 @@ interface Props {
 }
 
 export const RadioInput: React.FC<Props> = ({ field, formTestId }) => (
-  <RadioWrapper>
-    {field.radioOptions!.map((ro) => (
+  <Columns
+    items={field.radioOptions!.map((ro) => (
       <article key={ro}>
         <RadioButton
           id={field.name + ro}
@@ -21,5 +22,5 @@ export const RadioInput: React.FC<Props> = ({ field, formTestId }) => (
         <label htmlFor={field.name + ro}>{ro}</label>
       </article>
     ))}
-  </RadioWrapper>
+  />
 );

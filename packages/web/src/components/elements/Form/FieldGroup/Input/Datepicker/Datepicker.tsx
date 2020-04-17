@@ -2,7 +2,7 @@ import React from "react";
 
 import { IField, IDropdown } from "../../../../../../store/types";
 import { Dropdown } from "../Dropdown";
-import { DatepickerWrapper } from "./Datepicker.style";
+import { Columns } from "../../../../../layout";
 
 interface Props {
   formTestId: string;
@@ -81,8 +81,8 @@ export const Datepicker: React.FC<Props> = ({ field, formTestId }) => {
   ];
 
   return (
-    <DatepickerWrapper>
-      {dropdowns.map((dd) => (
+    <Columns
+      items={dropdowns.map((dd) => (
         <article key={dd.name}>
           <Dropdown
             formTestId={formTestId}
@@ -91,6 +91,6 @@ export const Datepicker: React.FC<Props> = ({ field, formTestId }) => {
           />
         </article>
       ))}
-    </DatepickerWrapper>
+    />
   );
 };
