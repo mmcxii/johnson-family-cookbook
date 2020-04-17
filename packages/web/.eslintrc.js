@@ -48,8 +48,12 @@ module.exports = {
      */
     "react/jsx-props-no-spreading": 0,
     /**
-     * Indentaion is handled by prettier
+     * Indentaion is handled by prettier.
      */
     "@typescript-eslint/indent": 0,
+    /**
+     * Parenthesis wrapping is determined by prettier.
+     */
+    "react/jsx-wrap-multilines": 0,
   },
 };

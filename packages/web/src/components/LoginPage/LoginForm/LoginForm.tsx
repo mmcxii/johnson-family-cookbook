@@ -38,7 +38,6 @@ export const LoginForm: React.FC<Props> = ({ login }) => (
     {({ errors }) => {
       const fieldGroups: IFieldGroup[] = [
         {
-          title: "login",
           description: "Enter your email and password.",
           fields: [
             {
@@ -53,9 +52,12 @@ export const LoginForm: React.FC<Props> = ({ login }) => (
       ];
 
       return (
-        <Card>
-          <Form testId="login" fieldGroups={fieldGroups} errors={errors} />
-        </Card>
+        <Card
+          title="login"
+          content={
+            <Form testId="login" fieldGroups={fieldGroups} errors={errors} />
+          }
+        />
       );
     }}
   </Formik>

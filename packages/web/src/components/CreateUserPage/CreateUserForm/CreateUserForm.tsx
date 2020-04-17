@@ -98,14 +98,17 @@ export const CreateUserForm: React.FC<Props> = ({ createUser }) => (
       ];
 
       return (
-        <Card>
-          <Form
-            testId="sign_up"
-            submitLabel="sign up"
-            fieldGroups={fieldGroups}
-            errors={errors}
-          />
-        </Card>
+        <Card
+          title="sign up"
+          content={
+            <Form
+              testId="sign_up"
+              submitLabel="sign up"
+              fieldGroups={fieldGroups}
+              errors={errors}
+            />
+          }
+        />
       );
     }}
   </Formik>
