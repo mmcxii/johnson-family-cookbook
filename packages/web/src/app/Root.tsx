@@ -4,7 +4,7 @@ import Normalize from "react-normalize";
 
 import { ApolloWrapper } from "../lib/Apollo";
 import { App } from "./App";
-import { CSSReset } from "./CSSReset";
+import { GlobalStyles } from "./CSSReset";
 
 export const Root: React.FC = () => (
   <>
@@ -12,7 +12,7 @@ export const Root: React.FC = () => (
      * CSS Resets
      */}
     <Normalize />
-    <CSSReset />
+    <GlobalStyles />
 
     {/*
      * Wrapping the Application in necessary services

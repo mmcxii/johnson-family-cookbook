@@ -1,12 +1,20 @@
 import React from "react";
+import styled from "styled-components";
 
 import { Container } from "../Container";
+import { spacing, bg } from "../../../utils/style";
 
 export const Footer: React.FC = () => (
-  <footer className="mt-auto py-4 bg-gray-400">
+  <FooterWrapper>
     <Container>
       {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
       <p>Nich Secord &copy;2019 -{new Date().getFullYear()}</p>
     </Container>
-  </footer>
+  </FooterWrapper>
 );
+
+const FooterWrapper = styled.footer`
+  margin-top: auto;
+  padding: ${spacing[4]} 0;
+  background-color: ${bg.headerFooter};
+`;

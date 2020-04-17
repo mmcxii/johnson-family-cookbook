@@ -1,23 +1,22 @@
 import React from "react";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { Container } from "../Container";
 import { Navbar } from "./Navbar";
 import { Button } from "../../elements";
+import { spacing, bg } from "../../../utils/style";
 
 export const Header: React.FC = () => (
-  <header className="bg-gray-400 py-4">
-    <Container className="flex flex-col justify-between items-center">
-      <h1 className="m-0 text-center">
-        <Link to="/" className="no-underline">
-          Johnson Family Cookbook
-        </Link>
-      </h1>
+  <HeaderWrapper>
+    <Container smCol>
+      <Logo>
+        <Link to="/">Johnson Family Cookbook</Link>
+      </Logo>
 
-      {/* <section className="flex items-center justify-end"> */}
       <Navbar />
 
-      <section className="pt-4 grid grid-cols-2 gap-2">
+      <ButtonGroup>
         <Button
           level="primary"
           label="sign up"
@@ -32,8 +31,28 @@ export const Header: React.FC = () => (
           onClick="/login"
           asLink
         />
-      </section>
-      {/* </section> */}
+      </ButtonGroup>
     </Container>
-  </header>
+  </HeaderWrapper>
 );
+
+const HeaderWrapper = styled.header`
+  background-color: ${bg.headerFooter};
+  padding: ${spacing[4]} 0;
+`;
+
+const Logo = styled.h1`
+  margin: ${spacing[0]};
+  text-align: center;
+
+  > a {
+    text-decoration: none;
+  }
+`;
+
+const ButtonGroup = styled.section`
+  padding-top: ${spacing[4]};
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: ${spacing[2]};
+`;

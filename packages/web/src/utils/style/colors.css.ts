@@ -123,4 +123,12 @@ export const pink = {
  * Named colors reference generic colors and describe their role in the app. It is expected that multiple
  * named colors will reference the same generic color.
  */
-export const bgPrimary = gray[200];
+export const bg = {
+  root: gray[100],
+  card: white,
+  headerFooter: gray[400],
+};
+
+export const text = {
+  root: gray[900],
+};
