@@ -27,6 +27,7 @@ export const Form: React.FC<Props> = ({
       testid={`${testId}_form__submit`}
       submit
       floating
+      level="primary"
     />
   </FormikForm>
 );

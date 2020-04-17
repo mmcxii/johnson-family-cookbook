@@ -47,5 +47,9 @@ module.exports = {
      * Prop spreading is desired.
      */
     "react/jsx-props-no-spreading": 0,
+    /**
+     * Indentaion is handled by prettier
+     */
+    "@typescript-eslint/indent": 0,
   },
 };

@@ -4,6 +4,7 @@
  * These colors should only be used in experimentation and design. Named colors are used in final designs.
  * Colors are pulled from the Tailwind CSS palette.
  */
+export const transparent = "transparent";
 export const black = "#000";
 export const white = "#fff";
 export const gray = {
@@ -127,8 +128,31 @@ export const bg = {
   root: gray[100],
   card: white,
   headerFooter: gray[400],
+  button: {
+    primary: {
+      default: gray[600],
+      hover: gray[800],
+    },
+    secondary: {
+      default: gray[300],
+      hover: gray[600],
+    },
+    tertiary: {
+      default: transparent,
+      hover: gray[300],
+    },
+  },
 };
 
 export const text = {
   root: gray[900],
+  button: {
+    default: gray[900],
+    primary: {
+      default: white,
+    },
+    secondary: {
+      hover: white,
+    },
+  },
 };
