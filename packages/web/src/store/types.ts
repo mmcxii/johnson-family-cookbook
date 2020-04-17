@@ -18,3 +18,8 @@ export interface IDropdown {
   name: string;
   options: (string | number)[];
 }
+
+export interface INavItem {
+  name: string;
+  link: string;
+}

@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
 
-interface Props {
+export interface Props {
   smCol?: boolean;
 }
 
-export const Container = styled.div<Props>`
+export const StyledContainer = styled.div<Props>`
   --margin: 0.5rem;
   margin: 0 var(--margin);
 

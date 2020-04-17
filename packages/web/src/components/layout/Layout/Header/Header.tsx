@@ -1,14 +1,13 @@
 import React from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { Container } from "../Container";
 import { Navbar } from "./Navbar";
-import { Button } from "../../elements";
-import { spacing, bg } from "../../../utils/style";
+import { Button } from "../../../elements";
+import { StyledHeader, Logo, ButtonGroup } from "./Header.style";
 
 export const Header: React.FC = () => (
-  <HeaderWrapper>
+  <StyledHeader>
     <Container smCol>
       <Logo>
         <Link to="/">Johnson Family Cookbook</Link>
@@ -33,26 +32,5 @@ export const Header: React.FC = () => (
         />
       </ButtonGroup>
     </Container>
-  </HeaderWrapper>
+  </StyledHeader>
 );
-
-const HeaderWrapper = styled.header`
-  background-color: ${bg.headerFooter};
-  padding: ${spacing[4]} 0;
-`;
-
-const Logo = styled.h1`
-  margin: ${spacing[0]};
-  text-align: center;
-
-  > a {
-    text-decoration: none;
-  }
-`;
-
-const ButtonGroup = styled.section`
-  padding-top: ${spacing[4]};
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: ${spacing[2]};
-`;

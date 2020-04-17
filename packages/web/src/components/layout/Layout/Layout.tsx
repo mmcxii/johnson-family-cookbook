@@ -3,13 +3,14 @@ import React from "react";
 import { Header } from "./Header";
 import { Container } from "./Container";
 import { Footer } from "./Footer";
+import { Main } from "./Layout.style";
 
 export const Layout: React.FC = ({ children }) => (
   <>
     <Header />
-    <main className="py-4">
+    <Main>
       <Container>{children}</Container>
-    </main>
+    </Main>
     <Footer />
   </>
 );

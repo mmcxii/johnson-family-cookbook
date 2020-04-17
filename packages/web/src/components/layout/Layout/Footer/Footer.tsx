@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Container } from "../Container";
-import { spacing, bg } from "../../../utils/style";
+import { spacing, bg } from "../../../../utils/style";
 
 export const Footer: React.FC = () => (
   <FooterWrapper>

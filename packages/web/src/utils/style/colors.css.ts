@@ -162,4 +162,9 @@ export const text = {
     errorMessage: gray[500],
     input: gray[700],
   },
+  nav: {
+    inactive: gray[100],
+    hover: gray[500],
+    active: gray[700],
+  },
 };
