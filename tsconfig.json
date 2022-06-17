@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "target": "ES6",
+    "moduleResolution": "node",
+    "strictPropertyInitialization": false,
+    "jsx": "react",
+    "resolveJsonModule": true
+  }
+}

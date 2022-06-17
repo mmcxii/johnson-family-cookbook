@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "aaron-bond.better-comments",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "eamodio.gitlens",
+    "BriteSnow.vscode-toggle-quotes",
+    "wix.vscode-import-cost",
+    "csstools.postcss"
+  ]
+}

@@ -1,0 +1,64 @@
+#* ######################################################
+#* ################### Stage 0: Base ####################
+#* ######################################################
+# This step establishes a small base image to be used by subsequent containers.
+# It ensures it is up to date and installs openssl, sets the timezone to US-West
+# and sets the working directory to /app.
+FROM node:18.0.0-buster-slim as base
+
+# Ensure container is up to date
+RUN apt-get update && apt-get install --no-install-recommends --yes openssl
+
+# Set Timezone to Pacific
+ENV TZ=America/Los_Angeles
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Establish working directory to contain application
+WORKDIR /app
+
+#* ######################################################
+#* ################## Stage 1: Builder ##################
+#* ######################################################
+# This step installs dependencies and runs the build command
+# to create a compiled production version of the app.
+FROM base as builder
+
+# Copy configuration files
+COPY ./package*.json jest.config.json jest*.ts webpack*.js tsconfig*.json ./
+
+# Install production dependencies
+RUN npm install --production --ignore-scripts
+RUN mkdir ./production-dependencies
+RUN cp -R node_modules/* ./production-dependencies
+
+# Install dev dependencies
+RUN npm install --ignore-scripts
+
+# Copy source code
+COPY src ./src
+COPY assets ./assets
+
+# Compile application
+RUN npm run build
+
+#* ######################################################
+#* ################## Stage 2: Runner ###################
+#* ######################################################
+# This step is the final resulting image from the build process.
+# It contains the compiled app and dependencies
+# required to run the app in production.
+FROM base as runner
+
+# Copy compiled application and dependencies
+COPY --from=builder /app/dist/shared ./dist/shared
+COPY --from=builder /app/dist/browser ./dist/browser
+COPY --from=builder /app/dist/server/proxy ./dist/server/proxy
+COPY --from=builder /app/dist/server/shared ./dist/server/shared
+COPY --from=builder /app/production-dependencies ./node_modules
+COPY --from=builder /app/assets ./assets
+
+# Expose port 4000 for connections
+EXPOSE 4000
+
+# Start the application
+CMD [ "node", "-r dotenv/config", "./dist/server/proxy/index.js" ]

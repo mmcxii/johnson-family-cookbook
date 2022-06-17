@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  ########################################
+  ############### Database ###############
+  ########################################
+  postgres:
+    container_name: postgres
+    image: postgres:12-alpine
+    ports:
+      - 5432:5432
+    env_file: ./env/postgres.env
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+  adminer:
+    container_name: adminer
+    image: adminer:latest
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+
+  ########################################
+  ################ Cache #################
+  ########################################
+  redis:
+    container_name: redis
+    image: redis:6.0.6-alpine3.12
+    ports:
+      - 6379:6379
+    volumes:
+      - ./data/redis:/data
