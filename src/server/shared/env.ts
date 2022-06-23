@@ -8,10 +8,14 @@ function getEnvValue(valueName: string) {
   return value;
 }
 
-export function getHostingEnv(): string {
+export function getHostingEnv(): "localhost" | "stage" | "production" {
   const envValue = getEnvValue("HOSTING_ENV");
 
-  return envValue;
+  if (!["localhost", "stage", "production"].includes(envValue)) {
+    throw new Error(`Unexpected value for HOSTING_ENV: ${envValue}`);
+  }
+
+  return envValue as "localhost" | "stage" | "production";
 }
 
 export function getApiServerPort(): number {
@@ -55,6 +59,12 @@ export function getAccessTokenSecret(): string {
 
 export function getRefreshTokenSecret(): string {
   const envValue = getEnvValue("AUTH__REFRESH_TOKEN_SECRET");
+
+  return envValue;
+}
+
+export function getRefreshTokenCookieName(): string {
+  const envValue = getEnvValue("AUTH__REFRESH_TOKEN_COOKIE_NAME");
 
   return envValue;
 }

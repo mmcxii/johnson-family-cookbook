@@ -1,4 +1,4 @@
-export * from "./utils/message-codes";
+export * from "./utils";
 export * from "./entity";
 export * from "./module";
 export * from "./service";

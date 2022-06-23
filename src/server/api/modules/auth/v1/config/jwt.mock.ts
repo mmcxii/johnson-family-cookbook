@@ -10,8 +10,10 @@ export const mockJwtConfig: Provider<JwtConfig> = {
       secret: "mock-access-token-secret",
     },
     refreshToken: {
+      cookieName: "refresh-token",
       lifespan: JWT_SEVEN_DAYS,
       secret: "mock-refresh-token-secret",
+      cookieConfig: {},
     },
   },
 };

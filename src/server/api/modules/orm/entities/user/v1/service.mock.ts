@@ -21,6 +21,19 @@ export function getMockUserV1Service(users: Array<UserV1> = [getMockUser()]): Pr
 
         return user;
       },
+      findOneByEmailAddressOrFail: async (
+        emailAddress: UserV1["emailAddress"],
+      ): Promise<UserV1> => {
+        const user = users
+          .filter((u) => u.archivedAt == null)
+          .find((u) => u.emailAddress === emailAddress);
+
+        if (!user) {
+          throw new Error(UserV1Errors.UserNotFound);
+        }
+
+        return user;
+      },
       createAndFlush: async (): Promise<UserV1> => {
         return getMockUser();
       },
