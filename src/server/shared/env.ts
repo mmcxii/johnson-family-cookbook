@@ -46,3 +46,15 @@ export function getWebpackDevServerPort(): number {
 
   return parsed;
 }
+
+export function getAccessTokenSecret(): string {
+  const envValue = getEnvValue("AUTH__ACCESS_TOKEN_SECRET");
+
+  return envValue;
+}
+
+export function getRefreshTokenSecret(): string {
+  const envValue = getEnvValue("AUTH__REFRESH_TOKEN_SECRET");
+
+  return envValue;
+}

@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { Options } from "@mikro-orm/core";
-import { ALL_ENTITIES } from "./all-entities";
+import { UserV1 } from "../../entities";
 
 /**
  * Mikro-ORM configuration.
@@ -12,7 +12,7 @@ export default {
   dbName: process.env.ORM__DATABASE_NAME,
   user: process.env.ORM__DATABASE_USERNAME,
   password: process.env.ORM__DATABASE_PASSWORD,
-  entities: ALL_ENTITIES,
+  entities: [UserV1],
   driverOptions:
     process.env.NODE_ENV !== "development"
       ? {
