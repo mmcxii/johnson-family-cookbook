@@ -58,3 +58,14 @@ export function getRefreshTokenSecret(): string {
 
   return envValue;
 }
+
+export function getPasswordSalt() {
+  const envValue = getEnvValue("AUTH__PASSWORD_SALT");
+  const parsed = Number.parseInt(envValue);
+
+  if (Number.isNaN(parsed)) {
+    throw new Error(`Nonnumeric value for AUTH__PASSWORD_SALT: ${envValue}`);
+  }
+
+  return parsed;
+}
