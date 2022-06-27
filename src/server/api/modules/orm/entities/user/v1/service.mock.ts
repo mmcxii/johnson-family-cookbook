@@ -1,5 +1,6 @@
 import { Provider } from "@nestjs/common";
 import { mockRepository } from "../../test-utils/mock-repository";
+import { CreateUserV1Params } from "./dto/create-params";
 import { UserV1 } from "./entity";
 import { getMockUser } from "./entity.mock";
 import { UserV1Service } from "./service";
@@ -34,8 +35,8 @@ export function getMockUserV1Service(users: Array<UserV1> = [getMockUser()]): Pr
 
         return user;
       },
-      createAndFlush: async (): Promise<UserV1> => {
-        return getMockUser();
+      createAndFlush: async (params: CreateUserV1Params): Promise<UserV1> => {
+        return getMockUser(params);
       },
       getRepository: (): any => {
         return mockRepository(users);

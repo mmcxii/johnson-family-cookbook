@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { Inject, Injectable } from "@nestjs/common";
 import { UserV1, UserV1AccountStatus, UserV1Service } from "../../../../orm";
-import { LoginInput, LoginResponse } from "../../dto";
+import { CreateTokensResponse, LoginInput, LoginResponse } from "../../dto";
 import { AuthV1Errors } from "../../utils/message-codes";
 import { CredentialsV1Service } from "../credentials";
 import { PasswordsV1Service } from "../passwords";
@@ -44,7 +44,7 @@ export class AuthenticationV1Service {
     response.clearCookie(this.config.refreshToken.cookieName);
   }
 
-  public async createNewTokens(user: UserV1): Promise<LoginResponse> {
+  public async createNewTokens(user: UserV1): Promise<CreateTokensResponse> {
     // Confirm the user's account is active
     this._confirmUserIsActive(user);
 
@@ -54,7 +54,6 @@ export class AuthenticationV1Service {
     ]);
 
     return {
-      user,
       accessToken,
       refreshToken,
     };
