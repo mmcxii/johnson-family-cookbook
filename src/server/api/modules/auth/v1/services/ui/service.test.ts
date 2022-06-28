@@ -1,6 +1,6 @@
 import { Test } from "@nestjs/testing";
+import { loginFormSchema, registerUserFormSchema } from "./json";
 import { UiV1Service } from "./service";
-import registerUserFormSchema from "./json/register-user-form.schema.json";
 
 describe("UiV1Service", () => {
   let uiV1Service: UiV1Service;
@@ -20,6 +20,16 @@ describe("UiV1Service", () => {
 
       //* Assert
       expect(result).toMatchObject(registerUserFormSchema);
+    });
+  });
+
+  describe("getLoginFormSchema", () => {
+    it("will return the expected schema", () => {
+      //* Act
+      const result = uiV1Service.getLoginFormSchema();
+
+      //* Assert
+      expect(result).toMatchObject(loginFormSchema);
     });
   });
 });
