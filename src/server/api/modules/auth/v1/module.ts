@@ -6,6 +6,7 @@ import { jwtConfig } from "./config/jwt";
 import { passwordsConfig } from "./config/passwords";
 import {
   AuthenticationV1Service,
+  UiV1Service,
   CredentialsV1Service,
   PasswordsV1Service,
   RegistrationV1Service,
@@ -23,6 +24,7 @@ import {
     CredentialsV1Service,
     PasswordsV1Service,
     RegistrationV1Service,
+    UiV1Service,
   ],
 })
 export class AuthV1Module {}
