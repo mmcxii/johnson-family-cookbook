@@ -28,7 +28,7 @@ describe("CredentialsV1Service", () => {
         CredentialsV1Service,
         JwtService,
         getMockUserV1Service([mockUser]),
-        // mockRedisService,
+        mockRedisService,
       ],
     }).compile();
 

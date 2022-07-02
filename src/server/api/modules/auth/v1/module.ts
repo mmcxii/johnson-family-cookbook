@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 import { RedisModule } from "nestjs-redis";
 import { UserV1Module } from "../../orm";
@@ -23,9 +23,9 @@ import {
     ConfigModule.forFeature(passwordsConfig),
     ConfigModule.forFeature(redisConfig),
     JwtModule.register({}),
-    // RedisModule.forRootAsync({
-    //   useFactory: redisConfig,
-    // }),
+    RedisModule.forRootAsync({
+      useFactory: redisConfig,
+    }),
     UserV1Module,
   ],
   providers: [

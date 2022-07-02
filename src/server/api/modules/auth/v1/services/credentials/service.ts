@@ -15,7 +15,8 @@ export class CredentialsV1Service {
     @Inject(jwtConfig.KEY)
     private readonly config: ConfigType<typeof jwtConfig>,
     private readonly jwtService: JwtService,
-    private readonly userV1Service: UserV1Service, // private readonly redisService: RedisService,
+    private readonly userV1Service: UserV1Service,
+    private readonly redisService: RedisService,
   ) {}
 
   public async createRefreshToken(user: UserV1): Promise<string> {
@@ -78,39 +79,39 @@ export class CredentialsV1Service {
     return decodedToken;
   }
 
-  // private async _storeTokenInCache(
-  //   prefix: AuthV1CachePrefixes,
-  //   id: string,
-  //   token: string,
-  // ): Promise<boolean> {
-  //   const redis = this.redisService.getClient();
+  private async _storeTokenInCache(
+    prefix: AuthV1CachePrefixes,
+    id: string,
+    token: string,
+  ): Promise<boolean> {
+    const redis = this.redisService.getClient();
 
-  //   try {
-  //     await redis.set(`${prefix}${id}`, token, "ex", SEVEN_DAYS_IN_SECONDS);
+    try {
+      await redis.set(`${prefix}${id}`, token, "ex", SEVEN_DAYS_IN_SECONDS);
 
-  //     return true;
-  //   } catch {
-  //     return false;
-  //   }
-  // }
+      return true;
+    } catch {
+      return false;
+    }
+  }
 
-  // private async _retrieveTokenFromCache(prefix: AuthV1CachePrefixes, id: string): Promise<string> {
-  //   const redis = this.redisService.getClient();
+  private async _retrieveTokenFromCache(prefix: AuthV1CachePrefixes, id: string): Promise<string> {
+    const redis = this.redisService.getClient();
 
-  //   const token = await redis.get(`${prefix}${id}`);
+    const token = await redis.get(`${prefix}${id}`);
 
-  //   if (!token) {
-  //     throw new Error(AuthV1Errors.TokenNotFound);
-  //   }
+    if (!token) {
+      throw new Error(AuthV1Errors.TokenNotFound);
+    }
 
-  //   return token;
-  // }
+    return token;
+  }
 
-  // private async _deleteTokenFromCache(prefix: AuthV1CachePrefixes, id: string): Promise<boolean> {
-  //   const redis = this.redisService.getClient();
+  private async _deleteTokenFromCache(prefix: AuthV1CachePrefixes, id: string): Promise<boolean> {
+    const redis = this.redisService.getClient();
 
-  //   const result = !!(await redis.del(`${prefix}${id}`));
+    const result = !!(await redis.del(`${prefix}${id}`));
 
-  //   return result;
-  // }
+    return result;
+  }
 }

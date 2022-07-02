@@ -11,9 +11,11 @@ import {
 export type RedisConfig = RedisModuleOptions & {};
 
 export const redisConfig = registerAs("redis", (): RedisConfig => {
+  const protocol = `redis${getHostingEnv() === "localhost" ? "" : "s"}`;
+  const auth = `${getRedisUsername()}:${getRedisPassword()}`;
+  const host = `${getRedisHost()}:${getRedisPort()}`;
+
   return {
-    url: `redis${
-      getHostingEnv() === "localhost" ? "" : "s"
-    }://${getRedisUsername()}:${getRedisPassword()}@${getRedisHost()}:${getRedisPort()}`,
+    url: `${protocol}://${auth}@${host}`,
   };
 });
