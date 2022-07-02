@@ -1,5 +1,11 @@
 import * as React from "react";
+import { BrowserRouter } from "react-router-dom";
+import { Router } from "./router";
 
 export const App: React.FC = () => {
-  return <div>hello world</div>;
+  return (
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
+  );
 };
