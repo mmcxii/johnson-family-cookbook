@@ -1,5 +1,6 @@
 {
   "globalSetup": "./jest.setup-global.ts",
+  "passWithNoTests": true,
   "projects": [
     {
       "preset": "ts-jest",
