@@ -4,3 +4,7 @@ export enum AuthV1Errors {
   UserNotActive = "ERROR:USER_NOT_ACTIVE",
   PasswordsMustMatch = "ERROR:PASSWORDS_MUST_MATCH",
 }
+
+export enum AuthV1Messages {
+  LogoutSuccessful = "LOGOUT_SUCCESSFUL",
+}

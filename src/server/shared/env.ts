@@ -8,14 +8,14 @@ function getEnvValue(valueName: string) {
   return value;
 }
 
-export function getHostingEnv(): "localhost" | "stage" | "production" {
+export function getHostingEnv(): "localhost" | "production" | "stage" {
   const envValue = getEnvValue("HOSTING_ENV");
 
   if (!["localhost", "stage", "production"].includes(envValue)) {
     throw new Error(`Unexpected value for HOSTING_ENV: ${envValue}`);
   }
 
-  return envValue as "localhost" | "stage" | "production";
+  return envValue as "localhost" | "production" | "stage";
 }
 
 export function getApiServerPort(): number {
@@ -78,4 +78,33 @@ export function getPasswordSalt() {
   }
 
   return parsed;
+}
+
+export function getRedisHost() {
+  const envValue = getEnvValue("CACHE__REDIS_HOST");
+
+  return envValue;
+}
+
+export function getRedisPort() {
+  const envValue = getEnvValue("CACHE__REDIS_PORT");
+  const parsed = Number.parseInt(envValue);
+
+  if (Number.isNaN(parsed)) {
+    throw new Error(`Nonnumeric value for CACHE__REDIS_PORT: ${envValue}`);
+  }
+
+  return envValue;
+}
+
+export function getRedisUsername() {
+  const envValue = getEnvValue("CACHE__REDIS_USERNAME");
+
+  return envValue;
+}
+
+export function getRedisPassword() {
+  const envValue = getEnvValue("CACHE__REDIS_PASSWORD");
+
+  return envValue;
 }

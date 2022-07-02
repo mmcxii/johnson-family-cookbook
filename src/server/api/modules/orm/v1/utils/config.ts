@@ -1,18 +1,13 @@
-import "dotenv/config";
 import { Options } from "@mikro-orm/core";
+import "dotenv/config";
 import { UserV1 } from "../../entities";
 
 /**
  * Mikro-ORM configuration.
  */
 export default {
-  type: "postgresql",
-  host: process.env.ORM__DATABASE_HOST,
-  port: Number.parseInt(process.env.ORM__DATABASE_PORT ?? "", 10),
   dbName: process.env.ORM__DATABASE_NAME,
-  user: process.env.ORM__DATABASE_USERNAME,
-  password: process.env.ORM__DATABASE_PASSWORD,
-  entities: [UserV1],
+  debug: process.env.NODE_ENV === "development",
   driverOptions:
     process.env.NODE_ENV !== "development"
       ? {
@@ -20,7 +15,8 @@ export default {
             ssl: { rejectUnauthorized: false },
           },
         }
-      : undefined,
+      : {},
+  entities: [UserV1],
   filters: {
     /**
      * The Soft Delete filter automatically removes items from any search that
@@ -40,5 +36,9 @@ export default {
       },
     },
   },
-  debug: process.env.NODE_ENV === "development",
+  host: process.env.ORM__DATABASE_HOST,
+  password: process.env.ORM__DATABASE_PASSWORD,
+  port: Number.parseInt(process.env.ORM__DATABASE_PORT ?? "", 10),
+  type: "postgresql",
+  user: process.env.ORM__DATABASE_USERNAME,
 } as Options;

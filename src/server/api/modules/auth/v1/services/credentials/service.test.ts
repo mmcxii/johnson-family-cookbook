@@ -1,17 +1,17 @@
 import { faker } from "@faker-js/faker";
 import { ConfigType } from "@nestjs/config";
-import { CredentialsV1Service } from "./service";
 import { JwtService } from "@nestjs/jwt";
-import { RedisService } from "nestjs-redis";
 import { Test } from "@nestjs/testing";
-import { jwtConfig } from "../../config/jwt";
-import { getMockUser, getMockUserV1Service } from "../../../../orm/entities/user/index.mock";
-import { mockRedisService } from "../../../../../../shared/test-utils/redis-service.mock";
+import { RedisService } from "nestjs-redis";
 import { SEVEN_DAYS_IN_SECONDS } from "../../../../../../../shared/time-values";
-import { Credentials, DecodedToken } from "../../types";
-import { mockJwtConfig } from "../../config/jwt.mock";
+import { mockRedisService } from "../../../../../../shared/test-utils/redis-service.mock";
 import { UserV1 } from "../../../../orm";
+import { getMockUser, getMockUserV1Service } from "../../../../orm/entities/user/index.mock";
+import { jwtConfig } from "../../config/jwt";
+import { mockJwtConfig } from "../../config/jwt.mock";
+import { Credentials, DecodedToken } from "../../types";
 import { AuthV1Errors } from "../../utils/message-codes";
+import { CredentialsV1Service } from "./service";
 
 describe("CredentialsV1Service", () => {
   let credentialsV1Service: CredentialsV1Service;
@@ -28,7 +28,7 @@ describe("CredentialsV1Service", () => {
         CredentialsV1Service,
         JwtService,
         getMockUserV1Service([mockUser]),
-        mockRedisService,
+        // mockRedisService,
       ],
     }).compile();
 
@@ -60,8 +60,8 @@ describe("CredentialsV1Service", () => {
         userId: mockUser.id,
       };
       const token = await jwtService.signAsync(tokenData, {
-        secret: jwtConfigReference.refreshToken.secret,
         expiresIn: jwtConfigReference.refreshToken.lifespan,
+        secret: jwtConfigReference.refreshToken.secret,
       });
 
       //* Act
@@ -78,8 +78,8 @@ describe("CredentialsV1Service", () => {
         userId: mockUser.id,
       };
       const token = await jwtService.signAsync(tokenData, {
-        secret: jwtConfigReference.refreshToken.secret,
         expiresIn: jwtConfigReference.refreshToken.lifespan,
+        secret: jwtConfigReference.refreshToken.secret,
       });
 
       // The mock user's credential version will default to less than 10
@@ -120,8 +120,8 @@ describe("CredentialsV1Service", () => {
         userId: mockUser.id,
       };
       const token = await jwtService.signAsync(tokenData, {
-        secret: jwtConfigReference.accessToken.secret,
         expiresIn: jwtConfigReference.accessToken.lifespan,
+        secret: jwtConfigReference.accessToken.secret,
       });
 
       //* Act
@@ -138,8 +138,8 @@ describe("CredentialsV1Service", () => {
         userId: mockUser.id,
       };
       const token = await jwtService.signAsync(tokenData, {
-        secret: jwtConfigReference.accessToken.secret,
         expiresIn: jwtConfigReference.accessToken.lifespan,
+        secret: jwtConfigReference.accessToken.secret,
       });
 
       // The mock user's credential version will default to less than 10
