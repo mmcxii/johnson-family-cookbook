@@ -1,2 +1,3 @@
-export * from "./credentials.type";
-export * from "./decoded-token.type";
+export * from "./credentials";
+export * from "./decoded-token";
+export * from "./sanitized-user";

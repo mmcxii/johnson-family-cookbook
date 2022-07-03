@@ -1,16 +1,16 @@
-import { Response } from "express";
 import { faker } from "@faker-js/faker";
 import { Test } from "@nestjs/testing";
+import { Response } from "express";
 import { UserV1, UserV1AccountStatus, UserV1Errors } from "../../../../orm";
 import { getMockUser, getMockUserV1Service } from "../../../../orm/entities/user/index.mock";
+import { mockJwtConfig } from "../../config/jwt.mock";
+import { mockPasswordsConfig } from "../../config/passwords.mock";
 import { LoginInput } from "../../dto";
 import { AuthV1Errors } from "../../utils/message-codes";
+import { sanitizeUser } from "../../utils/sanitize-user";
 import { mockCredentialsV1Service } from "../credentials/service.mock";
-import { mockPasswordsV1Service } from "../passwords/service.mock";
-import { AuthenticationV1Service } from "./service";
-import { mockJwtConfig } from "../../config/jwt.mock";
 import { PasswordsV1Service } from "../passwords";
-import { mockPasswordsConfig } from "../../config/passwords.mock";
+import { AuthenticationV1Service } from "./service";
 
 describe("AuthenticationV1Service", () => {
   let authenticationV1Service: AuthenticationV1Service;
@@ -35,7 +35,7 @@ describe("AuthenticationV1Service", () => {
   });
 
   describe("login", () => {
-    it("will return the user and an access token if all checks pass and will send a refresh token as a cookie", async () => {
+    it("will return a sanitized user and an access token if all checks pass and will send a refresh token as a cookie", async () => {
       //* Arrange
       const data: LoginInput = {
         emailAddress: mockUser.emailAddress,
@@ -46,7 +46,7 @@ describe("AuthenticationV1Service", () => {
       const result = await authenticationV1Service.login(data);
 
       //* Assert
-      expect(result.user).toMatchObject(mockUser);
+      expect(result.user).toMatchObject(sanitizeUser(mockUser));
       expect(result.accessToken).toBeDefined();
     });
 

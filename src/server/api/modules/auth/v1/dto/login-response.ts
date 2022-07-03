@@ -1,7 +1,7 @@
-import { UserV1 } from "../../../orm";
+import { SanitizedUser } from "../types/sanitized-user";
 
 export class LoginResponse {
-  public user: UserV1;
+  public user: SanitizedUser;
 
   public accessToken: string;
 

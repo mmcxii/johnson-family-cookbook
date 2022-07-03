@@ -1,12 +1,13 @@
-import { Response } from "express";
 import { Inject, Injectable } from "@nestjs/common";
+import { ConfigType } from "@nestjs/config";
+import { Response } from "express";
 import { UserV1, UserV1AccountStatus, UserV1Service } from "../../../../orm";
+import { jwtConfig } from "../../config/jwt";
 import { CreateTokensResponse, LoginInput, LoginResponse } from "../../dto";
 import { AuthV1Errors } from "../../utils/message-codes";
+import { sanitizeUser } from "../../utils/sanitize-user";
 import { CredentialsV1Service } from "../credentials";
 import { PasswordsV1Service } from "../passwords";
-import { ConfigType } from "@nestjs/config";
-import { jwtConfig } from "../../config/jwt";
 
 @Injectable()
 export class AuthenticationV1Service {
@@ -34,9 +35,9 @@ export class AuthenticationV1Service {
     const { accessToken, refreshToken } = await this.createNewTokens(user);
 
     return {
-      user,
       accessToken,
       refreshToken,
+      user: sanitizeUser(user),
     };
   }
 

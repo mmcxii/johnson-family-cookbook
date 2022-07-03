@@ -1,1 +1,1 @@
-export * from "./component";
+export { AppContainer as App } from "./container";

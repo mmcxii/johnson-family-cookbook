@@ -5,4 +5,5 @@ export enum AuthV1Routes {
   RefreshTokens = "/refresh-tokens",
   RegisterUser = "/register-user",
   RegisterUserSchema = "/register-user/schema",
+  User = "/user",
 }

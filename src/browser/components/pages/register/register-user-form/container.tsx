@@ -2,14 +2,16 @@ import * as React from "react";
 import { AuthV1Queries } from "../../../../queries";
 import { RegisterUserForm, RegisterUserFormProps } from "./component";
 
-export type RegisterUserFormContainerProps = Omit<RegisterUserFormProps, "schema">;
+export type RegisterUserFormContainerProps = Omit<RegisterUserFormProps, "onSubmit" | "schema">;
 
 export const RegisterUserFormContainer: React.FC<RegisterUserFormContainerProps> = (props) => {
   //* Queries
-  const registerUserSchemaResponse = AuthV1Queries.useGetRegisterUserSchema();
+  const registerUserSchema = AuthV1Queries.schemas.useGetRegisterUserSchema();
+  const registerUser = AuthV1Queries.usePostRegisterUser();
 
   //* Variables
-  const { data } = registerUserSchemaResponse;
+  const { data } = registerUserSchema;
+  const { mutate } = registerUser;
 
-  return <RegisterUserForm {...props} schema={data} />;
+  return <RegisterUserForm {...props} onSubmit={mutate} schema={data} />;
 };

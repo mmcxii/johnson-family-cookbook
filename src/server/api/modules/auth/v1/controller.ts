@@ -5,8 +5,10 @@ import { UserV1 } from "../../orm";
 import { CreateTokensResponse, LoginInput, LoginResponse, RegisterUserInput } from "./dto";
 import { AccessTokenGuard, RefreshTokenGuard } from "./guards";
 import { AuthenticationV1Service, RegistrationV1Service, UiV1Service } from "./services";
+import { SanitizedUser } from "./types/sanitized-user";
 import { AuthV1Messages } from "./utils/message-codes";
 import { AuthV1Routes } from "./utils/routes";
+import { sanitizeUser } from "./utils/sanitize-user";
 
 @Controller("/auth/v1")
 export class AuthV1Controller {
@@ -46,6 +48,14 @@ export class AuthV1Controller {
   }
 
   //* Private Routes
+  @UseGuards(AccessTokenGuard)
+  @Get(AuthV1Routes.User)
+  public async getCurrentUser(@Req() request: Request): Promise<SanitizedUser> {
+    const user = sanitizeUser(request.user as UserV1);
+
+    return user;
+  }
+
   @UseGuards(RefreshTokenGuard)
   @Post(AuthV1Routes.RefreshTokens)
   public async refreshTokens(@Req() request: Request): Promise<CreateTokensResponse> {

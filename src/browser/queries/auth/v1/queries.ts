@@ -1,15 +1,34 @@
-import { useQuery } from "react-query";
-import { getApiAuthV1LoginSchema, getApiAuthV1RegisterUserSchema } from "../../../services";
+import { useMutation, useQuery } from "react-query";
+import {
+  PostApiAuthV1LoginParams,
+  PostApiAuthV1LoginResponse,
+  PostApiAuthV1RegisterUserParams,
+  PostApiAuthV1RegisterUserResponse,
+  getApiAuthV1User,
+  postApiAuthV1Login,
+  postApiAuthV1RegisterUser,
+} from "../../../services";
 import { keys } from "./keys";
+import { AuthV1SchemasQueries } from "./schemas";
 
 export class AuthV1Queries {
-  private static keys = keys;
+  public static schemas = new AuthV1SchemasQueries(keys);
 
-  public static useGetLoginSchema() {
-    return useQuery(this.keys.loginFormSchema, getApiAuthV1LoginSchema);
+  public static useGetUser() {
+    return useQuery(keys.user, getApiAuthV1User);
   }
 
-  public static useGetRegisterUserSchema() {
-    return useQuery(this.keys.registerUserFormSchema, getApiAuthV1RegisterUserSchema);
+  public static usePostRegisterUser() {
+    return useMutation<PostApiAuthV1RegisterUserResponse, Error, PostApiAuthV1RegisterUserParams>(
+      keys.user,
+      postApiAuthV1RegisterUser,
+    );
+  }
+
+  public static usePostLogin() {
+    return useMutation<PostApiAuthV1LoginResponse, Error, PostApiAuthV1LoginParams>(
+      keys.user,
+      postApiAuthV1Login,
+    );
   }
 }

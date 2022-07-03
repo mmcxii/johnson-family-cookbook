@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { UserV1Service } from "../../../../orm";
 import { LoginResponse, RegisterUserInput } from "../../dto";
 import { AuthV1Errors } from "../../utils/message-codes";
+import { sanitizeUser } from "../../utils/sanitize-user";
 import { AuthenticationV1Service } from "../authentication";
 import { PasswordsV1Service } from "../passwords";
 
@@ -14,7 +15,7 @@ export class RegistrationV1Service {
   ) {}
 
   public async registerUser(params: RegisterUserInput): Promise<LoginResponse> {
-    const { password, confirmPassword } = params;
+    const { confirmPassword, password } = params;
 
     if (password !== confirmPassword) {
       throw new Error(AuthV1Errors.PasswordsMustMatch);
@@ -29,7 +30,7 @@ export class RegistrationV1Service {
 
     return {
       ...tokens,
-      user,
+      user: sanitizeUser(user),
     };
   }
 }
