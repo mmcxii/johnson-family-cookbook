@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Post,
-  Req,
-  Res,
-  UseGuards,
-} from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { Request, Response } from "express";
 import { HttpStatusCodes } from "../../../../../shared/constants/http-status-codes";
 import { FormSchema } from "../../../../../shared/types/form-schema.type";
@@ -80,6 +70,7 @@ export class AuthV1Controller {
 
   @UseGuards(RefreshTokenGuard)
   @Post(AuthV1Routes.RefreshTokens)
+  @HttpCode(HttpStatusCodes.Success)
   public async refreshTokens(@Req() request: Request): Promise<CreateTokensResponse> {
     const user = request.user as UserV1;
 

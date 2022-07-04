@@ -4,22 +4,12 @@ import { User } from "../../../../../../shared/types/api";
 import { ApiRoutes } from "../../../../../utils/routes";
 import { serviceRequest } from "../../../../../utils/service-request";
 
-export type PostApiAuthV1LoginParams = {
-  values: Record<string, unknown>;
-};
-
-export type PostApiAuthV1LoginResponse = {
+export type PostApiAuthV1RefreshTokensResponse = {
   user: User;
 };
 
-export async function postApiAuthV1Login(
-  params: PostApiAuthV1LoginParams,
-): Promise<PostApiAuthV1LoginResponse> {
-  const { values } = params;
-
-  const response = await serviceRequest("post", ApiRoutes.ApiAuthV1Login, {
-    body: JSON.stringify(values),
-  });
+export async function postApiAuthV1RefreshTokens(): Promise<PostApiAuthV1RefreshTokensResponse> {
+  const response = await serviceRequest("post", ApiRoutes.ApiAuthV1RefreshTokens);
 
   switch (response.status) {
     case HttpStatusCodes.Success: {
@@ -29,7 +19,7 @@ export async function postApiAuthV1Login(
     }
 
     default: {
-      throw new Error(SharedV1Errors.FailedToSubmitForm);
+      throw new Error(SharedV1Errors.FailedToLoadUser);
     }
   }
 }

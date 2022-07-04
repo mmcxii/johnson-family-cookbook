@@ -8,14 +8,15 @@ import {
   postApiAuthV1Login,
   postApiAuthV1RegisterUser,
 } from "../../../services";
-import { keys } from "./keys";
+import { keys as keysDefinition } from "./keys";
 import { AuthV1SchemasQueries } from "./schemas";
 
 export class AuthV1Queries {
-  public static schemas = new AuthV1SchemasQueries(keys);
+  public static keys = keysDefinition;
+  public static schemas = new AuthV1SchemasQueries(this.keys);
 
   public static useGetUser() {
-    return useQuery(keys.user, getApiAuthV1User);
+    return useQuery(this.keys.user, getApiAuthV1User);
   }
 
   public static usePostRegisterUser() {
@@ -25,7 +26,7 @@ export class AuthV1Queries {
       postApiAuthV1RegisterUser,
       {
         onSuccess: () => {
-          qc.invalidateQueries(keys.user);
+          qc.invalidateQueries(this.keys.user);
         },
       },
     );
@@ -38,7 +39,7 @@ export class AuthV1Queries {
       postApiAuthV1Login,
       {
         onSuccess: () => {
-          qc.invalidateQueries(keys.user);
+          qc.invalidateQueries(this.keys.user);
         },
       },
     );

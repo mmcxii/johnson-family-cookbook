@@ -8,15 +8,7 @@ export type PostApiAuthV1RegisterUserParams = {
   values: Record<string, unknown>;
 };
 
-type PostApiAuthV1RegisterUserApiResponse = {
-  accessToken: string;
-  user: User;
-};
-
-export type PostApiAuthV1RegisterUserResponse = Omit<
-  PostApiAuthV1RegisterUserApiResponse,
-  "accessToken"
->;
+export type PostApiAuthV1RegisterUserResponse = { user: User };
 
 export async function postApiAuthV1RegisterUser(
   params: PostApiAuthV1RegisterUserParams,
