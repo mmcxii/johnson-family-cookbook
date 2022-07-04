@@ -1,4 +1,5 @@
 import { Provider } from "@nestjs/common";
+import { getBaseMockEntityService } from "../../test-utils/entity-service.mock";
 import { mockRepository } from "../../test-utils/mock-repository";
 import { CreateUserV1Params } from "./dto/create-params";
 import { UserV1 } from "./entity";
@@ -10,17 +11,9 @@ export function getMockUserV1Service(users: Array<UserV1> = [getMockUser()]): Pr
   return {
     provide: UserV1Service,
     useValue: {
-      findAll: async (): Promise<Array<UserV1>> => {
-        return users.filter((u) => u.archivedAt == null);
-      },
-      findByIdOrFail: async (id: UserV1["id"]): Promise<UserV1> => {
-        const user = users.filter((u) => u.archivedAt == null).find((u) => u.id === id);
-
-        if (!user) {
-          throw new Error(UserV1Errors.UserNotFound);
-        }
-
-        return user;
+      ...getBaseMockEntityService(users),
+      createAndFlush: async (params: CreateUserV1Params): Promise<UserV1> => {
+        return getMockUser(params);
       },
       findOneByEmailAddressOrFail: async (
         emailAddress: UserV1["emailAddress"],
@@ -28,43 +21,6 @@ export function getMockUserV1Service(users: Array<UserV1> = [getMockUser()]): Pr
         const user = users
           .filter((u) => u.archivedAt == null)
           .find((u) => u.emailAddress === emailAddress);
-
-        if (!user) {
-          throw new Error(UserV1Errors.UserNotFound);
-        }
-
-        return user;
-      },
-      createAndFlush: async (params: CreateUserV1Params): Promise<UserV1> => {
-        return getMockUser(params);
-      },
-      getRepository: (): any => {
-        return mockRepository(users);
-      },
-      findByIdAndArchiveOrFail: async (id: UserV1["id"]): Promise<UserV1> => {
-        const user = users.filter((u) => u.archivedAt == null).find((u) => u.id === id);
-
-        if (!user) {
-          throw new Error(UserV1Errors.UserNotFound);
-        }
-
-        user.archivedAt = new Date();
-
-        return user;
-      },
-      findByIdAndUnarchiveOrFail: async (id: UserV1["id"]): Promise<UserV1> => {
-        const user = users.filter((u) => u.archivedAt != null).find((u) => u.id === id);
-
-        if (!user) {
-          throw new Error(UserV1Errors.UserNotFound);
-        }
-
-        user.archivedAt = undefined;
-
-        return user;
-      },
-      findArchivedByIdOrFail: async (id: UserV1["id"]): Promise<UserV1> => {
-        const user = users.filter((u) => u.archivedAt != null).find((u) => u.id === id);
 
         if (!user) {
           throw new Error(UserV1Errors.UserNotFound);

@@ -1,6 +1,6 @@
 import { Options } from "@mikro-orm/core";
 import "dotenv/config";
-import { UserV1 } from "../../entities";
+import { RecipeV1, UserV1 } from "../../entities";
 
 /**
  * Mikro-ORM configuration.
@@ -16,7 +16,7 @@ export default {
           },
         }
       : {},
-  entities: [UserV1],
+  entities: [UserV1, RecipeV1],
   filters: {
     /**
      * The Soft Delete filter automatically removes items from any search that
