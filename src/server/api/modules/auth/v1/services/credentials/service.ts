@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigType } from "@nestjs/config";
 import { JwtService, JwtSignOptions, JwtVerifyOptions } from "@nestjs/jwt";
+import { Response } from "express";
 import { RedisService } from "nestjs-redis";
 import { SEVEN_DAYS_IN_SECONDS } from "../../../../../../../shared/time-values";
 import { UserV1, UserV1Service } from "../../../../orm";
@@ -51,6 +52,14 @@ export class CredentialsV1Service {
     });
 
     return decodedToken;
+  }
+
+  public attachRefreshTokenToResponse(response: Response, token: string): void {
+    response.cookie(
+      this.config.refreshToken.cookieName,
+      token,
+      this.config.refreshToken.cookieConfig,
+    );
   }
 
   private async _createToken(user: UserV1, options: JwtSignOptions): Promise<string> {

@@ -1,26 +1,30 @@
 import { SharedV1Errors } from "../../../../../../../shared/constants/errors";
 import { HttpStatusCodes } from "../../../../../../../shared/constants/http-status-codes";
 import { User } from "../../../../../../shared/types/api";
-import { ApiRoutes } from "../../../../../routes";
+import { ApiRoutes } from "../../../../../utils/routes";
+import { serviceRequest } from "../../../../../utils/service-request";
 
 export type PostApiAuthV1RegisterUserParams = {
   values: Record<string, unknown>;
 };
 
-export type PostApiAuthV1RegisterUserResponse = {
+type PostApiAuthV1RegisterUserApiResponse = {
   accessToken: string;
   user: User;
 };
 
-export async function postApiAuthV1RegisterUser(params: PostApiAuthV1RegisterUserParams) {
+export type PostApiAuthV1RegisterUserResponse = Omit<
+  PostApiAuthV1RegisterUserApiResponse,
+  "accessToken"
+>;
+
+export async function postApiAuthV1RegisterUser(
+  params: PostApiAuthV1RegisterUserParams,
+): Promise<PostApiAuthV1RegisterUserResponse> {
   const { values } = params;
 
-  const response = await fetch(ApiRoutes.ApiAuthV1RegisterUser, {
+  const response = await serviceRequest("post", ApiRoutes.ApiAuthV1RegisterUser, {
     body: JSON.stringify(values),
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "post",
   });
 
   switch (response.status) {

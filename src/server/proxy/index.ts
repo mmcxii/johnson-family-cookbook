@@ -10,7 +10,7 @@ import { proxyMiddleware } from "./middleware/proxy";
     const app = express();
     const port = getProxyServerPort();
 
-    app.use(loggerMiddleware());
+    // app.use(loggerMiddleware());
     app.use(proxyMiddleware());
     app.use(serveStaticAssets());
 

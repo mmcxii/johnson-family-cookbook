@@ -1,12 +1,13 @@
 import { SharedV1Errors } from "../../../../../../../../shared/constants/errors";
 import { HttpStatusCodes } from "../../../../../../../../shared/constants/http-status-codes";
 import { FormSchema } from "../../../../../../../../shared/types/form-schema.type";
-import { ApiRoutes } from "../../../../../../routes";
+import { ApiRoutes } from "../../../../../../utils/routes";
+import { serviceRequest } from "../../../../../../utils/service-request";
 
 export type GetApiAuthV1RegisterUserSchemaResponse = FormSchema;
 
 export async function getApiAuthV1RegisterUserSchema(): Promise<GetApiAuthV1RegisterUserSchemaResponse> {
-  const response = await fetch(ApiRoutes.ApiAuthV1RegisterUserSchema);
+  const response = await serviceRequest("get", ApiRoutes.ApiAuthV1RegisterUserSchema);
 
   switch (response.status) {
     case HttpStatusCodes.Success: {

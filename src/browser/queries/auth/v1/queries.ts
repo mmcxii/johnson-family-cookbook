@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   PostApiAuthV1LoginParams,
   PostApiAuthV1LoginResponse,
@@ -19,16 +19,28 @@ export class AuthV1Queries {
   }
 
   public static usePostRegisterUser() {
+    const qc = useQueryClient();
+
     return useMutation<PostApiAuthV1RegisterUserResponse, Error, PostApiAuthV1RegisterUserParams>(
-      keys.user,
       postApiAuthV1RegisterUser,
+      {
+        onSuccess: () => {
+          qc.invalidateQueries(keys.user);
+        },
+      },
     );
   }
 
   public static usePostLogin() {
+    const qc = useQueryClient();
+
     return useMutation<PostApiAuthV1LoginResponse, Error, PostApiAuthV1LoginParams>(
-      keys.user,
       postApiAuthV1Login,
+      {
+        onSuccess: () => {
+          qc.invalidateQueries(keys.user);
+        },
+      },
     );
   }
 }

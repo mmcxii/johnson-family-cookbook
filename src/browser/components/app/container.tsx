@@ -5,7 +5,13 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthV1Queries } from "../../queries";
 import { App } from "./component";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 export const AppContainer: React.FC = () => {
   return (
