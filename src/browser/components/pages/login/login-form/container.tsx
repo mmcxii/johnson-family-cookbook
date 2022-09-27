@@ -1,17 +1,37 @@
 import * as React from "react";
-import { AuthV1Queries } from "../../../../queries";
+import { AuthV1LoginFormContext } from "../../../../contexts";
 import { LoginForm, LoginFormProps } from "./component";
 
-export type LoginFormContainerProps = Omit<LoginFormProps, "onSubmit" | "schema">;
+export type LoginFormContainerProps = Omit<
+  LoginFormProps,
+  "getError" | "getState" | "onSubmit" | "postError" | "postState" | "schema"
+>;
 
 export const LoginFormContainer: React.FC<LoginFormContainerProps> = (props) => {
-  //* Queries
-  const loginSchema = AuthV1Queries.schemas.useGetLoginSchema();
-  const login = AuthV1Queries.usePostLogin();
+  //* Contexts
+  const authV1LoginFormContext = React.useContext(AuthV1LoginFormContext.Context);
 
   //* Variables
-  const { data } = loginSchema;
-  const { mutate } = login;
+  const { post } = authV1LoginFormContext;
+  const { schema } = authV1LoginFormContext.data;
+  const [getState, postState] = [
+    authV1LoginFormContext.state.get,
+    authV1LoginFormContext.state.post,
+  ];
+  const [getError, postError] = [
+    authV1LoginFormContext.error.get,
+    authV1LoginFormContext.error.post,
+  ];
 
-  return <LoginForm {...props} onSubmit={mutate} schema={data} />;
+  return (
+    <LoginForm
+      {...props}
+      getError={getError}
+      getState={getState}
+      onSubmit={post}
+      postError={postError}
+      postState={postState}
+      schema={schema}
+    />
+  );
 };

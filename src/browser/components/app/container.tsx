@@ -1,36 +1,28 @@
 import * as React from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 import { BrowserRouter } from "react-router-dom";
-import { AuthV1Queries } from "../../queries";
+import { AuthV1UserContext } from "../../contexts";
 import { App } from "./component";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: false,
-    },
-  },
-});
 
 export const AppContainer: React.FC = () => {
   return (
-    <QueryClientProvider client={queryClient}>
+    <AuthV1UserContext.ApiProvider>
       <BrowserRouter>
         <AppDataLoader />
 
         <App />
       </BrowserRouter>
-
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+    </AuthV1UserContext.ApiProvider>
   );
 };
 
 const AppDataLoader: React.FC = () => {
-  //* Queries
-  AuthV1Queries.useGetUser();
+  //* Contexts
+  const authV1UserContext = React.useContext(AuthV1UserContext.Context);
+
+  //* Effects
+  React.useEffect(() => {
+    authV1UserContext.get();
+  }, []);
 
   return null;
 };

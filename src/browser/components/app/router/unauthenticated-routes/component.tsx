@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { AuthV1UserContext } from "../../../../contexts";
 import { UiRoutes } from "../../../../shared/constants/routes";
-import { User } from "../../../../shared/types/api";
 
 export type UnauthenticatedRoutesProps = {
-  user: undefined | User;
+  user: AuthV1UserContext.ContextData["data"]["user"];
 };
 
 export const UnauthenticatedRoutes: React.FC<UnauthenticatedRoutesProps> = (props) => {

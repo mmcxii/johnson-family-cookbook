@@ -1,9 +1,9 @@
 export type FormSchema = {
-  type?: "object";
+  allOf?: Array<AllOfSchema>;
   properties: Record<string, FormGroupSchema | InputSchema>;
   propertyOrder?: Array<string>;
-  allOf?: Array<AllOfSchema>;
   title?: string;
+  type?: "object";
 };
 
 export type FormGroupSchema = FormSchema & {
@@ -16,19 +16,26 @@ export type AllOfSchema = {
   then: FormSchema;
 };
 
-export type InputSchema = StringInputSchema | NumberInputSchema;
+export type InputSchema = ArrayInputSchema | NumberInputSchema | StringInputSchema;
 
 export type StringInputSchema = {
-  type?: "string";
-  title?: string;
   oneOf?: Array<Record<"const" | "title", string>>;
-  "ui:props"?: Record<string, unknown>;
+  title?: string;
+  type?: "string";
   "ui:control"?: string;
+  "ui:props"?: Record<string, unknown>;
 };
 
 export type NumberInputSchema = {
-  type?: "number";
   title?: string;
-  "ui:props"?: Record<string, unknown>;
+  type?: "number";
   "ui:control"?: string;
+  "ui:props"?: Record<string, unknown>;
+};
+
+export type ArrayInputSchema = {
+  items?: FormSchema;
+  title?: string;
+  type?: "array";
+  "ui:before": Array<InputSchema>;
 };

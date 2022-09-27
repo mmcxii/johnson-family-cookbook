@@ -1,1 +1,1 @@
-export * from "./component";
+export { LoginPageContainer as LoginPage } from "./container";

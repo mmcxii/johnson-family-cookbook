@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AuthV1Queries } from "../../../../queries";
+import { AuthV1UserContext } from "../../../../contexts";
 import { UnauthenticatedRoutes, UnauthenticatedRoutesProps } from "./component";
 
 export type UnauthenticatedRoutesContainerProps = Omit<UnauthenticatedRoutesProps, "user">;
@@ -7,8 +7,11 @@ export type UnauthenticatedRoutesContainerProps = Omit<UnauthenticatedRoutesProp
 export const UnauthenticatedRoutesContainer: React.FC<UnauthenticatedRoutesContainerProps> = (
   props,
 ) => {
-  //* Queries
-  const user = AuthV1Queries.useGetUser();
+  //* Contexts
+  const authV1UserContext = React.useContext(AuthV1UserContext.Context);
 
-  return <UnauthenticatedRoutes {...props} user={user.data} />;
+  //* Variables
+  const { user } = authV1UserContext.data;
+
+  return <UnauthenticatedRoutes {...props} user={user} />;
 };

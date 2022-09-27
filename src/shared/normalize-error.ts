@@ -1,4 +1,8 @@
-export function normalizeError(error: unknown): string {
+export function normalizeError(error: unknown): null | string {
+  if (error == null) {
+    return null;
+  }
+
   if (error instanceof Error) {
     return error.message;
   }

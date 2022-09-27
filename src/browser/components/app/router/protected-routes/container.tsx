@@ -1,12 +1,15 @@
 import * as React from "react";
-import { AuthV1Queries } from "../../../../queries";
+import { AuthV1UserContext } from "../../../../contexts";
 import { ProtectedRoutes, ProtectedRoutesProps } from "./component";
 
 export type ProtectedRoutesContainerProps = Omit<ProtectedRoutesProps, "user">;
 
 export const ProtectedRoutesContainer: React.FC<ProtectedRoutesContainerProps> = (props) => {
-  //* Queries
-  const user = AuthV1Queries.useGetUser();
+  //* Contexts
+  const authV1UserContext = React.useContext(AuthV1UserContext.Context);
 
-  return <ProtectedRoutes {...props} user={user.data} />;
+  //* Variables
+  const { user } = authV1UserContext.data;
+
+  return <ProtectedRoutes {...props} user={user} />;
 };
